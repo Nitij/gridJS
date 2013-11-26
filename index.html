@@ -1,0 +1,111 @@
+<!doctype html>
+<html>
+    <head>
+        <title>gridJS</title>
+        <script type="text/javascript" src="jQuery.js"></script> 
+        <script type="text/javascript" src="grid.main.js"></script>
+        <style type="text/css">
+            .Grid 
+            {
+                font-family:Georgia;   
+            }
+            .Grid tr td
+            {
+                font-family:Georgia;   
+            }
+            .GridHeader 
+            {
+                font-size:large;
+                font-weight:600;    
+            }
+            .GridHeaderCol
+            {
+                background-color:lightblue;   
+            }
+            .GridDataRow td 
+            {
+                border-radius:10px;
+            }
+            .GridFooterRow
+            {
+                height:1px;
+                background-color:black;
+            }
+        </style>
+    </head>
+    <body>
+        <gridJS id="myGrid" class="Grid">
+            <headerRow class="GridHeader">
+                <column class="GridHeaderCol">First Name</column>
+                <column class="GridHeaderCol">Last Name</column>
+                <column class="GridHeaderCol">Phone Number</column>
+                <column class="GridHeaderCol">Vehicle</column>
+            </headerRow>
+            <dataRow class="GridDataRow">
+                <column><div id="myDiv"></div>{{firstName}}</column>
+                <column><div></div>{{lastName}}</column>
+                <column>{{phone}}</column>
+                <column>{{vehicle}}</column>
+            </dataRow>
+            <footerRow class="GridFooterRow">
+                <column></column>
+                <column></column>
+                <column></column>
+                <column></column>
+            </footerRow>
+        </gridJS>
+
+
+        <script type="text/javascript">
+            var dataSource = [
+                {
+                    firstName: "Nitij",
+                    lastName: "Jhangra",
+                    phone: "9982211288",
+                    vehicle: "Audi"
+                },
+                {
+                    firstName: "Abhishek",
+                    lastName: "Shukla",
+                    phone: "9454645648",
+                    vehicle: "Nano"
+                },
+                {
+                    firstName: "Ajay",
+                    lastName: "Singh",
+                    phone: "9435436343",
+                    vehicle: "Scooter"
+                },
+                {
+                    firstName: "Hemant",
+                    lastName: "Daulani",
+                    phone: "9353535353",
+                    vehicle: "Hero Cycle"
+                },
+                {
+                    firstName: "Deepak",
+                    lastName: "Pathak",
+                    phone: "9454657353",
+                    vehicle: "Luna"
+                },
+                {
+                    firstName: "Alok",
+                    lastName: "Soni",
+                    phone: "9454346463",
+                    vehicle: "Tractor"
+                }
+            ];
+            var gridJS = new GridJS().getGrid("myGrid")
+                .dataSource(dataSource)
+                .setDataRowColors(["#FFFCCF", "#B4EEB4", "#CAE1FF"])
+                .setCellPadding(8)
+                .onRowAddition(HandleRowAddition)
+                .draw();
+
+            function HandleRowAddition(dataRow, dataSource, index) {
+                //if (index === 2) { $(dataRow).css("background-color", "red")}
+                return dataRow;
+            }
+        </script>
+    </body>
+</html>

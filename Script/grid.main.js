@@ -4,11 +4,9 @@
 
     gridJS = function () {
         this._grid = null;
-        this._headerHTML = "";
-        this._dataHTML = "";
-        this._footerHTML = "";
         this._dataSource = null;
         this._dataItemCount = 0;
+        this._dataRowBackColors = [];
         return this;
     };
     gridJS.prototype = {
@@ -21,63 +19,72 @@
             this._dataItemCount = dataSource.length;
             return this;
         },
-        draw: function () {
+        draw: function ()
+        {
+            debugger;
             var dataSource = this._dataSource;
             var headerElement = this._grid.find("headerRow");
             var headerColumns = headerElement.find("column");
             var dataElement = this._grid.find("dataRow");
             var dataColumns = dataElement.find("column");
             var footerElement = null;
-            var wholeGrid = [];
-            var headerHtml = [];
-            var dataHtml = [];
-            var i = 0, j = 0;
+            var i = 0, j = 0, colorIdx = 0;
             var currentRow = "";
+            var headerRow = null, dataRow = null, footerRow = null, finalGrid = null;
+            var headerCol = null, dataCol = null, footerCol = null;
+            var setDataRowBackColor = this._dataRowBackColors.length > 0;
+            finalGrid = document.createElement("table");
+            finalGrid = $(finalGrid);
 
             //header
-            headerHtml.push("<tr>");
-            for (; i < headerColumns.length; i++) {
-                headerHtml.push("<td>");
-                headerHtml.push(headerColumns[i].innerHTML);
-                headerHtml.push("</td>");
+            headerRow = document.createElement("tr");
+            headerRow = $(headerRow);
+            for (; i < headerColumns.length; i++)
+            {
+                headerCol = document.createElement("td");
+                headerCol = $(headerCol);
+                headerCol.html(headerColumns[i].innerHTML);
+                headerRow.append(headerCol);
             }
-            headerHtml.push("</tr>");
-            this._headerHTML = headerHtml.join("");
-            debugger;
+            finalGrid.append(headerRow);
+
             //data rows
             i = 0;
             for (; i < dataSource.length; i++) {
-                dataHtml.push("<tr>");
-                for (; j < dataColumns.length; j++) {
+                dataRow = document.createElement("tr");
+                dataRow = $(dataRow);
+                //set background colors if any provided
+                if (setDataRowBackColor)
+                {
+                    if (colorIdx === this._dataRowBackColors.length) { colorIdx = 0}
+                    dataRow.css("background-color", this._dataRowBackColors[colorIdx]);
+                    colorIdx++;
+                }
+                //set the data for each row
+                for (; j < dataColumns.length; j++)
+                {
+                    dataCol = document.createElement("td");
+                    dataCol = $(dataCol);
                     currentRow = dataColumns[j].innerHTML;
-                    dataHtml.push("<td>");
 
                     //lets now replace the template items with their data
                     currentRow = ReplaceToken(currentRow, dataSource[i])
-                    dataHtml.push(currentRow);
-                    dataHtml.push("</td>");
+                    dataCol.html(currentRow);
+                    dataRow.append(dataCol);
                 }
-                dataHtml.push("</tr>");
+                finalGrid.append(dataRow);
                 j = 0;
             }
-            this._dataHTML = dataHtml.join("");
-
-            //lets create template for the complete grid
-            wholeGrid.push("<table>");
-            wholeGrid.push("{{header}}");
-            wholeGrid.push("{{data}}");
-            //wholeGrid.push("{{footer}}");
-            wholeGrid.push("</table>");
-
-            wholeGrid = wholeGrid.join("");
-            wholeGrid = wholeGrid.replace("{{header}}", this._headerHTML);
-            wholeGrid = wholeGrid.replace("{{data}}", this._dataHTML);
-
 
             //finally set the grid's inner html
-            this._grid.html(wholeGrid);
+            this._grid.html("");
+            this._grid.append(finalGrid);
             return this;
-        }
+        },
+        setDataRowColors: function (colors) {
+            this._dataRowBackColors = colors;
+            return this;
+        },
     };
 
     function ReplaceToken(str, data) {

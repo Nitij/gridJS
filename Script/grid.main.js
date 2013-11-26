@@ -22,30 +22,34 @@
             this._dataItemCount = dataSource.length;
             return this;
         },
-        draw: function ()
-        {
+        draw: function () {
             var dataSource = this._dataSource;
             var headerElement = this._grid.find("headerRow");
             var headerColumns = headerElement.find("column");
             var dataElement = this._grid.find("dataRow");
             var dataColumns = dataElement.find("column");
-            var footerElement = null;
+            var footerElement = this._grid.find("footerRow");
+            var footerColumns = footerElement.find("column");
             var i = 0, j = 0, k = 0, colorIdx = 0;
             var currentRow = "";
             var headerRow = null, dataRow = null, footerRow = null, finalGrid = null;
             var headerCol = null, dataCol = null, dataColChildren = null, footerCol = null;
             var setDataRowBackColor = this._dataRowBackColors.length > 0;
+
+            //initialize final grid table
             finalGrid = document.createElement("table");
             finalGrid.setAttribute("cellspacing", 0);
             finalGrid.setAttribute("cellpadding", this._cellPadding);
+            finalGrid.setAttribute("class", this._grid.attr("class"));
             finalGrid = $(finalGrid);
 
             //header
             headerRow = document.createElement("tr");
+            headerRow.setAttribute("class", headerElement.attr("class"));
             headerRow = $(headerRow);
-            for (; i < headerColumns.length; i++)
-            {
+            for (; i < headerColumns.length; i++) {
                 headerCol = document.createElement("td");
+                headerCol.setAttribute("class", $(headerColumns[i]).attr("class"));
                 headerCol = $(headerCol);
                 headerCol.html(headerColumns[i].innerHTML);
                 headerRow.append(headerCol);
@@ -56,6 +60,7 @@
             i = 0;
             for (; i < dataSource.length; i++) {
                 dataRow = document.createElement("tr");
+                dataRow.setAttribute("class", dataElement.attr("class"));
                 dataRow = $(dataRow);
                 //set background colors if any provided
                 if (setDataRowBackColor)
@@ -65,9 +70,9 @@
                     colorIdx++;
                 }
                 //set the data for each row
-                for (; j < dataColumns.length; j++)
-                {
+                for (; j < dataColumns.length; j++) {
                     dataCol = document.createElement("td");
+                    dataCol.setAttribute("class", $(dataColumns[i]).attr("class"));
                     dataCol = $(dataCol);
                     currentRow = dataColumns[j].innerHTML;
 
@@ -85,12 +90,26 @@
                 }
                 //row add event handling
                 if (this._hasRowAddHandler) {
-                    dataRow = $(this._rowAddHandler(dataRow[0], dataSource));
+                    dataRow = $(this._rowAddHandler(dataRow[0], dataSource, i));
                 }
                 
                 finalGrid.append(dataRow);
                 j = 0;
             }
+
+            //footer
+            i = 0;
+            footerRow = document.createElement("tr");
+            footerRow.setAttribute("class", footerElement.attr("class"));
+            footerRow = $(footerRow);
+            for (; i < footerColumns.length; i++) {
+                footerCol = document.createElement("td");
+                footerCol.setAttribute("class", $(footerColumns[i]).attr("class"));
+                footerCol = $(footerCol);
+                footerCol.html(footerColumns[i].innerHTML);
+                footerRow.append(footerCol);
+            }
+            finalGrid.append(footerRow);
 
             //finally set the grid's inner html
             this._grid.html("");

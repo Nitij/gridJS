@@ -1,5 +1,6 @@
 ;
 (function ($, w, undefined) {
+    "use strict";
     var gridJS = null;
 
     gridJS = function () {

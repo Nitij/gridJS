@@ -7,6 +7,9 @@
         this._dataSource = null;
         this._dataItemCount = 0;
         this._dataRowBackColors = [];
+        this._cellPadding = 5;
+        this._hasRowAddHandler = false;
+        this._rowAddHandler = null;
         return this;
     };
     gridJS.prototype = {
@@ -27,12 +30,14 @@
             var dataElement = this._grid.find("dataRow");
             var dataColumns = dataElement.find("column");
             var footerElement = null;
-            var i = 0, j = 0, colorIdx = 0;
+            var i = 0, j = 0, k = 0, colorIdx = 0;
             var currentRow = "";
             var headerRow = null, dataRow = null, footerRow = null, finalGrid = null;
-            var headerCol = null, dataCol = null, footerCol = null;
+            var headerCol = null, dataCol = null, dataColChildren = null, footerCol = null;
             var setDataRowBackColor = this._dataRowBackColors.length > 0;
             finalGrid = document.createElement("table");
+            finalGrid.setAttribute("cellspacing", 0);
+            finalGrid.setAttribute("cellpadding", this._cellPadding);
             finalGrid = $(finalGrid);
 
             //header
@@ -69,8 +74,20 @@
                     //lets now replace the template items with their data
                     currentRow = ReplaceToken(currentRow, dataSource[i])
                     dataCol.html(currentRow);
+                    
+                    //set unique IDs for all childrens
+                    dataColChildren = dataCol[0].children;
+                    for (; k < dataColChildren.length; k++) {
+                        if (dataColChildren[k].id !== "") { dataColChildren[k].id += "_" + i; }
+                    }
+                    k = 0;
                     dataRow.append(dataCol);
                 }
+                //row add event handling
+                if (this._hasRowAddHandler) {
+                    dataRow = $(this._rowAddHandler(dataRow[0], dataSource));
+                }
+                
                 finalGrid.append(dataRow);
                 j = 0;
             }
@@ -84,6 +101,15 @@
             this._dataRowBackColors = colors;
             return this;
         },
+        setCellPadding: function (cellPadding) {
+            this._cellPadding = cellPadding;
+            return this;
+        },
+        onRowAddition: function (f) {
+            this._hasRowAddHandler = true;
+            this._rowAddHandler = f;
+            return this;
+        }
     };
 
     function ReplaceToken(str, data) {

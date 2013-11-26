@@ -21,7 +21,6 @@
         },
         draw: function ()
         {
-            debugger;
             var dataSource = this._dataSource;
             var headerElement = this._grid.find("headerRow");
             var headerColumns = headerElement.find("column");

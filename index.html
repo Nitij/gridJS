@@ -3,15 +3,11 @@
     <head>
         <title>gridJS</title>
         <script type="text/javascript" src="jQuery.js"></script> 
-        <script type="text/javascript" src="grid.main.js"></script>
+        <script type="text/javascript" src="Script\grid.main.js"></script>
         <style type="text/css">
             .Grid 
             {
-                font-family:Georgia;   
-            }
-            .Grid tr td
-            {
-                font-family:Georgia;   
+                font-family: Verdana;
             }
             .GridHeader 
             {
@@ -42,8 +38,11 @@
                 <column class="GridHeaderCol">Vehicle</column>
             </headerRow>
             <dataRow class="GridDataRow">
-                <column><div id="myDiv"></div>{{firstName}}</column>
-                <column><div></div>{{lastName}}</column>
+                <column><input id="txtFirstName" type="text" value="{{firstName}}" /></column>
+                <column>
+                    <input id="rdoLastName" type="radio" name="myRadio" value='{{lastName}}' />
+                    {{lastName}}
+                </column>
                 <column>{{phone}}</column>
                 <column>{{vehicle}}</column>
             </dataRow>
@@ -100,6 +99,7 @@
                 .setDataRowColors(["#FFFCCF", "#B4EEB4", "#CAE1FF"])
                 .setCellPadding(8)
                 .onRowAddition(HandleRowAddition)
+                .setMouseOverColor("#FFC1C1")
                 .draw();
 
             function HandleRowAddition(dataRow, dataSource, index) {

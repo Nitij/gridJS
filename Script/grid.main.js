@@ -10,6 +10,8 @@
         this._cellPadding = 5;
         this._hasRowAddHandler = false;
         this._rowAddHandler = null;
+        this._hasMouseOverColor = false;
+        this._mouseOverColor = "";
         return this;
     };
     gridJS.prototype = {
@@ -62,13 +64,21 @@
                 dataRow = document.createElement("tr");
                 dataRow.setAttribute("class", dataElement.attr("class"));
                 dataRow = $(dataRow);
+                
                 //set background colors if any provided
-                if (setDataRowBackColor)
-                {
-                    if (colorIdx === this._dataRowBackColors.length) { colorIdx = 0}
+                if (setDataRowBackColor) {
+                    if (colorIdx === this._dataRowBackColors.length) { colorIdx = 0 }
                     dataRow.css("background-color", this._dataRowBackColors[colorIdx]);
                     colorIdx++;
                 }
+
+                //set mouse over and out color
+                if (this._hasMouseOverColor) {
+                    dataRow.mouseover([dataRow, this._mouseOverColor], SetBackgroundColor);
+                    dataRow.mouseout([dataRow, dataRow.css("background-color")]
+                        , SetBackgroundColor);
+                }
+
                 //set the data for each row
                 for (; j < dataColumns.length; j++) {
                     dataCol = document.createElement("td");
@@ -79,7 +89,7 @@
                     //lets now replace the template items with their data
                     currentRow = ReplaceToken(currentRow, dataSource[i])
                     dataCol.html(currentRow);
-                    
+
                     //set unique IDs for all childrens
                     dataColChildren = dataCol[0].children;
                     for (; k < dataColChildren.length; k++) {
@@ -92,7 +102,7 @@
                 if (this._hasRowAddHandler) {
                     dataRow = $(this._rowAddHandler(dataRow[0], dataSource, i));
                 }
-                
+
                 finalGrid.append(dataRow);
                 j = 0;
             }
@@ -128,8 +138,20 @@
             this._hasRowAddHandler = true;
             this._rowAddHandler = f;
             return this;
+        },
+        setMouseOverColor: function (color) {
+            this._hasMouseOverColor = true;
+            this._mouseOverColor = color;
+            return this;
         }
     };
+
+    //Set the background color of the html element passed in the even parameters
+    function SetBackgroundColor(e) {
+        var el = e.data[0];
+        var color = e.data[1];
+        el.css("background-color", color);
+    }
 
     function ReplaceToken(str, data) {
         var i = 0;
@@ -138,7 +160,7 @@
         var pStart = 0, pEnd = 0, tokenStart = 0, tokenEnd = 0;
         var token = "", tokenName = "";
         var output = str;
-        
+
         for (; i < length; i++) {
             if (i < length) {
                 ptr = str.substr(i, 2);
@@ -148,7 +170,7 @@
                     tokenStart = i + 2;
                 }
                 else if (ptr === "}}") {
-                    pEnd = i+1;
+                    pEnd = i + 1;
                     tokenEnd = i - 1;
                     token = str.substr(pStart, pEnd - pStart + 1);
                     tokenName = str.substr(tokenStart, tokenEnd - tokenStart + 1);

@@ -1,111 +1,165 @@
 <!doctype html>
 <html>
-    <head>
-        <title>gridJS</title>
-        <script type="text/javascript" src="jQuery.js"></script> 
-        <script type="text/javascript" src="Script\grid.main.js"></script>
-        <style type="text/css">
-            .Grid 
-            {
-                font-family: Verdana;
+<head>
+    <title>gridJS</title>
+    <script type="text/javascript" src="jQuery.js"></script>
+    <script type="text/javascript" src="Script\grid.main.js"></script>
+    <script type="text/javascript" src="sampleData.js"></script>
+    <style type="text/css">
+        .myButton {
+            -moz-box-shadow: inset 0px 1px 0px 0px #efdcfb;
+            -webkit-box-shadow: inset 0px 1px 0px 0px #efdcfb;
+            box-shadow: inset 0px 1px 0px 0px #efdcfb;
+            background: -webkit-gradient(linear, left top, left bottom, color-stop(0.05, #dfbdfa), color-stop(1, #bc80ea));
+            background: -moz-linear-gradient(top, #dfbdfa 5%, #bc80ea 100%);
+            background: -webkit-linear-gradient(top, #dfbdfa 5%, #bc80ea 100%);
+            background: -o-linear-gradient(top, #dfbdfa 5%, #bc80ea 100%);
+            background: -ms-linear-gradient(top, #dfbdfa 5%, #bc80ea 100%);
+            background: linear-gradient(to bottom, #dfbdfa 5%, #bc80ea 100%);
+            filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#dfbdfa', endColorstr='#bc80ea',GradientType=0);
+            background-color: #dfbdfa;
+            -moz-border-radius: 6px;
+            -webkit-border-radius: 6px;
+            border-radius: 6px;
+            border: 1px solid #c584f3;
+            display: inline-block;
+            cursor: pointer;
+            color: #ffffff;
+            font-family: arial;
+            font-size: 15px;
+            font-weight: bold;
+            padding: 6px 24px;
+            text-decoration: none;
+            text-shadow: 0px 1px 0px #9752cc;
+        }
+
+            .myButton:hover {
+                background: -webkit-gradient(linear, left top, left bottom, color-stop(0.05, #bc80ea), color-stop(1, #dfbdfa));
+                background: -moz-linear-gradient(top, #bc80ea 5%, #dfbdfa 100%);
+                background: -webkit-linear-gradient(top, #bc80ea 5%, #dfbdfa 100%);
+                background: -o-linear-gradient(top, #bc80ea 5%, #dfbdfa 100%);
+                background: -ms-linear-gradient(top, #bc80ea 5%, #dfbdfa 100%);
+                background: linear-gradient(to bottom, #bc80ea 5%, #dfbdfa 100%);
+                filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#bc80ea', endColorstr='#dfbdfa',GradientType=0);
+                background-color: #bc80ea;
             }
-            .GridHeader 
-            {
-                font-size:large;
-                font-weight:600;    
+
+            .myButton:active {
+                position: relative;
+                top: 1px;
             }
-            .GridHeaderCol
-            {
-                background-color:lightblue;   
+
+        .myButton-active {
+            -moz-box-shadow: inset 0px 1px 0px 0px #dcecfb;
+            -webkit-box-shadow: inset 0px 1px 0px 0px #dcecfb;
+            box-shadow: inset 0px 1px 0px 0px #dcecfb;
+            background: -webkit-gradient(linear, left top, left bottom, color-stop(0.05, #bddbfa), color-stop(1, #80b5ea));
+            background: -moz-linear-gradient(top, #bddbfa 5%, #80b5ea 100%);
+            background: -webkit-linear-gradient(top, #bddbfa 5%, #80b5ea 100%);
+            background: -o-linear-gradient(top, #bddbfa 5%, #80b5ea 100%);
+            background: -ms-linear-gradient(top, #bddbfa 5%, #80b5ea 100%);
+            background: linear-gradient(to bottom, #bddbfa 5%, #80b5ea 100%);
+            filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#bddbfa', endColorstr='#80b5ea',GradientType=0);
+            background-color: #bddbfa;
+            -moz-border-radius: 6px;
+            -webkit-border-radius: 6px;
+            border-radius: 6px;
+            border: 1px solid #84bbf3;
+            display: inline-block;
+            cursor: pointer;
+            color: #ffffff;
+            font-family: arial;
+            font-size: 15px;
+            font-weight: bold;
+            padding: 6px 24px;
+            text-decoration: none;
+            text-shadow: 0px 1px 0px #528ecc;
+        }
+
+            .myButton-active:hover {
+                background: -webkit-gradient(linear, left top, left bottom, color-stop(0.05, #80b5ea), color-stop(1, #bddbfa));
+                background: -moz-linear-gradient(top, #80b5ea 5%, #bddbfa 100%);
+                background: -webkit-linear-gradient(top, #80b5ea 5%, #bddbfa 100%);
+                background: -o-linear-gradient(top, #80b5ea 5%, #bddbfa 100%);
+                background: -ms-linear-gradient(top, #80b5ea 5%, #bddbfa 100%);
+                background: linear-gradient(to bottom, #80b5ea 5%, #bddbfa 100%);
+                filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#80b5ea', endColorstr='#bddbfa',GradientType=0);
+                background-color: #80b5ea;
             }
-            .GridDataRow td 
-            {
-                /*border-radius:10px;*/
+
+            .myButton-active:active {
+                position: relative;
+                top: 1px;
             }
-            .GridFooterRow
-            {
-                height:1px;
-                background-color:black;
-            }
-        </style>
-    </head>
-    <body>
-        <gridJS id="myGrid" class="Grid">
-            <headerRow class="GridHeader">
-                <column class="GridHeaderCol">First Name</column>
-                <column class="GridHeaderCol">Last Name</column>
-                <column class="GridHeaderCol">Phone Number</column>
-                <column class="GridHeaderCol">Vehicle</column>
-            </headerRow>
-            <dataRow class="GridDataRow">
-                <column><input id="txtFirstName" type="text" value="{{firstName}}" /></column>
-                <column>
-                    <input id="rdoLastName" type="radio" name="myRadio" value='{{lastName}}' />
-                    {{lastName}}
-                </column>
-                <column>{{phone}}</column>
-                <column>{{vehicle}}</column>
-            </dataRow>
-            <footerRow class="GridFooterRow">
-                <column></column>
-                <column></column>
-                <column></column>
-                <column></column>
-            </footerRow>
-        </gridJS>
 
 
-        <script type="text/javascript">
-            var dataSource = [
-                {
-                    firstName: "Nitij",
-                    lastName: "Jhangra",
-                    phone: "9982211288",
-                    vehicle: "Audi"
-                },
-                {
-                    firstName: "Abhishek",
-                    lastName: "Shukla",
-                    phone: "9454645648",
-                    vehicle: "Nano"
-                },
-                {
-                    firstName: "Ajay",
-                    lastName: "Singh",
-                    phone: "9435436343",
-                    vehicle: "Scooter"
-                },
-                {
-                    firstName: "Hemant",
-                    lastName: "Daulani",
-                    phone: "9353535353",
-                    vehicle: "Hero Cycle"
-                },
-                {
-                    firstName: "Deepak",
-                    lastName: "Pathak",
-                    phone: "9454657353",
-                    vehicle: "Luna"
-                },
-                {
-                    firstName: "Alok",
-                    lastName: "Soni",
-                    phone: "9454346463",
-                    vehicle: "Tractor"
-                }
-            ];
-            var gridJS = new GridJS().getGrid("myGrid")
-                .dataSource(dataSource)
-                .setDataRowColors(["#FFFCCF", "#B4EEB4", "#CAE1FF"])
-                .setCellPadding(8)
-                .onRowAddition(HandleRowAddition)
-                .setMouseOverColor("#FFC1C1")
-                .draw();
 
-            function HandleRowAddition(dataRow, dataSource, index) {
-                //if (index === 2) { $(dataRow).css("background-color", "red")}
-                return dataRow;
-            }
-        </script>
-    </body>
+        .Grid {
+            font-family: Verdana;
+            margin: 0 auto;
+            width: 80%;
+        }
+
+        .GridHeader {
+            font-size: large;
+            font-weight: 600;
+        }
+
+        .GridHeaderCol {
+            background-color: lightblue;
+        }
+
+        .GridDataRow td {
+            border-radius: 10px;
+        }
+
+        .GridFooterRow {
+            height: 1px;
+            background-color: black;
+        }
+    </style>
+</head>
+<body>
+    <div style="text-align: center; width: 100%;">
+        <gridjs id="myGrid" class="Grid">
+                <headerRow class="GridHeader">
+                    <column class="GridHeaderCol">ID</column>
+                    <column class="GridHeaderCol">City</column>
+                    <column class="GridHeaderCol">Population</column>
+                    <column class="GridHeaderCol">State</column>
+                </headerRow>
+                <dataRow class="GridDataRow">
+                    <column>{{_id}}</column>
+                    <column>{{city}}</column>
+                    <column>{{pop}}</column>
+                    <column>{{state}}</column>
+                </dataRow>
+                <footerRow class="GridFooterRow">
+                    <column></column>
+                    <column></column>
+                    <column></column>
+                    <column></column>
+                </footerRow>
+            </gridjs>
+    </div>
+
+
+    <script type="text/javascript">
+
+        var gridJS = new GridJS().getGrid("myGrid")
+            .dataSource(DataSource)
+            .setDataRowColors(["#FFFCCF", "#B4EEB4", "#CAE1FF"])
+            .setCellPadding(8)
+            .onRowAddition(HandleRowAddition)
+            .setMouseOverColor("#FFC1C1")
+            .setPagination(10)
+            //.setPageButtonCss("myButton", "myButton-active")
+            .draw();
+
+        function HandleRowAddition(dataRow, dataSource, index) {
+            //if (index === 2) { $(dataRow).css("background-color", "red")}
+            return dataRow;
+        }
+    </script>
+</body>
 </html>

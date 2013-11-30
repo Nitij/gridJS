@@ -13,9 +13,37 @@
         this._rowAddHandler = null;
         this._hasMouseOverColor = false;
         this._mouseOverColor = "";
+        this._hasPagination = false;
+        this._pageRowCount = 0;
+        this._currentPageNumber = 1;
+        this._headerElement = null;
+        this._dataElement = null;
+        this._footerElement = null;
+        this._pageButtonNormalCss = "";
+        this._pageButtonActiveCss = "";
         return this;
     };
     gridJS.prototype = {
+        setPageButtonCss: function (normalCss, activeCss) {
+            this._pageButtonNormalCss = normalCss;
+            this._pageButtonActiveCss = activeCss;
+            return this;
+        },
+        init: function () {
+            this._headerElement = this._grid.find("headerRow");
+            this._dataElement = this._grid.find("dataRow");
+            this._footerElement = this._grid.find("footerRow");
+            return this;
+        },
+        draw: function(){
+            this.init().reDraw();
+            return this;
+        },
+        setPagination: function (numRows) {
+            this._hasPagination = true;
+            this._pageRowCount = numRows;
+            return this;
+        },
         getGrid: function (gridID) {
             this._grid = $("gridJS[id = '" + gridID + "']");
             return this;
@@ -25,19 +53,22 @@
             this._dataItemCount = dataSource.length;
             return this;
         },
-        draw: function () {
+        reDraw: function () {
             var dataSource = this._dataSource;
-            var headerElement = this._grid.find("headerRow");
+            var headerElement = this._headerElement;
             var headerColumns = headerElement.find("column");
-            var dataElement = this._grid.find("dataRow");
+            var dataElement = this._dataElement;
             var dataColumns = dataElement.find("column");
-            var footerElement = this._grid.find("footerRow");
+            var footerElement = this._footerElement;
             var footerColumns = footerElement.find("column");
             var i = 0, j = 0, k = 0, colorIdx = 0;
+            var dataSourceLength = null, startRow = null, endRow = null;
             var currentRow = "";
             var headerRow = null, dataRow = null, footerRow = null, finalGrid = null;
             var headerCol = null, dataCol = null, dataColChildren = null, footerCol = null;
             var setDataRowBackColor = this._dataRowBackColors.length > 0;
+            var paginationDiv = null, tempAnchor = null;
+            var pageClickEvent = null;
 
             //initialize final grid table
             finalGrid = document.createElement("table");
@@ -60,8 +91,20 @@
             finalGrid.append(headerRow);
 
             //data rows
-            i = 0;
-            for (; i < dataSource.length; i++) {
+            //first handle the pagination if any applied
+            dataSourceLength = dataSource.length;
+            if (this._hasPagination) {
+                startRow = 0 + (this._currentPageNumber * this._pageRowCount) - this._pageRowCount;
+                endRow = this._currentPageNumber * this._pageRowCount;
+                if (endRow > dataSourceLength)
+                    endRow = dataSourceLength;
+            }
+            else {
+                startRow = 0;
+                endRow = dataSourceLength;
+            }
+
+            for (; startRow < endRow; startRow++) {
                 dataRow = document.createElement("tr");
                 dataRow.setAttribute("class", dataElement.attr("class"));
                 dataRow = $(dataRow);
@@ -83,25 +126,25 @@
                 //set the data for each row
                 for (; j < dataColumns.length; j++) {
                     dataCol = document.createElement("td");
-                    dataCol.setAttribute("class", $(dataColumns[i]).attr("class"));
+                    dataCol.setAttribute("class", $(dataColumns[startRow]).attr("class"));
                     dataCol = $(dataCol);
                     currentRow = dataColumns[j].innerHTML;
 
                     //lets now replace the template items with their data
-                    currentRow = ReplaceToken(currentRow, dataSource[i])
+                    currentRow = ReplaceToken(currentRow, dataSource[startRow])
                     dataCol.html(currentRow);
 
                     //set unique IDs for all childrens
                     dataColChildren = dataCol[0].children;
                     for (; k < dataColChildren.length; k++) {
-                        if (dataColChildren[k].id !== "") { dataColChildren[k].id += "_" + i; }
+                        if (dataColChildren[k].id !== "") { dataColChildren[k].id += "_" + startRow; }
                     }
                     k = 0;
                     dataRow.append(dataCol);
                 }
                 //row add event handling
                 if (this._hasRowAddHandler) {
-                    dataRow = $(this._rowAddHandler(dataRow[0], dataSource, i));
+                    dataRow = $(this._rowAddHandler(dataRow[0], dataSource, startRow));
                 }
 
                 finalGrid.append(dataRow);
@@ -122,9 +165,79 @@
             }
             finalGrid.append(footerRow);
 
+            //lets now set the pagination area
+            if (this._hasPagination) {
+                paginationDiv = $(document.createElement("div"));
+                paginationDiv.attr("class", this._grid.attr("class"));
+                paginationDiv.css("text-align", "center");
+                paginationDiv.css("text-decoration", "none");
+                paginationDiv.css("padding-top", "4px");
+
+                //'<' anchor
+                if (this._currentPageNumber > 1) {
+                    tempAnchor = $(document.createElement("a"));
+                    tempAnchor.attr("href", "#");
+                    tempAnchor.attr("class", this._pageButtonNormalCss);
+                    tempAnchor.append("<");
+                    tempAnchor.css("text-decoration", "none");
+                    tempAnchor.css("padding-left", "2px");
+                    tempAnchor.css("padding-right", "2px");
+                    pageClickEvent = $.proxy(DrawGridByPage, this, [this._currentPageNumber - 1]);
+                    tempAnchor.click(pageClickEvent);
+                    paginationDiv.append(tempAnchor);
+                    paginationDiv.append("&nbsp;");
+                }
+
+                //page number anchors                
+                i = 1;
+                j = parseInt(dataSourceLength / this._pageRowCount);
+                if (dataSourceLength % this._pageRowCount > 0)
+                    j++;
+                for (; i <= j; i++) {
+                    tempAnchor = $(document.createElement("a"));
+                    tempAnchor.attr("href", "#");
+                    
+                    tempAnchor.css("text-decoration", "none");
+                    tempAnchor.css("padding-left", "2px");
+                    tempAnchor.css("padding-right", "2px");
+                    //if this is current page then bold this number
+                    if (i === this._currentPageNumber) {
+                        tempAnchor.attr("class", this._pageButtonActiveCss);
+                        tempAnchor.css("font-weight", "bold");
+                    }
+                    else {
+                        tempAnchor.attr("class", this._pageButtonNormalCss);
+                    }
+
+                    pageClickEvent = $.proxy(DrawGridByPage, this, [i]);
+                    tempAnchor.click(pageClickEvent);
+                    tempAnchor.append(i);
+                    paginationDiv.append(tempAnchor);
+                    paginationDiv.append("&nbsp;");
+                }
+                if (this._currentPageNumber < j) {
+                    //'>' anchor
+                    tempAnchor = $(document.createElement("a"));
+                    tempAnchor.attr("href", "#");
+                    tempAnchor.attr("class", this._pageButtonNormalCss);
+                    tempAnchor.append(">");
+                    tempAnchor.css("text-decoration", "none");
+                    tempAnchor.css("padding-left", "2px");
+                    tempAnchor.css("padding-right", "2px");
+                    pageClickEvent = $.proxy(DrawGridByPage, this, [this._currentPageNumber + 1]);
+                    tempAnchor.click(pageClickEvent);
+                    paginationDiv.append(tempAnchor);
+                }
+            }
+
+
             //finally set the grid's inner html
             this._grid.html("");
             this._grid.append(finalGrid);
+            if (this._hasPagination) {
+                this._grid.append(paginationDiv);
+            }
+
             return this;
         },
         setDataRowColors: function (colors) {
@@ -152,6 +265,12 @@
         var el = e.data[0];
         var color = e.data[1];
         el.css("background-color", color);
+    }
+
+    //set the page number and draw the grid again
+    function DrawGridByPage(e) {
+        this._currentPageNumber = e[0];
+        this.reDraw();
     }
 
     function ReplaceToken(str, data) {

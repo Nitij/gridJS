@@ -78,9 +78,8 @@
             finalGrid = $(finalGrid);
 
             //header
-            headerRow = document.createElement("tr");
-            headerRow.setAttribute("class", headerElement.attr("class"));
-            headerRow = $(headerRow);
+            headerRow = $(document.createElement("tr"));
+            headerRow.attr("class", headerElement.attr("class"));
             for (; i < headerColumns.length; i++) {
                 headerCol = document.createElement("td");
                 headerCol.setAttribute("class", $(headerColumns[i]).attr("class"));
@@ -105,9 +104,8 @@
             }
 
             for (; startRow < endRow; startRow++) {
-                dataRow = document.createElement("tr");
-                dataRow.setAttribute("class", dataElement.attr("class"));
-                dataRow = $(dataRow);
+                dataRow = $(document.createElement("tr"));
+                dataRow.attr("class", dataElement.attr("class"));
                 
                 //set background colors if any provided
                 if (setDataRowBackColor) {
@@ -153,9 +151,8 @@
 
             //footer
             i = 0;
-            footerRow = document.createElement("tr");
-            footerRow.setAttribute("class", footerElement.attr("class"));
-            footerRow = $(footerRow);
+            footerRow = $(document.createElement("tr"));
+            footerRow.attr("class", footerElement.attr("class"));
             for (; i < footerColumns.length; i++) {
                 footerCol = document.createElement("td");
                 footerCol.setAttribute("class", $(footerColumns[i]).attr("class"));
@@ -182,6 +179,7 @@
                     tempAnchor.css("text-decoration", "none");
                     tempAnchor.css("padding-left", "2px");
                     tempAnchor.css("padding-right", "2px");
+                    tempAnchor.css("display", "inline-block");
                     pageClickEvent = $.proxy(DrawGridByPage, this, [this._currentPageNumber - 1]);
                     tempAnchor.click(pageClickEvent);
                     paginationDiv.append(tempAnchor);
@@ -200,6 +198,7 @@
                     tempAnchor.css("text-decoration", "none");
                     tempAnchor.css("padding-left", "2px");
                     tempAnchor.css("padding-right", "2px");
+                    tempAnchor.css("display", "inline-block");
                     //if this is current page then bold this number
                     if (i === this._currentPageNumber) {
                         tempAnchor.attr("class", this._pageButtonActiveCss);
@@ -224,6 +223,7 @@
                     tempAnchor.css("text-decoration", "none");
                     tempAnchor.css("padding-left", "2px");
                     tempAnchor.css("padding-right", "2px");
+                    tempAnchor.css("display", "inline-block");
                     pageClickEvent = $.proxy(DrawGridByPage, this, [this._currentPageNumber + 1]);
                     tempAnchor.click(pageClickEvent);
                     paginationDiv.append(tempAnchor);
@@ -276,7 +276,7 @@
     function ReplaceToken(str, data) {
         var i = 0;
         var length = str.length;
-        var ptr = "", ptr;
+        var ptr = "";
         var pStart = 0, pEnd = 0, tokenStart = 0, tokenEnd = 0;
         var token = "", tokenName = "";
         var output = str;
@@ -294,12 +294,63 @@
                     tokenEnd = i - 1;
                     token = str.substr(pStart, pEnd - pStart + 1);
                     tokenName = str.substr(tokenStart, tokenEnd - tokenStart + 1);
-                    output = output.replace(token, data[tokenName]);
+                    output = output.replace(token, EvalToken(data, tokenName));
                 }
             }
         }
 
         return output;
+    }
+
+    //Function to evaluate token
+    function EvalToken(data, str) {
+        var i = 0;
+        var length = str.length;
+        var ptr = "";
+        var pStart = 0, pEnd = 0;
+        var token = "";
+        var resetPointer = false;
+        debugger;
+        for (; i < length; i++) {
+            if (i < length) {
+                ptr = str.substr(i, 1);
+                if (resetPointer) {
+                    pStart = i;
+                    resetPointer = false;
+                }
+                if ((ptr === "[" || ptr === "." || ptr === "]")
+                    && (i < (length - 1))) {
+                    //set pointer end
+                    pEnd = i;
+                    //get the current data
+                    data = GetTokenData(str, data, pStart, pEnd);
+                    resetPointer = true;
+                }
+                if (i === (length - 1)) {
+                    //set pointer end
+                    if (ptr === "]") {
+                        pEnd = i;
+                    }
+                    else {
+                        pEnd = i + 1;
+                    }
+                    //get the current data
+                    data = GetTokenData(str, data, pStart, pEnd);
+                    resetPointer = true;
+                }
+            }
+        }
+        return data;
+    }
+
+    //Returns the token data from the string and data passed
+    function GetTokenData(str, data, pStart, pEnd) {
+        //debugger;
+        var token = str.substr(pStart, pEnd - pStart);
+        if (token.length > 0) {
+            data = data[token];
+        }
+        return data;
     }
 
     w["GridJS"] = gridJS;

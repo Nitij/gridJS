@@ -5,6 +5,7 @@
     <script type="text/javascript" src="jQuery.js"></script>
     <script type="text/javascript" src="Script\grid.main.js"></script>
     <script type="text/javascript" src="sampleData.js"></script>
+    
     <style type="text/css">
         .myButton {
             -moz-box-shadow: inset 0px 1px 0px 0px #efdcfb;
@@ -97,7 +98,7 @@
         .Grid {
             font-family: Verdana;
             margin: 0 auto;
-            width: 80%;
+            width: 500px;
         }
 
         .GridHeader {
@@ -110,7 +111,7 @@
         }
 
         .GridDataRow td {
-            border-radius: 10px;
+            /*border-radius: 10px;*/
         }
 
         .GridFooterRow {
@@ -127,24 +128,89 @@
                     <column class="GridHeaderCol">City</column>
                     <column class="GridHeaderCol">Population</column>
                     <column class="GridHeaderCol">State</column>
+                    <column class="GridHeaderCol">Map</column>
                 </headerRow>
                 <dataRow class="GridDataRow">
                     <column>{{_id}}</column>
                     <column>{{city}}</column>
                     <column>{{pop}}</column>
                     <column>{{state}}</column>
+                    <column>
+                        <img src="http://maps.google.com/maps/api/staticmap?center={{loc[1]}},{{loc[0]}}&zoom=12&size=200x200&sensor=true" 
+                            style="width: 200px; height: 200px;" />
+                    </column>
                 </dataRow>
                 <footerRow class="GridFooterRow">
                     <column></column>
                     <column></column>
                     <column></column>
                     <column></column>
+                    <column></column>
                 </footerRow>
             </gridjs>
+        <!--<br /><br /><br /><br />
+        <gridjs id="Gridjs1" class="Grid">
+                <headerRow class="GridHeader">
+                    <column class="GridHeaderCol">ID</column>
+                    <column class="GridHeaderCol">City</column>
+                    <column class="GridHeaderCol">City</column>
+                    <column class="GridHeaderCol">City</column>
+                    <column class="GridHeaderCol">City</column>
+                </headerRow>
+                <dataRow class="GridDataRow">
+                    <column>{{a}}</column>
+                    <column>{{b.c.d}}</column>
+                    <column>{{g[0].a.a[0].b}}</column>
+                    <column>{{g[1].a.a[0].b}}</column>
+                    <column>{{h[0].a.a}}</column>
+                </dataRow>
+                <footerRow class="GridFooterRow">
+                    <column></column>
+                    <column></column>
+                    <column></column>
+                    <column></column>
+                    <column></column>
+                </footerRow>
+            </gridjs>-->
     </div>
 
 
     <script type="text/javascript">
+        var sampleDS =
+            [
+                {
+                    a: 1
+                , b:
+                    {
+                        c:
+                          { d: "Hello" }
+                    }
+                    , g:
+                        [
+                            { a: { a: [{ b: 1 }, { b: 2 }] } }, { a: { a: [{ b: 3 }, { b: 4 }] } }
+                        ]
+                    , h:
+                        [
+                            { a: { a: 1 } }, { a: { a: 2 } }
+                        ]
+                },
+                {
+                    a: 1
+                , b:
+                    {
+                        c:
+                          { d: "World" }
+                    }
+                    , g:
+                        [
+                            { a: { a: [{ b: 5 }, { b: 6 }] } }, { a: { a: [{ b: 7 }, { b: 8 }] } }
+                        ]
+                    , h:
+                        [
+                            { a: { a: 3 } }, { a: { a: 4 } }
+                        ]
+                }
+            ];
 
         var gridJS = new GridJS().getGrid("myGrid")
             .dataSource(DataSource)
@@ -152,12 +218,20 @@
             .setCellPadding(8)
             .onRowAddition(HandleRowAddition)
             .setMouseOverColor("#FFC1C1")
-            .setPagination(10)
+            .setPagination(5)
             //.setPageButtonCss("myButton", "myButton-active")
             .draw();
+        //var gridJS1 = new GridJS().getGrid("Gridjs1")
+        //    .dataSource(sampleDS)
+        //    .setDataRowColors(["#FFFCCF", "#B4EEB4", "#CAE1FF"])
+        //    .setCellPadding(8)
+        //    .onRowAddition(HandleRowAddition)
+        //    .setMouseOverColor("#FFC1C1")
+        //    //.setPagination(5)
+        //    //.setPageButtonCss("myButton", "myButton-active")
+        //    .draw();
 
         function HandleRowAddition(dataRow, dataSource, index) {
-            //if (index === 2) { $(dataRow).css("background-color", "red")}
             return dataRow;
         }
     </script>

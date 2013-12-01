@@ -21,6 +21,7 @@
         this._footerElement = null;
         this._pageButtonNormalCss = "";
         this._pageButtonActiveCss = "";
+        this._dataChanges = {};
         return this;
     };
     gridJS.prototype = {
@@ -263,6 +264,7 @@
                 //set the correct event handler based on type of input
                 switch (currentElement[0].type) {
                     case "text":
+                    case "number":
                         currentElement.change(bindInputDelegate);
                         break;
                 }
@@ -287,6 +289,15 @@
             this._hasMouseOverColor = true;
             this._mouseOverColor = color;
             return this;
+        },
+        //Returns an array containing updated data rows
+        getDataUpdates: function () {
+            var dataUpdates = [];
+            var dataChanges = this._dataChanges;
+            $.each(dataChanges, function (key, element) {
+                dataUpdates.push(element);
+            });
+            return dataUpdates;
         }
     };
 
@@ -300,6 +311,7 @@
         var binding = {};
         switch (inputElement.type) {
             case "text":
+            case "number":
                 value = inputElement.value;
                 break;
         }
@@ -316,15 +328,18 @@
 
     //Binds the input element's value with the grid's data source
     function BindInput(e) {
+        debugger;
         var value = null;
         var grid = e[0];
         var rowIndex = e[1];
         var propertyName = e[2];
         switch (this.type) {
             case "text":
+            case "number":
                 value = this.value;
         }
         grid._dataSource[rowIndex][propertyName] = value;
+        grid._dataChanges["row" + rowIndex] = grid._dataSource[rowIndex];
     }
 
     //Set the background color of the html element passed in the even parameters

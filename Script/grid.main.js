@@ -69,7 +69,6 @@
             var setDataRowBackColor = this._dataRowBackColors.length > 0;
             var paginationDiv = null, tempAnchor = null;
             var pageClickEvent = null;
-
             //initialize final grid table
             finalGrid = document.createElement("table");
             finalGrid.setAttribute("cellspacing", 0);
@@ -182,6 +181,7 @@
                     tempAnchor.css("display", "inline-block");
                     pageClickEvent = $.proxy(DrawGridByPage, this, [this._currentPageNumber - 1]);
                     tempAnchor.click(pageClickEvent);
+                    tempAnchor.click(function () { return false;});
                     paginationDiv.append(tempAnchor);
                     paginationDiv.append("&nbsp;");
                 }
@@ -210,6 +210,7 @@
 
                     pageClickEvent = $.proxy(DrawGridByPage, this, [i]);
                     tempAnchor.click(pageClickEvent);
+                    tempAnchor.click(function () { return false; });
                     tempAnchor.append(i);
                     paginationDiv.append(tempAnchor);
                     paginationDiv.append("&nbsp;");
@@ -226,6 +227,7 @@
                     tempAnchor.css("display", "inline-block");
                     pageClickEvent = $.proxy(DrawGridByPage, this, [this._currentPageNumber + 1]);
                     tempAnchor.click(pageClickEvent);
+                    tempAnchor.click(function () { return false; });
                     paginationDiv.append(tempAnchor);
                 }
             }
@@ -310,7 +312,6 @@
         var pStart = 0, pEnd = 0;
         var token = "";
         var resetPointer = false;
-        debugger;
         for (; i < length; i++) {
             if (i < length) {
                 ptr = str.substr(i, 1);
@@ -345,7 +346,6 @@
 
     //Returns the token data from the string and data passed
     function GetTokenData(str, data, pStart, pEnd) {
-        //debugger;
         var token = str.substr(pStart, pEnd - pStart);
         if (token.length > 0) {
             data = data[token];

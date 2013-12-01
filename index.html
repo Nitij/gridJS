@@ -100,20 +100,16 @@
             margin: 0 auto;
             width: 500px;
         }
-
         .GridHeader {
             font-size: large;
             font-weight: 600;
         }
-
         .GridHeaderCol {
             background-color: lightblue;
         }
-
         .GridDataRow td {
             /*border-radius: 10px;*/
         }
-
         .GridFooterRow {
             height: 1px;
             background-color: black;
@@ -132,7 +128,9 @@
                 </headerRow>
                 <dataRow class="GridDataRow">
                     <column>{{_id}}</column>
-                    <column>{{city}}</column>
+                    <column>
+                        <input id="txtCity" type="text" value="{{city}}" />
+                    </column>
                     <column>{{pop}}</column>
                     <column>{{state}}</column>
                     <column>

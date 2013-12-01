@@ -66,9 +66,12 @@
             var currentRow = "";
             var headerRow = null, dataRow = null, footerRow = null, finalGrid = null;
             var headerCol = null, dataCol = null, dataColChildren = null, footerCol = null;
-            var setDataRowBackColor = this._dataRowBackColors.length > 0;
-            var paginationDiv = null, tempAnchor = null;
-            var pageClickEvent = null;
+            var setDataRowBackColor = this._dataRowBackColors.length > 0; //vars for data row back color
+            var paginationDiv = null, tempAnchor = null; //vars for pagination
+            var pageClickEvent = null; //page click event for pagination
+            var currentElement = null;// used to process html elements
+            var inputBindings = []; //input element's binding data, format: {id, rowIndex, propertyToBind}
+            var bindInputDelegate; //delegate to bind inputs to the data source
             //initialize final grid table
             finalGrid = document.createElement("table");
             finalGrid.setAttribute("cellspacing", 0);
@@ -127,15 +130,24 @@
                     dataCol = $(dataCol);
                     currentRow = dataColumns[j].innerHTML;
 
-                    //lets now replace the template items with their data
-                    currentRow = ReplaceToken(currentRow, dataSource[startRow])
                     dataCol.html(currentRow);
 
-                    //set unique IDs for all childrens
+                    //set unique IDs for all childrens and input bindings
                     dataColChildren = dataCol[0].children;
+                    
                     for (; k < dataColChildren.length; k++) {
+                        //currentElement = dataColChildren[k];
                         if (dataColChildren[k].id !== "") { dataColChildren[k].id += "_" + startRow; }
+                        if (dataColChildren[k].tagName.toLowerCase() === "input") {
+                            inputBindings.push(GetInputBinding(dataColChildren[k], startRow));
+                        }
                     }
+                    
+                    //lets now replace the template items with their data
+                    currentRow = ReplaceToken(dataCol.html(), dataSource[startRow])
+                    //currentRow = ReplaceToken(currentRow, dataSource[startRow])
+                    dataCol.html(currentRow);
+                    
                     k = 0;
                     dataRow.append(dataCol);
                 }
@@ -236,8 +248,24 @@
             //finally set the grid's inner html
             this._grid.html("");
             this._grid.append(finalGrid);
+            //append the pagination to the grid
             if (this._hasPagination) {
                 this._grid.append(paginationDiv);
+            }
+
+            //lets bind the input elements to the data source
+            i = 0; //reset counter
+            for (; i < inputBindings.length; i++) {
+                currentRow = inputBindings[i]; //reusing currentRow var here
+                currentElement = $("#" + currentRow.id); //reusing currentElement var here
+                bindInputDelegate = $.proxy(BindInput, currentElement[0], [this
+                    , currentRow.rowIndex, currentRow.propToBind]);
+                //set the correct event handler based on type of input
+                switch (currentElement[0].type) {
+                    case "text":
+                        currentElement.change(bindInputDelegate);
+                        break;
+                }
             }
 
             return this;
@@ -261,6 +289,43 @@
             return this;
         }
     };
+
+    //Binds the input element value with the data source
+    function GetInputBinding(inputElement, index) {
+        var value = "";
+        var eventType = "";
+        var pStart = null, pEnd = null;
+        var tokenStart = null, tokenEnd = null;
+        var token = "";
+        var binding = {};
+        switch (inputElement.type) {
+            case "text":
+                value = inputElement.value;
+                break;
+        }
+        pStart = value.indexOf("{{");
+        pEnd = value.indexOf("}}");
+        tokenStart = pStart + 2;
+        tokenEnd = pEnd - 1;
+        token = value.substr(tokenStart, tokenEnd - tokenStart + 1);
+        binding["id"] = inputElement.id;
+        binding["rowIndex"] = index;
+        binding["propToBind"] = token;
+        return binding;
+    }
+
+    //Binds the input element's value with the grid's data source
+    function BindInput(e) {
+        var value = null;
+        var grid = e[0];
+        var rowIndex = e[1];
+        var propertyName = e[2];
+        switch (this.type) {
+            case "text":
+                value = this.value;
+        }
+        grid._dataSource[rowIndex][propertyName] = value;
+    }
 
     //Set the background color of the html element passed in the even parameters
     function SetBackgroundColor(e) {

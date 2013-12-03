@@ -22,9 +22,14 @@
         this._pageButtonNormalCss = "";
         this._pageButtonActiveCss = "";
         this._dataChanges = {};
+        this._bindInput = true;
         return this;
     };
     gridJS.prototype = {
+        disableInputBindings: function (bool) {
+            this._bindInput = bool;
+            return this;
+        },
         setPageButtonCss: function (normalCss, activeCss) {
             this._pageButtonNormalCss = normalCss;
             this._pageButtonActiveCss = activeCss;
@@ -73,6 +78,7 @@
             var currentElement = null;// used to process html elements
             var inputBindings = []; //input element's binding data, format: {id, rowIndex, propertyToBind}
             var bindInputDelegate; //delegate to bind inputs to the data source
+
             //initialize final grid table
             finalGrid = document.createElement("table");
             finalGrid.setAttribute("cellspacing", 0);
@@ -130,17 +136,21 @@
                     dataCol.setAttribute("class", $(dataColumns[startRow]).attr("class"));
                     dataCol = $(dataCol);
                     currentRow = dataColumns[j].innerHTML;
-
                     dataCol.html(currentRow);
 
                     //set unique IDs for all childrens and input bindings
                     dataColChildren = dataCol[0].children;
-                    
+
                     for (; k < dataColChildren.length; k++) {
-                        //currentElement = dataColChildren[k];
-                        if (dataColChildren[k].id !== "") { dataColChildren[k].id += "_" + startRow; }
-                        if (dataColChildren[k].tagName.toLowerCase() === "input") {
-                            inputBindings.push(GetInputBinding(dataColChildren[k], startRow));
+                        currentElement = dataColChildren[k];
+                        if (currentElement.id !== "") {
+                            currentElement.id = dataColChildren[k].id += "_" + startRow;
+                        }
+                        if (this._bindInput) {
+                            //input bindings
+                            if (currentElement.tagName.toLowerCase() === "input") {
+                                inputBindings.push(GetInputBinding(currentElement, startRow));
+                            }
                         }
                     }
                     
@@ -206,12 +216,12 @@
                     j++;
                 for (; i <= j; i++) {
                     tempAnchor = $(document.createElement("a"));
-                    tempAnchor.attr("href", "#");
-                    
+                    tempAnchor.attr("href", "#");                    
                     tempAnchor.css("text-decoration", "none");
                     tempAnchor.css("padding-left", "2px");
                     tempAnchor.css("padding-right", "2px");
                     tempAnchor.css("display", "inline-block");
+
                     //if this is current page then bold this number
                     if (i === this._currentPageNumber) {
                         tempAnchor.attr("class", this._pageButtonActiveCss);
@@ -220,7 +230,6 @@
                     else {
                         tempAnchor.attr("class", this._pageButtonNormalCss);
                     }
-
                     pageClickEvent = $.proxy(DrawGridByPage, this, [i]);
                     tempAnchor.click(pageClickEvent);
                     tempAnchor.click(function () { return false; });
@@ -245,7 +254,6 @@
                 }
             }
 
-
             //finally set the grid's inner html
             this._grid.html("");
             this._grid.append(finalGrid);
@@ -255,36 +263,42 @@
             }
 
             //lets bind the input elements to the data source
-            i = 0; //reset counter
-            for (; i < inputBindings.length; i++) {
-                currentRow = inputBindings[i]; //reusing currentRow var here
-                currentElement = $("#" + currentRow.id); //reusing currentElement var here
-                bindInputDelegate = $.proxy(BindInput, currentElement[0], [this
-                    , currentRow.rowIndex, currentRow.propToBind]);
-                //set the correct event handler based on type of input
-                switch (currentElement[0].type) {
-                    case "text":
-                    case "number":
-                        currentElement.change(bindInputDelegate);
-                        break;
+            if (this._bindInput) {
+                i = 0; //reset counter
+                for (; i < inputBindings.length; i++) {
+                    currentRow = inputBindings[i]; //reusing currentRow var here
+                    currentElement = $("#" + currentRow.id); //reusing currentElement var here
+                    bindInputDelegate = $.proxy(BindInput, currentElement[0], [this
+                        , currentRow.rowIndex, currentRow.propToBind]);
+                    //set the correct event handler based on type of input
+                    switch (currentElement[0].type) {
+                        case "text":
+                        case "number":
+                            currentElement.change(bindInputDelegate);
+                            break;
+                    }
                 }
             }
 
             return this;
         },
+        //this is to set alternate colors or custom color sequence for the rows
         setDataRowColors: function (colors) {
             this._dataRowBackColors = colors;
             return this;
         },
+        //set the padding of the table cells
         setCellPadding: function (cellPadding) {
             this._cellPadding = cellPadding;
             return this;
         },
+        //this is to set row add event handler
         onRowAddition: function (f) {
             this._hasRowAddHandler = true;
             this._rowAddHandler = f;
             return this;
         },
+        //Sets row mouse over color
         setMouseOverColor: function (color) {
             this._hasMouseOverColor = true;
             this._mouseOverColor = color;
@@ -328,7 +342,6 @@
 
     //Binds the input element's value with the grid's data source
     function BindInput(e) {
-        debugger;
         var value = null;
         var grid = e[0];
         var rowIndex = e[1];
@@ -355,6 +368,8 @@
         this.reDraw();
     }
 
+    //replaces token of the format {{value}} from the provided html string
+    //with its appropriate value from the data source
     function ReplaceToken(str, data) {
         var i = 0;
         var length = str.length;

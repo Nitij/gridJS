@@ -274,6 +274,7 @@
                     switch (currentElement[0].type) {
                         case "text":
                         case "number":
+                        case "password":
                             currentElement.change(bindInputDelegate);
                             break;
                     }
@@ -326,7 +327,10 @@
         switch (inputElement.type) {
             case "text":
             case "number":
-                value = inputElement.value;
+            case "password":
+                //we need to get property name by using getAttribute function
+                //as the element is not rendered yet so there is no default value
+                value = inputElement.getAttribute("value");
                 break;
         }
         pStart = value.indexOf("{{");
@@ -349,7 +353,9 @@
         switch (this.type) {
             case "text":
             case "number":
+            case "password":
                 value = this.value;
+                break;
         }
         grid._dataSource[rowIndex][propertyName] = value;
         grid._dataChanges["row" + rowIndex] = grid._dataSource[rowIndex];

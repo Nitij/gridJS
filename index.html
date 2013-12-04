@@ -168,7 +168,7 @@
                 <column>{{OrderID}}</column>
                 <column>{{CustomerID}}</column>
                 <column><input id="numEmployeeID" type="number" min="0" max="15" step="1" value="{{EmployeeID}}" /></column>
-                <column>{{OrderDate}}</column>
+                <column><!--{{OrderDate}}-->{{GetOrderDate()}}</column>
                 <column>{{RequiredDate}}</column>
                 <column>{{ShippedDate}}</column>
                 <column>{{ShipVia}}</column>
@@ -220,6 +220,12 @@
             .setMouseOverColor("#FFC1C1")
             .setPagination(7)
             //.setPageButtonCss("myButton", "myButton-active")
+            //.disableInputBindings(false)
+            .addCustomFunction("GetOrderDate"
+            , function (data, rowIndex) {
+                var date = new Date(Date.parse(data[rowIndex]["OrderDate"]));
+                return date.getMonth() + "/" + date.getDate() + "/" + date.getYear();
+            })
             .draw();
 
         function GetUpdates() {

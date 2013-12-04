@@ -23,9 +23,16 @@
         this._pageButtonActiveCss = "";
         this._dataChanges = {};
         this._bindInput = true;
+        this._customFunctions = {};
+        this._hasCustomBindings = false;
         return this;
     };
     gridJS.prototype = {
+        addCustomFunction: function (funcName, f) {
+            this._customFunctions[funcName] = f;
+            this._hasCustomBindings = true;
+            return this;
+        },
         disableInputBindings: function (bool) {
             this._bindInput = bool;
             return this;
@@ -60,24 +67,24 @@
             return this;
         },
         reDraw: function () {
-            var dataSource = this._dataSource;
-            var headerElement = this._headerElement;
-            var headerColumns = headerElement.find("column");
-            var dataElement = this._dataElement;
-            var dataColumns = dataElement.find("column");
-            var footerElement = this._footerElement;
-            var footerColumns = footerElement.find("column");
-            var i = 0, j = 0, k = 0, colorIdx = 0;
-            var dataSourceLength = null, startRow = null, endRow = null;
-            var currentRow = "";
-            var headerRow = null, dataRow = null, footerRow = null, finalGrid = null;
-            var headerCol = null, dataCol = null, dataColChildren = null, footerCol = null;
-            var setDataRowBackColor = this._dataRowBackColors.length > 0; //vars for data row back color
-            var paginationDiv = null, tempAnchor = null; //vars for pagination
-            var pageClickEvent = null; //page click event for pagination
-            var currentElement = null;// used to process html elements
-            var inputBindings = []; //input element's binding data, format: {id, rowIndex, propertyToBind}
-            var bindInputDelegate; //delegate to bind inputs to the data source
+            var dataSource = this._dataSource,
+                headerElement = this._headerElement,
+                headerColumns = headerElement.find("column"),
+                dataElement = this._dataElement,
+                dataColumns = dataElement.find("column"),
+                footerElement = this._footerElement,
+                footerColumns = footerElement.find("column"),
+                i = 0, j = 0, k = 0, colorIdx = 0,
+                dataSourceLength = null, startRow = null, endRow = null,
+                currentRow = "",
+                headerRow = null, dataRow = null, footerRow = null, finalGrid = null,
+                headerCol = null, dataCol = null, dataColChildren = null, footerCol = null,
+                setDataRowBackColor = this._dataRowBackColors.length > 0, //vars for data row back color
+                paginationDiv = null, tempAnchor = null, //vars for pagination
+                pageClickEvent = null, //page click event for pagination
+                currentElement = null,// used to process html elements
+                inputBindings = [], //input element's binding data, format: {id, rowIndex, propertyToBind}
+                bindInputDelegate, //delegate to bind inputs to the data source
 
             //initialize final grid table
             finalGrid = document.createElement("table");
@@ -155,7 +162,11 @@
                     }
                     
                     //lets now replace the template items with their data
-                    currentRow = ReplaceToken(dataCol.html(), dataSource[startRow])
+                    currentRow = ReplaceToken(dataCol.html()
+                        , dataSource
+                        , startRow
+                        , this._customFunctions
+                        , this._hasCustomBindings)
                     //currentRow = ReplaceToken(currentRow, dataSource[startRow])
                     dataCol.html(currentRow);
                     
@@ -188,9 +199,11 @@
             if (this._hasPagination) {
                 paginationDiv = $(document.createElement("div"));
                 paginationDiv.attr("class", this._grid.attr("class"));
-                paginationDiv.css("text-align", "center");
-                paginationDiv.css("text-decoration", "none");
-                paginationDiv.css("padding-top", "4px");
+                paginationDiv.css({
+                    "text-align": "center",
+                    "text-decoration": "none",
+                    "padding-top": "4px"
+                });
 
                 //'<' anchor
                 if (this._currentPageNumber > 1) {
@@ -198,10 +211,12 @@
                     tempAnchor.attr("href", "#");
                     tempAnchor.attr("class", this._pageButtonNormalCss);
                     tempAnchor.append("<");
-                    tempAnchor.css("text-decoration", "none");
-                    tempAnchor.css("padding-left", "2px");
-                    tempAnchor.css("padding-right", "2px");
-                    tempAnchor.css("display", "inline-block");
+                    tempAnchor.css({
+                        "text-decoration": "none",
+                        "padding-left": "2px",
+                        "padding-right": "2px",
+                        "display": "inline-block"
+                    });
                     pageClickEvent = $.proxy(DrawGridByPage, this, [this._currentPageNumber - 1]);
                     tempAnchor.click(pageClickEvent);
                     tempAnchor.click(function () { return false;});
@@ -217,10 +232,12 @@
                 for (; i <= j; i++) {
                     tempAnchor = $(document.createElement("a"));
                     tempAnchor.attr("href", "#");                    
-                    tempAnchor.css("text-decoration", "none");
-                    tempAnchor.css("padding-left", "2px");
-                    tempAnchor.css("padding-right", "2px");
-                    tempAnchor.css("display", "inline-block");
+                    tempAnchor.css({
+                        "text-decoration": "none",
+                        "padding-left": "2px",
+                        "padding-right": "2px",
+                        "display": "inline-block"
+                    });
 
                     //if this is current page then bold this number
                     if (i === this._currentPageNumber) {
@@ -243,10 +260,12 @@
                     tempAnchor.attr("href", "#");
                     tempAnchor.attr("class", this._pageButtonNormalCss);
                     tempAnchor.append(">");
-                    tempAnchor.css("text-decoration", "none");
-                    tempAnchor.css("padding-left", "2px");
-                    tempAnchor.css("padding-right", "2px");
-                    tempAnchor.css("display", "inline-block");
+                    tempAnchor.css({
+                        "text-decoration": "none",
+                        "padding-left": "2px",
+                        "padding-right": "2px",
+                        "display": "inline-block"
+                    });
                     pageClickEvent = $.proxy(DrawGridByPage, this, [this._currentPageNumber + 1]);
                     tempAnchor.click(pageClickEvent);
                     tempAnchor.click(function () { return false; });
@@ -318,12 +337,12 @@
 
     //Binds the input element value with the data source
     function GetInputBinding(inputElement, index) {
-        var value = "";
-        var eventType = "";
-        var pStart = null, pEnd = null;
-        var tokenStart = null, tokenEnd = null;
-        var token = "";
-        var binding = {};
+        var value = "",
+            eventType = "",
+            pStart = null, pEnd = null,
+            tokenStart = null, tokenEnd = null,
+            token = "",
+            binding = {};
         switch (inputElement.type) {
             case "text":
             case "number":
@@ -376,13 +395,14 @@
 
     //replaces token of the format {{value}} from the provided html string
     //with its appropriate value from the data source
-    function ReplaceToken(str, data) {
-        var i = 0;
-        var length = str.length;
-        var ptr = "";
-        var pStart = 0, pEnd = 0, tokenStart = 0, tokenEnd = 0;
-        var token = "", tokenName = "";
-        var output = str;
+    function ReplaceToken(str, dataSource, rowIndex, customBindings, hasCustomBindings) {
+        var i = 0,
+            length = str.length,
+            ptr = "",
+            pStart = 0, pEnd = 0, tokenStart = 0, tokenEnd = 0,
+            token = "", tokenName = "",
+            output = str,
+            data = dataSource[rowIndex];
 
         for (; i < length; i++) {
             if (i < length) {
@@ -397,12 +417,50 @@
                     tokenEnd = i - 1;
                     token = str.substr(pStart, pEnd - pStart + 1);
                     tokenName = str.substr(tokenStart, tokenEnd - tokenStart + 1);
-                    output = output.replace(token, EvalToken(data, tokenName));
+                    if (!IsFunctionTemplate(tokenName)) {
+                        output = output.replace(token, EvalToken(data, tokenName));
+                    }
+                    else {
+                        //final check, will procedd if there is any custom binding added else
+                        //there is no need to process the code any further
+                        if (hasCustomBindings) {
+                            output = output.replace(token
+                            , EvalFunction(tokenName, dataSource, rowIndex, customBindings));
+                        }
+                        else {
+                            //replace the token template with empty string if 
+                            //there are no function bindings added
+                            output = output.replace(token, "");
+                        }
+                    }
                 }
             }
         }
 
         return output;
+    }
+
+    //Function to determine if the provided string is a function template or not
+    function IsFunctionTemplate(str) {
+        var length = str.length;
+        if (length) {
+            //(length - 2) because of the zero based index
+            if (str.substr(length - 2, 2) === "()") {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+    }
+
+    //Function to evalute value from a template function
+    function EvalFunction(f, dataSource, rowIndex, customBindings) {
+        var func = f.replace("()", "");
+        var func = customBindings[func];
+        if (!IsNullOrUndefined(func)) {
+            return func(dataSource, rowIndex);
+        }
     }
 
     //Function to evaluate token
@@ -452,6 +510,11 @@
             data = data[token];
         }
         return data;
+    }
+
+    //Checks if an object is null or undefined.
+    function IsNullOrUndefined(obj){
+        return obj === null || obj === undefined;
     }
 
     w["GridJS"] = gridJS;

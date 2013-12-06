@@ -1,0 +1,102 @@
+<!doctype html>
+<html>
+<head>
+    <title>gridJS</title>
+    <script type="text/javascript" src="Script\jQuery.js"></script>
+    <script type="text/javascript" src="Script\grid.main.js"></script>
+    <script type="text/javascript" src="Script\sampleData.js"></script>
+    <script type="text/javascript" src="Script\sampleNorthWindData.js"></script>
+    
+    <style type="text/css">
+        .Grid {
+            font-family: Verdana;
+            margin: 0 auto;
+            width: 200px;
+        }
+        .GridHeader {
+            font-size: medium;
+            font-weight: 600;
+        }
+        .GridHeaderCol {
+            background-color: lightblue;
+        }
+        .GridDataRow td {
+            /*font-size: small;*/
+            height:10px;
+        }
+        .GridFooterRow {
+            height: 1px;
+            background-color: black;
+        }
+        .todoGridStatusCol {
+            width:10%;
+            text-align:left;
+        }
+        .todoGridTextCol {
+            width:90%;
+            text-align:left;
+        }
+    </style>
+</head>
+<body>
+    <div style="text-align: center; width: 100%;">
+        <gridjs id="todoGrid" class="Grid">
+            <headerRow>
+                <!--<column></column>
+                <column></column>-->
+            </headerRow>
+            <dataRow>
+                <column class="todoGridStatusCol"><input type="checkbox" "{{done}}" /></column>
+                <column class="todoGridTextCol">{{title}}</column>
+            </dataRow>
+            <footerRow>
+                <!--<column></column>
+                <column></column>-->
+            </footerRow>
+        </gridjs>
+        <br />
+        
+        <input id="txtTodo" type="text" placeholder="add new todo here"/>
+        <input type="submit" value="Add Todo" onclick="AddTodo(); return false;"/>
+    </div>
+
+
+    <script type="text/javascript">
+        //TODO app object
+        var todoGrid;
+        var todo = function (t, d) {
+            this.title = t;
+            this.done = d;
+        }
+        var todoList = [];
+        var $txtTodo = $("#txtTodo");
+
+        function AddTodo() {
+            todoList.push(new todo($txtTodo.val(), ""));
+            todoGrid.reDraw();
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+        todoGrid = new GridJS().getGrid("todoGrid")
+            .dataSource(todoList)
+            .setDataRowColors(["#FFFCCF", "#B4EEB4", "#CAE1FF"])
+            .setCellPadding(8)
+            //.onRowAddition(HandleRowAddition)
+            .setMouseOverColor("#FFC1C1")
+            //.setPagination(4)
+            //.setPageButtonCss("myButton", "myButton-active")
+            //.disableInputBindings(false)
+            .draw();
+    </script>
+</body>
+</html>

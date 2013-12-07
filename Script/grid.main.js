@@ -1,10 +1,11 @@
 ;
-(function ($, w, undefined) {
+(function ($, w, d, undefined) {
     "use strict";
     var gridJS = null;
 
     gridJS = function () {
         this._grid = null;
+        this._gridID = null;
         this._dataSource = null;
         this._dataItemCount = 0;
         this._dataRowBackColors = [];
@@ -59,6 +60,7 @@
         },
         getGrid: function (gridID) {
             this._grid = $("gridJS[id = '" + gridID + "']");
+            this._gridID = gridID;
             return this;
         },
         dataSource: function (dataSource) {
@@ -66,6 +68,7 @@
             this._dataItemCount = dataSource.length;
             return this;
         },
+        //re-draw the entire grid
         reDraw: function () {
             var dataSource = this._dataSource,
                 headerElement = this._headerElement,
@@ -83,8 +86,9 @@
                 paginationDiv = null, tempAnchor = null, //vars for pagination
                 pageClickEvent = null, //page click event for pagination
                 currentElement = null,// used to process html elements
-                inputBindings = [], //input element's binding data, format: {id, rowIndex, propertyToBind}
-                bindInputDelegate, //delegate to bind inputs to the data source
+                inputBindings = [], //input element's binding data, format: {id, rowIndex, propertyToBind}                
+                procesedRow = null,
+                tempAttribute = null; //temp attribute var which can be reused
 
             //initialize final grid table
             finalGrid = document.createElement("table");
@@ -105,7 +109,8 @@
             }
             finalGrid.append(headerRow);
 
-            //data rows
+            //DATA ROWS
+            //============================================================================================
             //first handle the pagination if any applied
             dataSourceLength = dataSource.length;
             if (this._hasPagination) {
@@ -120,65 +125,12 @@
             }
 
             for (; startRow < endRow; startRow++) {
-                dataRow = $(document.createElement("tr"));
-                dataRow.attr("class", dataElement.attr("class"));
-                
-                //set background colors if any provided
-                if (setDataRowBackColor) {
-                    if (colorIdx === this._dataRowBackColors.length) { colorIdx = 0 }
-                    dataRow.css("background-color", this._dataRowBackColors[colorIdx]);
-                    colorIdx++;
-                }
+                if (colorIdx === this._dataRowBackColors.length) { colorIdx = 0 }
+                procesedRow = GetDataRow.call(this, startRow, inputBindings, true, colorIdx);
+                colorIdx++;
 
-                //set mouse over and out color
-                if (this._hasMouseOverColor) {
-                    dataRow.mouseover([dataRow, this._mouseOverColor], SetBackgroundColor);
-                    dataRow.mouseout([dataRow, dataRow.css("background-color")]
-                        , SetBackgroundColor);
-                }
-
-                //set the data for each row
-                for (; j < dataColumns.length; j++) {
-                    dataCol = document.createElement("td");
-                    dataCol.setAttribute("class", $(dataColumns[j]).attr("class"));
-                    dataCol = $(dataCol);
-                    currentRow = dataColumns[j].innerHTML;
-                    dataCol.html(currentRow);
-
-                    //set unique IDs for all childrens and input bindings
-                    dataColChildren = dataCol[0].children;
-
-                    for (; k < dataColChildren.length; k++) {
-                        currentElement = dataColChildren[k];
-                        if (currentElement.id !== "") {
-                            currentElement.id = dataColChildren[k].id += "_" + startRow;
-                        }
-                        if (this._bindInput) {
-                            //input bindings
-                            if (currentElement.tagName.toLowerCase() === "input") {
-                                inputBindings.push(GetInputBinding(currentElement, startRow));
-                            }
-                        }
-                    }
-                    
-                    //lets now replace the template items with their data
-                    currentRow = ReplaceToken(dataCol.html()
-                        , dataSource
-                        , startRow
-                        , this._customFunctions
-                        , this._hasCustomBindings)
-                    //currentRow = ReplaceToken(currentRow, dataSource[startRow])
-                    dataCol.html(currentRow);
-                    
-                    k = 0;
-                    dataRow.append(dataCol);
-                }
-                //row add event handling
-                if (this._hasRowAddHandler) {
-                    dataRow = $(this._rowAddHandler(dataRow[0], dataSource, startRow));
-                }
-
-                finalGrid.append(dataRow);
+                finalGrid.append(procesedRow.dataRow);
+                inputBindings = procesedRow.inputBindings;
                 j = 0;
             }
 
@@ -283,23 +235,19 @@
 
             //lets bind the input elements to the data source
             if (this._bindInput) {
-                i = 0; //reset counter
-                for (; i < inputBindings.length; i++) {
-                    currentRow = inputBindings[i]; //reusing currentRow var here
-                    currentElement = $("#" + currentRow.id); //reusing currentElement var here
-                    bindInputDelegate = $.proxy(BindInput, currentElement[0], [this
-                        , currentRow.rowIndex, currentRow.propToBind]);
-                    //set the correct event handler based on type of input
-                    switch (currentElement[0].type) {
-                        case "text":
-                        case "number":
-                        case "password":
-                            currentElement.change(bindInputDelegate);
-                            break;
-                    }
-                }
+                BindInputs.call(this, inputBindings);
             }
 
+            return this;
+        },
+        //re-draw a specific row binding the new data.
+        reDrawRow: function () {
+            debugger;
+            var rowIndex = arguments[0],
+                $dataRow = $("#" + this._gridID + "_dataRow_" + rowIndex),
+                output = GetDataRow.call(this, rowIndex, null, false, null)
+            $dataRow.html(output.dataRow.html());
+            BindInputs.call(this, output.inputBindings);
             return this;
         },
         //this is to set alternate colors or custom color sequence for the rows
@@ -335,6 +283,130 @@
         }
     };
 
+    //function to bind inputs to the data source
+    function BindInputs(inputBindings) {
+        var i = 0, //counter
+            currentRow,
+            bindInputDelegate, //delegate to bind inputs to the data source
+            currentElement;
+        for (; i < inputBindings.length; i++) {
+            currentRow = inputBindings[i]; //reusing currentRow var here
+            currentElement = $("#" + currentRow.id); //reusing currentElement var here
+            bindInputDelegate = $.proxy(BindInput, currentElement[0], [this
+                , currentRow.rowIndex, currentRow.propToBind]);
+            //set the correct event handler based on type of input
+            switch (currentElement[0].type) {
+                case "text":
+                case "number":
+                case "password":
+                    currentElement.change(bindInputDelegate);
+                    break;
+                case "checkbox":
+                    currentElement.click(bindInputDelegate);
+                    break;
+            }
+        }
+    }
+    //Function to return a data row after parsing its contents
+    function GetDataRow(startRow, inputBindings, setColor, colorIdx) {
+        var dataRow,
+            dataCol = null,
+            dataColChildren = null,
+            currentElement = null,// used to process html elements
+            $currentElement = null,//jQuery equivalent
+            currentRow = "",
+            setDataRowBackColor = this._dataRowBackColors.length > 0,
+            j = 0,
+            k = 0,
+            dataColumns = this._dataElement.find("column"),
+            dataSource = this._dataSource,
+            tempAttribute = null, //temp attribute var which can be reused
+            returnVal = {};
+
+        if (inputBindings === null || inputBindings === undefined) { inputBindings = [];}
+
+        dataRow = $(document.createElement("tr"));
+        dataRow.attr("id", this._gridID + "_dataRow_" + startRow);
+        dataRow.attr("class", this._dataElement.attr("class"));
+
+        //set background colors if any provided
+        if (setDataRowBackColor) {
+            dataRow.css("background-color", this._dataRowBackColors[colorIdx]);
+        }
+
+        //set mouse over and out color
+        if (setColor && this._hasMouseOverColor) {
+            dataRow.mouseover([dataRow, this._mouseOverColor], SetBackgroundColor);
+            dataRow.mouseout([dataRow, dataRow.css("background-color")]
+                , SetBackgroundColor);
+        }
+
+        //set the data for each row
+        for (; j < dataColumns.length; j++) {
+            dataCol = document.createElement("td");
+            dataCol.setAttribute("class", $(dataColumns[startRow]).attr("class"));
+            dataCol = $(dataCol);
+            currentRow = dataColumns[j].innerHTML;
+            dataCol.html(currentRow);
+
+            //set unique IDs for all childrens and input bindings
+            dataColChildren = dataCol[0].children;
+
+            for (; k < dataColChildren.length; k++) {
+                currentElement = dataColChildren[k];
+                $currentElement = $(currentElement);
+                if (currentElement.id !== "") {
+                    currentElement.id = dataColChildren[k].id += "_" + startRow;
+                }
+                if (this._bindInput) {
+                    //input bindings
+                    if (currentElement.tagName.toLowerCase() === "input"
+                        && $currentElement.attr("model")) {
+                        inputBindings.push(GetInputBinding(currentElement, startRow));
+                        switch (currentElement.type) {
+                            case "text":
+                            case "number":
+                            case "password":
+                                tempAttribute = d.createAttribute("value");
+                                tempAttribute.value = $currentElement.attr("model");
+                                dataColChildren[k].setAttributeNode(tempAttribute);
+                                break;
+                            case "checkbox":
+                                if (ReplaceToken($currentElement.attr("model")
+                                    , dataSource
+                                    , startRow
+                                    , this._customFunctions
+                                    , this._hasCustomBindings) === 'true') {
+                                    tempAttribute = d.createAttribute("checked");
+                                    dataColChildren[k].setAttributeNode(tempAttribute);
+                                }
+                                break;
+                        }
+                    }
+                }
+            }
+
+            //lets now replace the template items with their data
+            currentRow = ReplaceToken(dataCol.html()
+                , dataSource
+                , startRow
+                , this._customFunctions
+                , this._hasCustomBindings)
+            dataCol.html(currentRow);
+
+            k = 0;
+            dataRow.append(dataCol);
+        }
+        //row add event handling
+        if (this._hasRowAddHandler) {
+            dataRow = $(this._rowAddHandler(dataRow[0], dataSource, startRow));
+        }
+
+        //finally return the row
+        returnVal["dataRow"] = dataRow;
+        returnVal["inputBindings"] = inputBindings;
+        return returnVal;
+    }
     //Binds the input element value with the data source
     function GetInputBinding(inputElement, index) {
         var value = "",
@@ -343,15 +415,8 @@
             tokenStart = null, tokenEnd = null,
             token = "",
             binding = {};
-        switch (inputElement.type) {
-            case "text":
-            case "number":
-            case "password":
-                //we need to get property name by using getAttribute function
-                //as the element is not rendered yet so there is no default value
-                value = inputElement.getAttribute("value");
-                break;
-        }
+
+        value = inputElement.getAttribute("model");
         pStart = value.indexOf("{{");
         pEnd = value.indexOf("}}");
         tokenStart = pStart + 2;
@@ -365,25 +430,32 @@
 
     //Binds the input element's value with the grid's data source
     function BindInput(e) {
-        var value = null;
-        var grid = e[0];
-        var rowIndex = e[1];
-        var propertyName = e[2];
+        var value = null,
+            grid = e[0],
+            rowIndex = e[1],
+            propertyName = e[2],
+            rowReDrawDelegate = null;
         switch (this.type) {
             case "text":
             case "number":
             case "password":
                 value = this.value;
                 break;
+            case "checkbox":
+                value = this.checked;
+                break;
         }
         grid._dataSource[rowIndex][propertyName] = value;
         grid._dataChanges["row" + rowIndex] = grid._dataSource[rowIndex];
+
+        //lets refresh the current row data here to update all the value bindings.
+        grid.reDrawRow.call(grid, rowIndex);
     }
 
     //Set the background color of the html element passed in the even parameters
     function SetBackgroundColor(e) {
-        var el = e.data[0];
-        var color = e.data[1];
+        var el = e.data[0],
+            color = e.data[1];
         el.css("background-color", color);
     }
 
@@ -403,7 +475,6 @@
             token = "", tokenName = "",
             output = str,
             data = dataSource[rowIndex];
-
         for (; i < length; i++) {
             if (i < length) {
                 ptr = str.substr(i, 2);
@@ -456,8 +527,8 @@
 
     //Function to evalute value from a template function
     function EvalFunction(f, dataSource, rowIndex, customBindings) {
-        var func = f.replace("()", "");
-        var func = customBindings[func];
+        var func = f.replace("()", ""),
+            func = customBindings[func];
         if (!IsNullOrUndefined(func)) {
             return func(dataSource, rowIndex);
         }
@@ -465,12 +536,12 @@
 
     //Function to evaluate token
     function EvalToken(data, str) {
-        var i = 0;
-        var length = str.length;
-        var ptr = "";
-        var pStart = 0, pEnd = 0;
-        var token = "";
-        var resetPointer = false;
+        var i = 0,
+            length = str.length,
+            ptr = "",
+            pStart = 0, pEnd = 0,
+            token = "",
+            resetPointer = false;
         for (; i < length; i++) {
             if (i < length) {
                 ptr = str.substr(i, 1);
@@ -519,4 +590,4 @@
 
     w["GridJS"] = gridJS;
 
-})(jQuery, window);
+})(jQuery, window, document);

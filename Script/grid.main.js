@@ -344,7 +344,7 @@
         //set the data for each row
         for (; j < dataColumns.length; j++) {
             dataCol = document.createElement("td");
-            dataCol.setAttribute("class", $(dataColumns[startRow]).attr("class"));
+            dataCol.setAttribute("class", $(dataColumns[j]).attr("class"));
             dataCol = $(dataCol);
             currentRow = dataColumns[j].innerHTML;
             dataCol.html(currentRow);

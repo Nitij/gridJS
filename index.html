@@ -13,20 +13,12 @@
             margin: 0 auto;
             width: 200px;
         }
-        .GridHeader {
-            font-size: medium;
-            font-weight: 600;
-        }
         .GridHeaderCol {
             background-color: lightblue;
         }
         .GridDataRow td {
             /*font-size: small;*/
             height:10px;
-        }
-        .GridFooterRow {
-            height: 1px;
-            background-color: black;
         }
         .todoGridStatusCol {
             width:10%;
@@ -36,28 +28,31 @@
             width:90%;
             text-align:left;
         }
+        .TodoTextNormal {
+        
+        }
+        .TodoTextDone {
+            text-decoration:line-through;
+        }
     </style>
 </head>
 <body>
     <div style="text-align: center; width: 100%;">
         <gridjs id="todoGrid" class="Grid">
             <headerRow>
-                <!--<column></column>
-                <column></column>-->
             </headerRow>
-            <dataRow>
-                <column class="todoGridStatusCol"><input type="checkbox" "{{done}}" /></column>
-                <column class="todoGridTextCol">{{title}}</column>
+            <dataRow class="GridDataRow">
+                <column class="todoGridStatusCol"><input id="chkStatus" type="checkbox" model="{{done}}" /></column>
+                <column class="todoGridTextCol"><span class="TodoText{{GetTodoStatus()}}">{{title}}</span></column>
             </dataRow>
             <footerRow>
-                <!--<column></column>
-                <column></column>-->
             </footerRow>
         </gridjs>
         <br />
         
         <input id="txtTodo" type="text" placeholder="add new todo here"/>
         <input type="submit" value="Add Todo" onclick="AddTodo(); return false;"/>
+        <input type="submit" value="Clear" onclick="ClearAll(); return false;"/>
     </div>
 
 
@@ -76,22 +71,19 @@
             todoGrid.reDraw();
         }
 
-
-
-
-
-
-
-
-
-
-
+        function ClearAll() {
+            todoList.length = 0;
+            todoGrid.reDraw();
+        }
 
         todoGrid = new GridJS().getGrid("todoGrid")
             .dataSource(todoList)
             .setDataRowColors(["#FFFCCF", "#B4EEB4", "#CAE1FF"])
-            .setCellPadding(8)
-            //.onRowAddition(HandleRowAddition)
+            //.setCellPadding(8)
+            .addCustomFunction("GetTodoStatus", function(data, rowIndex){
+                if (data[rowIndex]["done"] === true) { return "Done"; }
+                else { return "Normal";}
+            })
             .setMouseOverColor("#FFC1C1")
             //.setPagination(4)
             //.setPageButtonCss("myButton", "myButton-active")

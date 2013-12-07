@@ -6,39 +6,62 @@
     <script type="text/javascript" src="Script\grid.main.js"></script>
     <script type="text/javascript" src="Script\sampleData.js"></script>
     <script type="text/javascript" src="Script\sampleNorthWindData.js"></script>
-    
+    <script type="text/javascript" src="Script\sampleCountryData.js"></script>
+
     <style type="text/css">
-        .Grid {
+        .CountryGrid {
+            margin: 0 auto;
+        }
+        .CountryGridRow {
+            font-family:Arial;
+            font-size:large;
+            font-weight:700;
+        }
+        .CountryGridHeaderRow {
+            font-family:Arial;
+            font-size:x-large;
+            font-weight:bolder;
+        }
+        .TodoGrid {
             font-family: Verdana;
             margin: 0 auto;
-            width: 200px;
+            width: 400px;
         }
+
         .GridHeaderCol {
             background-color: lightblue;
         }
+
         .GridDataRow td {
             /*font-size: small;*/
-            height:10px;
+            height: 10px;
         }
+
         .todoGridStatusCol {
-            width:10%;
-            text-align:left;
+            width: 20%;
+            text-align: right;
         }
+
         .todoGridTextCol {
-            width:90%;
-            text-align:left;
+            width: 80%;
+            text-align: left;
         }
+
         .TodoTextNormal {
-        
         }
+
         .TodoTextDone {
-            text-decoration:line-through;
+            text-decoration: line-through;
         }
     </style>
 </head>
 <body>
-    <div style="text-align: center; width: 100%;">
-        <gridjs id="todoGrid" class="Grid">
+    <div id="divTodoGrid" style="text-align: center; width: 100%;">
+        <input id="txtTodo" type="text" placeholder="add new todo here" />
+        <input type="submit" value="Add Todo" onclick="AddTodo(); return false;" />
+        <input type="submit" value="Clear" onclick="ClearAllTodo(); return false;" />
+        <br />
+        <gridjs id="todoGrid" class="TodoGrid">
             <headerRow>
             </headerRow>
             <dataRow class="GridDataRow">
@@ -48,47 +71,80 @@
             <footerRow>
             </footerRow>
         </gridjs>
-        <br />
-        
-        <input id="txtTodo" type="text" placeholder="add new todo here"/>
-        <input type="submit" value="Add Todo" onclick="AddTodo(); return false;"/>
-        <input type="submit" value="Clear" onclick="ClearAll(); return false;"/>
+    </div>
+    <br />
+    <br />
+    <div id="divCountryGrid" style="text-align: center; width: 100%;">
+        <gridjs id="gridCountry" class="CountryGrid">
+            <headerRow class="CountryGridHeaderRow">
+                <column><b>Name</b></column>
+                <column><b>Capital</b></column>
+                <column><b>Area</b></column>
+                <column><b>Population</b></column>
+                <column><b>Official Flag</b></column>
+            </headerRow>
+            <dataRow class="CountryGridRow">
+                <column>{{name}}</column>
+                <column>{{capital}}</column>
+                <column>{{area}}</column>
+                <column>{{population}}</column>
+                <column><img src="Images/{{flag}}" height="60px" width="100px" /></column>
+            </dataRow>
+            <footerRow>
+            </footerRow>
+        </gridjs>
     </div>
 
 
     <script type="text/javascript">
-        //TODO app object
-        var todoGrid;
-        var todo = function (t, d) {
-            this.title = t;
-            this.done = d;
-        }
-        var todoList = [];
-        var $txtTodo = $("#txtTodo");
+        var AddTodo = null,
+            ClearAllTodo = null;
+        $(document).ready(function () {
+            //Country grid
+            //===============================================================================
+            var countryGrid = new GridJS().getGrid("gridCountry")
+                .dataSource(CountryDataSource)
+                .setCellPadding(8)
+                .setDataRowColors(["#F8FBEF", "#EFF5FB"])
+                .draw();
+            //===============================================================================
 
-        function AddTodo() {
-            todoList.push(new todo($txtTodo.val(), ""));
-            todoGrid.reDraw();
-        }
+            //TODO app object
+            //===============================================================================
+            var todoGrid,
+                todo = function (t, d) {
+                    this.title = t;
+                    this.done = d;
+                },
+                todoList = [],
+                $txtTodo = $("#txtTodo");
 
-        function ClearAll() {
-            todoList.length = 0;
-            todoGrid.reDraw();
-        }
+            AddTodo = function () {
+                todoList.push(new todo($txtTodo.val(), ""));
+                todoGrid.reDraw();
+                $txtTodo.val("");
+            }
 
-        todoGrid = new GridJS().getGrid("todoGrid")
-            .dataSource(todoList)
-            .setDataRowColors(["#FFFCCF", "#B4EEB4", "#CAE1FF"])
-            //.setCellPadding(8)
-            .addCustomFunction("GetTodoStatus", function(data, rowIndex){
-                if (data[rowIndex]["done"] === true) { return "Done"; }
-                else { return "Normal";}
-            })
-            .setMouseOverColor("#FFC1C1")
-            //.setPagination(4)
-            //.setPageButtonCss("myButton", "myButton-active")
-            //.disableInputBindings(false)
-            .draw();
+            ClearAllTodo = function() {
+                todoList.length = 0;
+                todoGrid.reDraw();
+            }
+
+            todoGrid = new GridJS().getGrid("todoGrid")
+                .dataSource(todoList)
+                .setDataRowColors(["#FFFFFF", "#FBEFFB", "#EFF8FB", "#FBFBEF", "#FBEFEF"])
+                //.setCellPadding(8)
+                .addCustomFunction("GetTodoStatus", function (data, rowIndex) {
+                    if (data[rowIndex]["done"] === true) { return "Done"; }
+                    else { return "Normal"; }
+                })
+                .setMouseOverColor("#FFC1C1")
+                .setPagination(10)
+                //.setPageButtonCss("myButton", "myButton-active")
+                //.disableInputBindings(false)
+                .draw();
+            //================================================================================
+        });
     </script>
 </body>
 </html>

@@ -6,6 +6,7 @@
     <script type="text/javascript" src="Script\grid.main.js"></script>
     <script type="text/javascript" src="sampleData.js"></script>
     <script type="text/javascript" src="sampleNorthWindData.js"></script>
+    <script type="text/javascript" src="sampleGeneralData.js"></script>
     
     <style type="text/css">
         .myButton {
@@ -148,7 +149,7 @@
                 </footerRow>
             </gridjs>-->
 
-        <gridjs id="northWindGrid" class="Grid">
+        <!--<gridjs id="northWindGrid" class="Grid">
             <headerRow class="GridHeader">
                 <column class="GridHeaderCol">Order ID</column>
                 <column class="GridHeaderCol">Customer ID</column>
@@ -167,8 +168,8 @@
             <dataRow class="GridDataRow">
                 <column>{{OrderID}}</column>
                 <column>{{CustomerID}}</column>
-                <column><input id="numEmployeeID" type="number" min="0" max="15" step="1" value="{{EmployeeID}}" /></column>
-                <column><!--{{OrderDate}}-->{{GetOrderDate()}}</column>
+                <column><input id="numEmployeeID" type="number" min="0" max="15" step="1" model="{{EmployeeID}}"/></column>
+                <column>{{GetOrderDate()}}</column>
                 <column>{{RequiredDate}}</column>
                 <column>{{ShippedDate}}</column>
                 <column>{{ShipVia}}</column>
@@ -177,7 +178,7 @@
                 <column>{{ShipAddress}}</column>
                 <column>{{ShipCity}}</column>
                 <column>{{ShipPostalCode}}</column>
-                <column><input id="txtShipCountry" type="text" value ="{{ShipCountry}}" /></column>
+                <column><input id="txtShipCountry" type="text" model="{{ShipCountry}}" /></column>
             </dataRow>
             <footerRow class="GridFooterRow">
                 <column></column>
@@ -194,7 +195,36 @@
                 <column></column>
                 <column></column>
             </footerRow>
-        </gridjs>
+        </gridjs>-->
+
+        <gridJS id="generalGrid" class="Grid">
+            <headerRow class="GridHeader">
+                <column class="GridHeaderCol">CheckBox</column>
+                <column class="GridHeaderCol">Text</column>
+                <column class="GridHeaderCol">Number</column>
+                <column class="GridHeaderCol">Radio</column>
+            </headerRow>
+            <dataRow class="GridDataRow">
+                <column>
+                    <input id="chkCheck" type="checkbox" model="{{sampleCheckValue}}" />
+                </column>
+                <column>
+                    <input id="txtText" type="text" model="{{sampleText}}" />
+                </column>
+                <column>
+                    <input id="numNumber" type="number" min="0" max="100" step="1" model="{{sampleNumber}}" style="display:{{ShowNumber()}};"/>
+                </column>
+                <column>
+                    {{sampleRadio}}
+                </column>
+            </dataRow>
+            <footerRow class="GridFooterRow">
+                <column></column>
+                <column></column>
+                <column></column>
+                <column></column>
+            </footerRow>
+        </gridJS>
         <br />
         <a href="" onclick="GetUpdates();return false;">Get Updates</a>
         
@@ -202,6 +232,24 @@
 
 
     <script type="text/javascript">
+        var gridJS = new GridJS().getGrid("generalGrid")
+            .dataSource(GeneralDataSource)
+            .setDataRowColors(["#FFFCCF", "#B4EEB4", "#CAE1FF"])
+            .setCellPadding(8)
+            .onRowAddition(HandleRowAddition)
+            .setMouseOverColor("#FFC1C1")
+            .setPagination(5)
+            .setPageButtonCss("myButton", "myButton-active")
+            .addCustomFunction("ShowNumber", function (data, rowIndex) {
+                if (data[rowIndex]["sampleCheckValue"] === true) {
+                    return "inline";
+                }
+                else {
+                    return "none";
+                }
+            })
+            .draw();
+
         //var gridJS = new GridJS().getGrid("myGrid")
         //    .dataSource(DataSource)
         //    .setDataRowColors(["#FFFCCF", "#B4EEB4", "#CAE1FF"])
@@ -212,27 +260,26 @@
         //    //.setPageButtonCss("myButton", "myButton-active")
         //    .draw();
         
-        var northWindGridJS = new GridJS().getGrid("northWindGrid")
-            .dataSource(NorthWindDataSource)
-            .setDataRowColors(["#FFFCCF", "#B4EEB4", "#CAE1FF"])
-            .setCellPadding(8)
-            .onRowAddition(HandleRowAddition)
-            .setMouseOverColor("#FFC1C1")
-            .setPagination(7)
-            //.setPageButtonCss("myButton", "myButton-active")
-            //.disableInputBindings(false)
-            .addCustomFunction("GetOrderDate"
-            , function (data, rowIndex) {
-                var date = new Date(Date.parse(data[rowIndex]["OrderDate"]));
-                return date.getMonth() + "/" + date.getDate() + "/" + date.getYear();
-            })
-            .draw();
+        //var northWindGridJS = new GridJS().getGrid("northWindGrid")
+        //    .dataSource(NorthWindDataSource)
+        //    .setDataRowColors(["#FFFCCF", "#B4EEB4", "#CAE1FF"])
+        //    .setCellPadding(8)
+        //    .onRowAddition(HandleRowAddition)
+        //    .setMouseOverColor("#FFC1C1")
+        //    .setPagination(7)
+        //    //.setPageButtonCss("myButton", "myButton-active")
+        //    //.disableInputBindings(false)
+        //    .addCustomFunction("GetOrderDate"
+        //    , function (data, rowIndex) {
+        //        var date = new Date(Date.parse(data[rowIndex]["OrderDate"]));
+        //        return date.getMonth() + "/" + date.getDate() + "/" + date.getYear();
+        //    })
+        //    .draw();
 
         function GetUpdates() {
             northWindGridJS.getDataUpdates();
             
         }
-        northWindGridJS.getDataUpdates();
 
         function HandleRowAddition(dataRow, dataSource, index) {
             return dataRow;

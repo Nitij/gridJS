@@ -9,6 +9,60 @@
     <script type="text/javascript" src="Script\sampleCountryData.js"></script>
 
     <style type="text/css">
+        .NorthWindPaginationButton {
+	        -moz-box-shadow:inset 0px 1px 0px 0px #9acc85;
+	        -webkit-box-shadow:inset 0px 1px 0px 0px #9acc85;
+	        box-shadow:inset 0px 1px 0px 0px #9acc85;
+	        background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #74ad5a), color-stop(1, #68a54b));
+	        background:-moz-linear-gradient(top, #74ad5a 5%, #68a54b 100%);
+	        background:-webkit-linear-gradient(top, #74ad5a 5%, #68a54b 100%);
+	        background:-o-linear-gradient(top, #74ad5a 5%, #68a54b 100%);
+	        background:-ms-linear-gradient(top, #74ad5a 5%, #68a54b 100%);
+	        background:linear-gradient(to bottom, #74ad5a 5%, #68a54b 100%);
+	        filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#74ad5a', endColorstr='#68a54b',GradientType=0);
+	        background-color:#74ad5a;
+	        border:1px solid #3b6e22;
+	        display:inline-block;
+	        cursor:pointer;
+	        color:#ffffff;
+	        font-family:arial;
+	        font-size:13px;
+	        font-weight:bold;
+	        padding:6px 12px;
+	        text-decoration:none;
+            height:16px;
+            width:20px;
+        }
+        .NorthWindPaginationButton:hover {
+	        background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #68a54b), color-stop(1, #74ad5a));
+	        background:-moz-linear-gradient(top, #68a54b 5%, #74ad5a 100%);
+	        background:-webkit-linear-gradient(top, #68a54b 5%, #74ad5a 100%);
+	        background:-o-linear-gradient(top, #68a54b 5%, #74ad5a 100%);
+	        background:-ms-linear-gradient(top, #68a54b 5%, #74ad5a 100%);
+	        background:linear-gradient(to bottom, #68a54b 5%, #74ad5a 100%);
+	        filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#68a54b', endColorstr='#74ad5a',GradientType=0);
+	        background-color:#68a54b;
+        }
+        .NorthWindPaginationButton:active {
+	        position:relative;
+	        top:1px;
+        }
+
+        .NorthWindGrid {
+            margin: 0 auto;
+            width:1100px;
+        }
+        .NorthWindGridHeaderRow {
+            font-family:Arial;
+            font-size:x-large;
+            font-weight:bolder;
+        }
+        .NorthWindGridRow {
+            font-family:Arial;
+            font-size:large;
+            font-weight:700;
+        }
+
         .CountryGrid {
             margin: 0 auto;
         }
@@ -27,29 +81,23 @@
             margin: 0 auto;
             width: 400px;
         }
-
         .GridHeaderCol {
             background-color: lightblue;
         }
-
         .GridDataRow td {
             /*font-size: small;*/
             height: 10px;
         }
-
         .todoGridStatusCol {
             width: 20%;
             text-align: right;
         }
-
         .todoGridTextCol {
             width: 80%;
             text-align: left;
         }
-
         .TodoTextNormal {
         }
-
         .TodoTextDone {
             text-decoration: line-through;
         }
@@ -94,15 +142,73 @@
             </footerRow>
         </gridjs>
     </div>
+    <br />
+    <div id="divNorthWindGrid" style="text-align: center; width: 100%;">
+        <gridjs id="gridNorthWind" class="NorthWindGrid">
+            <headerRow class="NorthWindGridHeaderRow">
+                <column><b>Order ID</b></column>
+                <column><b>Customer ID</b></column>
+                <column><b>Employee ID</b></column>
+                <column><b>Order Date</b></column>
+                <!--<column><b>Required Date</b></column>-->
+                <column><b>Shipped Date</b></column>
+                <column><b>Freight</b></column>
+                <column><b>Ship Name</b></column>
+                <column><b>Ship Address</b></column>
+                <column><b>Ship City</b></column>
+                <column><b>Ship Postal Code</b></column>
+                <column><b>Ship Country</b></column>
+            </headerRow>
+            <dataRow class="NorthWindGridRow">
+                <column>{{OrderID}}</column>
+                <column>{{CustomerID}}</column>
+                <column>{{EmployeeID}}</column>
+                <column>{{GetOrderDate()}}</column>
+                <!--<column>{{RequiredDate}}</column>-->
+                <column>{{ShippedDate}}</column>
+                <column>{{Freight}}</column>
+                <column>{{ShipName}}</column>
+                <column>{{ShipAddress}}</column>
+                <column>{{ShipCity}}</column>
+                <column>{{ShipPostalCode}}</column>
+                <column>{{ShipCountry}}</column>                
+            </dataRow>
+            <footerRow>
+            </footerRow>
+        </gridjs>
+    </div>
 
 
     <script type="text/javascript">
         var AddTodo = null,
             ClearAllTodo = null;
         $(document).ready(function () {
+            //Northwind grid
+            //===============================================================================
+            var northWindGrid = new GridJS()
+                .getGrid("gridNorthWind")
+                .dataSource(NorthWindDataSource)
+                .setCellPadding(6)
+                .setPagination(10)
+                .setPageButtonCss("NorthWindPaginationButton")
+                .addCustomFunction("GetOrderDate", function (data, rowIndex) {
+                    var date = new Date(data[rowIndex].OrderDate);
+                    var month = date.getMonth();
+                    var date = date.getDate();
+                    var year = date.getFullYear();
+                    return month + "-" + date + "-" + year;
+                })
+                .addCustomFunction("GetShippedDate", function (data, rowIndex) {
+
+                })
+                .draw();
+
+            //===============================================================================
+
             //Country grid
             //===============================================================================
-            var countryGrid = new GridJS().getGrid("gridCountry")
+            var countryGrid = new GridJS()
+                .getGrid("gridCountry")
                 .dataSource(CountryDataSource)
                 .setCellPadding(8)
                 .setDataRowColors(["#F8FBEF", "#EFF5FB"])

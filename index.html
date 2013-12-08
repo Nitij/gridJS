@@ -7,6 +7,7 @@
     <script type="text/javascript" src="Script\sampleData.js"></script>
     <script type="text/javascript" src="Script\sampleNorthWindData.js"></script>
     <script type="text/javascript" src="Script\sampleCountryData.js"></script>
+    <script type="text/javascript" src="Script\sampleShoppingData.js"></script>
 
     <style type="text/css">
         .NorthWindPaginationButton {
@@ -50,17 +51,21 @@
 
         .NorthWindGrid {
             margin: 0 auto;
-            width:1100px;
+            width:1500px;
+            height:800px;
         }
         .NorthWindGridHeaderRow {
             font-family:Arial;
-            font-size:x-large;
+            font-size:large;
             font-weight:bolder;
+            color:white;
+            background-color:#6E6E6E;
         }
         .NorthWindGridRow {
             font-family:Arial;
             font-size:large;
             font-weight:700;
+            color:white;
         }
 
         .CountryGrid {
@@ -143,18 +148,17 @@
         </gridjs>
     </div>
     <br />
+    <br />
     <div id="divNorthWindGrid" style="text-align: center; width: 100%;">
         <gridjs id="gridNorthWind" class="NorthWindGrid">
             <headerRow class="NorthWindGridHeaderRow">
                 <column><b>Order ID</b></column>
                 <column><b>Customer ID</b></column>
-                <column><b>Employee ID</b></column>
+                <column><b>Emp ID</b></column>
                 <column><b>Order Date</b></column>
-                <!--<column><b>Required Date</b></column>-->
                 <column><b>Shipped Date</b></column>
                 <column><b>Freight</b></column>
                 <column><b>Ship Name</b></column>
-                <column><b>Ship Address</b></column>
                 <column><b>Ship City</b></column>
                 <column><b>Ship Postal Code</b></column>
                 <column><b>Ship Country</b></column>
@@ -164,14 +168,28 @@
                 <column>{{CustomerID}}</column>
                 <column>{{EmployeeID}}</column>
                 <column>{{GetOrderDate()}}</column>
-                <!--<column>{{RequiredDate}}</column>-->
-                <column>{{ShippedDate}}</column>
+                <column>{{GetShippedDate()}}</column>
                 <column>{{Freight}}</column>
                 <column>{{ShipName}}</column>
-                <column>{{ShipAddress}}</column>
                 <column>{{ShipCity}}</column>
                 <column>{{ShipPostalCode}}</column>
                 <column>{{ShipCountry}}</column>                
+            </dataRow>
+            <footerRow>
+            </footerRow>
+        </gridjs>
+    </div>
+    <br />
+    <br />
+    <div id="divShoppingGrid" style="text-align: center; width: 100%;">
+        <gridjs id="gridShopping" class="NorthWindGrid">
+            <headerRow class="NorthWindGridHeaderRow">
+            </headerRow>
+            <dataRow class="NorthWindGridRow">
+                <column>
+
+
+                </column>
             </dataRow>
             <footerRow>
             </footerRow>
@@ -183,6 +201,17 @@
         var AddTodo = null,
             ClearAllTodo = null;
         $(document).ready(function () {
+            //Shopping Grid
+            //===============================================================================
+            var shoppingGrid = new GridJS()
+                .getGrid("gridShopping")
+                .dataSource(ShoppingDataSource)
+                .setCellPadding(8)
+                .setPagination(4)
+                .draw();
+
+            //===============================================================================
+
             //Northwind grid
             //===============================================================================
             var northWindGrid = new GridJS()
@@ -192,17 +221,21 @@
                 .setPagination(10)
                 .setPageButtonCss("NorthWindPaginationButton")
                 .addCustomFunction("GetOrderDate", function (data, rowIndex) {
-                    var date = new Date(data[rowIndex].OrderDate);
-                    var month = date.getMonth();
-                    var date = date.getDate();
-                    var year = date.getFullYear();
-                    return month + "-" + date + "-" + year;
+                    var date = new Date(Date.parse(data[rowIndex].OrderDate)),
+                        month = date.getMonth(),
+                        day = date.getDate(),
+                        year = date.getYear();
+                    return month + "/" + day + "/" + year;
                 })
                 .addCustomFunction("GetShippedDate", function (data, rowIndex) {
-
+                    var date = new Date(Date.parse(data[rowIndex].ShippedDate)),
+                        month = date.getMonth(),
+                        day = date.getDate(),
+                        year = date.getYear();
+                    return month + "/" + day + "/" + year;
                 })
+                .setDataRowColors(["#0B6121", "#0A2A0A"])
                 .draw();
-
             //===============================================================================
 
             //Country grid

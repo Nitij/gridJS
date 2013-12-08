@@ -5,6 +5,7 @@
             {
                 name: "HTC One Max",
                 price: 53909,
+                discount: 3,
                 operatingSystem: "Android OS",
                 processor: "1.7 GHz Qualcomm Snapdragon 600, Quad Core",
                 resolution: "Full HD, 1920 x 1080 Pixels",
@@ -18,6 +19,7 @@
             {
                 name: "Apple iPhone 5S",
                 price: 53500,
+                discount: 1,
                 operatingSystem: "iOS 7",
                 processor: "A7 Chip with 64-bit Architecture and M7 Motion Coprocessor",
                 resolution: "1136 x 640 Pixels",
@@ -31,6 +33,7 @@
             {
                 name: "Apple iPhone 5C",
                 price: 51499,
+                discount: 11,
                 operatingSystem: "iOS 7",
                 processor: "A6 Chip",
                 resolution: "1136 x 640 Pixels",
@@ -44,6 +47,7 @@
             {
                 name: "Apple iPhone 5C",
                 price: 51499,
+                discount: 7,
                 operatingSystem: "iOS 7",
                 processor: "A6 Chip",
                 resolution: "1136 x 640 Pixels",
@@ -57,6 +61,7 @@
             {
                 name: "Apple iPhone 5C",
                 price: 51499,
+                discount: 3,
                 operatingSystem: "iOS 7",
                 processor: "A6 Chip",
                 resolution: "1136 x 640 Pixels",
@@ -70,6 +75,7 @@
             {
                 name: "Apple iPhone 5C",
                 price: 51499,
+                discount: 5,
                 operatingSystem: "iOS 7",
                 processor: "A6 Chip",
                 resolution: "1136 x 640 Pixels",
@@ -83,6 +89,7 @@
             {
                 name: "Samsung Galaxy Golden I9230",
                 price: 49900,
+                discount: 1,
                 operatingSystem: "Android v4.2 (Jelly Bean) OS",
                 processor: "1.7 GHz MSM8930 Pro, Dual Core",
                 resolution: "WVGA, 480 x 800 Pixels",
@@ -96,6 +103,7 @@
             {
                 name: "HTC One",
                 price: 48999,
+                discount: 4,
                 operatingSystem: "Android Jelly Bean OS",
                 processor: "1.7 GHz Qualcomm Snapdragan 600, Quad Core",
                 resolution: "Full HD, 1920 x 1080 Pixels",
@@ -109,6 +117,7 @@
             {
                 name: "Samsung Galaxy Note 3 N9000",
                 price: 46900,
+                discount: 3.2,
                 operatingSystem: "Android v4.3 (Jelly Bean) OS",
                 processor: "1.9 GHz Quad + 1.3 GHz Quad",
                 resolution: "Full HD, 1920 x 1080 Pixels",
@@ -122,6 +131,7 @@
             {
                 name: "Samsung Galaxy Note 3 N9000",
                 price: 46900,
+                discount: 3,
                 operatingSystem: "Android v4.3 (Jelly Bean) OS",
                 processor: "1.9 GHz Quad + 1.3 GHz Quad",
                 resolution: "Full HD, 1920 x 1080 Pixels",
@@ -135,6 +145,7 @@
             {
                 name: "Nokia Lumia 1020",
                 price: 45999,
+                discount: 1.5,
                 operatingSystem: "Windows Phone 8 OS",
                 processor: "1.5 GHz Qualcomm Snapdragon S4, Dual Core",
                 resolution: "WXGA, 1280 x 768 Pixels",
@@ -148,6 +159,7 @@
             {
                 name: "Nokia Lumia 1020",
                 price: 45999,
+                discount: 1,
                 operatingSystem: "Windows Phone 8 OS",
                 processor: "1.5 GHz Qualcomm Snapdragon S4, Dual Core",
                 resolution: "WXGA, 1280 x 768 Pixels",
@@ -161,6 +173,7 @@
             {
                 name: "Nokia Lumia 1020",
                 price: 45999,
+                discount: 10,
                 operatingSystem: "Windows Phone 8 OS",
                 processor: "1.5 GHz Qualcomm Snapdragon S4, Dual Core",
                 resolution: "WXGA, 1280 x 768 Pixels",
@@ -174,6 +187,7 @@
             {
                 name: "Sony Xperia Z Ultra",
                 price: 44990,
+                discount: 5.8,
                 operatingSystem: "Android v4.2 (Jelly Bean) OS",
                 processor: "2.2 GHz Qualcomm Snapdragon 800, Quad Core",
                 resolution: "Full HD, 1920 x 1080 Pixels",
@@ -187,6 +201,7 @@
             {
                 name: "BlackBerry Q10",
                 price: 44000,
+                discount: 2.2,
                 operatingSystem: "BlackBerry 10",
                 processor: "1.5 GHz, Dual Core",
                 resolution: "720 x 720 Pixels",
@@ -200,6 +215,7 @@
             {
                 name: "LG G2",
                 price: 43490,
+                discount: 4,
                 operatingSystem: "Android v4.2.2 (Jelly Bean)",
                 processor: "2.26 GHz Qualcomm Snapdragon 800, Quad Core",
                 resolution: "Full HD, 1920 x 1080 Pixels",
@@ -213,6 +229,7 @@
             {
                 name: "Samsung Galaxy S4 I9500",
                 price: 40690,
+                discount: 5,
                 operatingSystem: "Android v4.2.2 (Jelly Bean)",
                 processor: "1.6 GHz Quad + 1.2 GHz Quad",
                 resolution: "Full HD, 1920 x 1080 Pixels",
@@ -226,6 +243,7 @@
             {
                 name: "LG Optimus G E975",
                 price: 28499,
+                discount: 1.5,
                 operatingSystem: "Android v4.1 (Jelly Bean)",
                 processor: "1.5 GHz Qualcomm Snapdragon S4 Pro, Quad Core",
                 resolution: "WXGA, 1280 x 768 Pixels",

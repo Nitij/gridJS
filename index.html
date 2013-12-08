@@ -52,7 +52,7 @@
         .NorthWindGrid {
             margin: 0 auto;
             width:1500px;
-            height:800px;
+            /*height:800px;*/
         }
         .NorthWindGridHeaderRow {
             font-family:Arial;
@@ -68,6 +68,180 @@
             color:white;
         }
 
+        .ShoppingGrid {
+            margin: 0 auto;
+            width:1000px;
+            text-align:left;
+        }
+        .ShoppingLeftCol {
+            width:30%;
+            text-align:right;
+        }
+        .ShoppingRightCol {
+            width:70%;
+        }
+        .ShoppingItemHeading {
+            font-family:Arial;
+            font-size:xx-large;
+        }
+        .ShoppingFeaturesCol {
+            font-family:Arial;
+            font-size:medium;
+        }
+        .ShoppingPriceCol {
+            font-family:Arial;
+            font-size:large;
+        }
+        .ShoppingBuyNowLeftCol {
+            width:50%;
+            font-size:medium;
+            font-family:Arial;
+            font-weight:700;
+        }
+        .ShoppingBuyNowRightCol {
+            width:50%;
+            font-size:large;
+            font-family:Arial;
+            font-weight:700;
+        }
+        .PriceWithoutDiscount {
+            text-decoration:line-through;
+            color:gray;
+            font-size:small;
+        }
+        .ShopingInStock {
+            font-size:x-large;
+            color:green;
+            font-family:Arial;
+        }
+        .ShoppingPrice {
+            font-size:x-large;
+            font-weight:700;
+        }
+        .ShoppingPaginationButton {
+	        -moz-box-shadow:inset 0px 1px 3px 0px #91b8b3;
+	        -webkit-box-shadow:inset 0px 1px 3px 0px #91b8b3;
+	        box-shadow:inset 0px 1px 3px 0px #91b8b3;
+	        background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #768d87), color-stop(1, #6c7c7c));
+	        background:-moz-linear-gradient(top, #768d87 5%, #6c7c7c 100%);
+	        background:-webkit-linear-gradient(top, #768d87 5%, #6c7c7c 100%);
+	        background:-o-linear-gradient(top, #768d87 5%, #6c7c7c 100%);
+	        background:-ms-linear-gradient(top, #768d87 5%, #6c7c7c 100%);
+	        background:linear-gradient(to bottom, #768d87 5%, #6c7c7c 100%);
+	        filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#768d87', endColorstr='#6c7c7c',GradientType=0);
+	        background-color:#768d87;
+	        -moz-border-radius:5px;
+	        -webkit-border-radius:5px;
+	        border-radius:5px;
+	        border:1px solid #566963;
+	        display:inline-block;
+	        cursor:pointer;
+	        color:#ffffff;
+	        font-family:arial;
+	        font-size:15px;
+	        font-weight:bold;
+	        padding:11px 23px;
+	        text-decoration:none;
+	        text-shadow:0px -1px 0px #2b665e;
+            width:25px;
+        }
+        .ShoppingPaginationButton:hover {
+	        background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #6c7c7c), color-stop(1, #768d87));
+	        background:-moz-linear-gradient(top, #6c7c7c 5%, #768d87 100%);
+	        background:-webkit-linear-gradient(top, #6c7c7c 5%, #768d87 100%);
+	        background:-o-linear-gradient(top, #6c7c7c 5%, #768d87 100%);
+	        background:-ms-linear-gradient(top, #6c7c7c 5%, #768d87 100%);
+	        background:linear-gradient(to bottom, #6c7c7c 5%, #768d87 100%);
+	        filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#6c7c7c', endColorstr='#768d87',GradientType=0);
+	        background-color:#6c7c7c;
+        }
+        .ShoppingPaginationButton:active {
+	        position:relative;
+	        top:1px;
+        }
+        .ShoppingPaginationActiveButton {
+	        -moz-box-shadow:inset 0px 1px 3px 0px #91b8b3;
+	        -webkit-box-shadow:inset 0px 1px 3px 0px #91b8b3;
+	        box-shadow:inset 0px 1px 3px 0px #91b8b3;
+	        background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #d5e041), color-stop(1, #849620));
+	        background:-moz-linear-gradient(top, #d5e041 5%, #849620 100%);
+	        background:-webkit-linear-gradient(top, #d5e041 5%, #849620 100%);
+	        background:-o-linear-gradient(top, #d5e041 5%, #849620 100%);
+	        background:-ms-linear-gradient(top, #d5e041 5%, #849620 100%);
+	        background:linear-gradient(to bottom, #d5e041 5%, #849620 100%);
+	        filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#d5e041', endColorstr='#849620',GradientType=0);
+	        background-color:#d5e041;
+	        -moz-border-radius:5px;
+	        -webkit-border-radius:5px;
+	        border-radius:5px;
+	        border:1px solid #566963;
+	        display:inline-block;
+	        cursor:pointer;
+	        color:#ffffff;
+	        font-family:arial;
+	        font-size:15px;
+	        font-weight:bold;
+	        padding:11px 23px;
+	        text-decoration:none;
+	        text-shadow:0px -1px 0px #2b665e;
+            width:25px;
+        }
+        .ShoppingPaginationActiveButton:hover {
+	        background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #849620), color-stop(1, #d5e041));
+	        background:-moz-linear-gradient(top, #849620 5%, #d5e041 100%);
+	        background:-webkit-linear-gradient(top, #849620 5%, #d5e041 100%);
+	        background:-o-linear-gradient(top, #849620 5%, #d5e041 100%);
+	        background:-ms-linear-gradient(top, #849620 5%, #d5e041 100%);
+	        background:linear-gradient(to bottom, #849620 5%, #d5e041 100%);
+	        filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#849620', endColorstr='#d5e041',GradientType=0);
+	        background-color:#849620;
+        }
+        .ShoppingPaginationActiveButton:active {
+	        position:relative;
+	        top:1px;
+        }
+        .ShoppingBuyNowButton {
+	        -moz-box-shadow:inset 0px 1px 0px 0px #f5978e;
+	        -webkit-box-shadow:inset 0px 1px 0px 0px #f5978e;
+	        box-shadow:inset 0px 1px 0px 0px #f5978e;
+	        background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #f24537), color-stop(1, #c62d1f));
+	        background:-moz-linear-gradient(top, #f24537 5%, #c62d1f 100%);
+	        background:-webkit-linear-gradient(top, #f24537 5%, #c62d1f 100%);
+	        background:-o-linear-gradient(top, #f24537 5%, #c62d1f 100%);
+	        background:-ms-linear-gradient(top, #f24537 5%, #c62d1f 100%);
+	        background:linear-gradient(to bottom, #f24537 5%, #c62d1f 100%);
+	        filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#f24537', endColorstr='#c62d1f',GradientType=0);
+	        background-color:#f24537;
+	        -moz-border-radius:6px;
+	        -webkit-border-radius:6px;
+	        border-radius:6px;
+	        border:1px solid #d02718;
+	        display:inline-block;
+	        cursor:pointer;
+	        color:#ffffff;
+	        font-family:arial;
+	        font-size:15px;
+	        font-weight:bold;
+	        padding:6px 24px;
+	        text-decoration:none;
+	        text-shadow:0px 1px 0px #810e05;
+        }
+        .ShoppingBuyNowButton:hover {
+	        background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #c62d1f), color-stop(1, #f24537));
+	        background:-moz-linear-gradient(top, #c62d1f 5%, #f24537 100%);
+	        background:-webkit-linear-gradient(top, #c62d1f 5%, #f24537 100%);
+	        background:-o-linear-gradient(top, #c62d1f 5%, #f24537 100%);
+	        background:-ms-linear-gradient(top, #c62d1f 5%, #f24537 100%);
+	        background:linear-gradient(to bottom, #c62d1f 5%, #f24537 100%);
+	        filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#c62d1f', endColorstr='#f24537',GradientType=0);
+	        background-color:#c62d1f;
+        }
+        .ShoppingBuyNowButton:active {
+	        position:relative;
+	        top:1px;
+        }
+
+
         .CountryGrid {
             margin: 0 auto;
         }
@@ -81,6 +255,7 @@
             font-size:x-large;
             font-weight:bolder;
         }
+
         .TodoGrid {
             font-family: Verdana;
             margin: 0 auto;
@@ -106,6 +281,7 @@
         .TodoTextDone {
             text-decoration: line-through;
         }
+        
     </style>
 </head>
 <body>
@@ -182,13 +358,73 @@
     <br />
     <br />
     <div id="divShoppingGrid" style="text-align: center; width: 100%;">
-        <gridjs id="gridShopping" class="NorthWindGrid">
-            <headerRow class="NorthWindGridHeaderRow">
+        <gridjs id="gridShopping" class="ShoppingGrid">
+            <headerRow>
             </headerRow>
-            <dataRow class="NorthWindGridRow">
+            <dataRow>
                 <column>
-
-
+                    <table>
+                        <tr>
+                            <td class="ShoppingLeftCol">
+                                <img src="Images\{{image}}" height="400px" />
+                            </td>
+                            <td class="ShoppingRightCol">
+                                <span class="ShoppingItemHeading">{{name}}</span>
+                                <br />
+                                <img src="Images\{{rating}}star.png" height="35px" />
+                                <br />
+                                <table cellpadding="12px">
+                                    <tr>
+                                        <td class="ShoppingPriceCol">
+                                            <span class="PriceWithoutDiscount">Rs. {{price}}</span>
+                                            <br />
+                                            <span class="ShoppingPrice">Rs. {{PriceAfterDiscount()}}</span>                        
+                                            <br />
+                                            Inclusive of taxes
+                                            <br /><br />
+                                            <b>Discount:</b> {{discount}}%
+                                            <br /><br />
+                                            Free home delivery
+                                        </td>
+                                        <td class="ShoppingFeaturesCol">
+                                            <b>Key Features:</b>
+                                            <ul>
+                                                <li><b>Operating System:</b> {{operatingSystem}}</li>
+                                                <li><b>Processor:</b> {{processor}}</li>
+                                                <li><b>Screen Resolution:</b> {{resolution}}</li>
+                                                <li><b>Camera:</b> {{primaryCamera}}</li>
+                                                <li><b>Size:</b> {{size}}</li>
+                                                <li><b>Weight:</b> {{weight}}</li>
+                                                <li><b>Internal Memory:</b> {{internalMemory}}</li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                </table>
+                        
+                                <table cellpadding="10px">
+                                    <tr>
+                                        <td class="ShoppingBuyNowLeftCol">
+                                            <a class="ShoppingBuyNowButton" href="" onclick="return false;">BUY NOW</a>
+                                            <br /><br />
+                                            Call <b>1800 200 9000 (toll free)</b> for assistance from our product expert.
+                                            <hr />
+                                            <b>Cash</b> on Delivery
+                                            <hr />
+                                            <b>EMI</b> Option
+                                            <hr />
+                                            <b>30 Day</b> Replacement Guarantee
+                                            <hr />
+                                        </td>
+                                        <td class="ShoppingBuyNowRightCol">
+                                            <span class="ShopingInStock">In Stock</span>
+                                            <br />
+                                            Cash-on-Delivery also available
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
                 </column>
             </dataRow>
             <footerRow>
@@ -207,7 +443,14 @@
                 .getGrid("gridShopping")
                 .dataSource(ShoppingDataSource)
                 .setCellPadding(8)
-                .setPagination(4)
+                .setPagination(1)
+                .addCustomFunction("PriceAfterDiscount", function (data, rowIndex) {
+                    var price = data[rowIndex].price;
+                    var discount = data[rowIndex].discount;
+
+                    return price - ((price * discount) / 100);
+                })
+                .setPageButtonCss("ShoppingPaginationButton", "ShoppingPaginationActiveButton")
                 .draw();
 
             //===============================================================================

@@ -360,28 +360,41 @@
                 }
                 if (this._bindInput) {
                     //input bindings
-                    if (currentElement.tagName.toLowerCase() === "input"
-                        && $currentElement.attr("model")) {
-                        inputBindings.push(GetInputBinding(currentElement, startRow));
-                        switch (currentElement.type) {
-                            case "text":
-                            case "number":
-                            case "password":
-                                tempAttribute = d.createAttribute("value");
-                                tempAttribute.value = $currentElement.attr("model");
-                                dataColChildren[k].setAttributeNode(tempAttribute);
-                                break;
-                            case "checkbox":
-                                if (ReplaceToken($currentElement.attr("model")
-                                    , dataSource
-                                    , startRow
-                                    , this._customFunctions
-                                    , this._hasCustomBindings) === 'true') {
-                                    tempAttribute = d.createAttribute("checked");
-                                    dataColChildren[k].setAttributeNode(tempAttribute);
+                    switch (currentElement.tagName.toLowerCase()) {
+                        case "input":
+                            if ($currentElement.attr("model")) {
+                                inputBindings.push(GetInputBinding(currentElement, startRow));
+                                switch (currentElement.type) {
+                                    case "text":
+                                    case "number":
+                                    case "password":
+                                        tempAttribute = d.createAttribute("value");
+                                        tempAttribute.value = $currentElement.attr("model");
+                                        dataColChildren[k].setAttributeNode(tempAttribute);
+                                        break;
+                                    case "checkbox":
+                                        if (ReplaceToken($currentElement.attr("model")
+                                            , dataSource
+                                            , startRow
+                                            , this._customFunctions
+                                            , this._hasCustomBindings) === 'true') {
+                                            tempAttribute = d.createAttribute("checked");
+                                            dataColChildren[k].setAttributeNode(tempAttribute);
+                                        }
+                                        break;
                                 }
-                                break;
-                        }
+                            }
+                            break;
+                        case "img":
+                            //we cannot use a model in the 'src' as browser will try to load the image from that url
+                            //and will throw a 'Failed to load resource' exception. So we have to read the src from a custom
+                            //attribute and then set that value in 'src' attribute.
+                            if ($currentElement.attr("model-src")) {
+                                tempAttribute = d.createAttribute("src");
+                                tempAttribute.value = $currentElement.attr("model-src");
+                                dataColChildren[k].setAttributeNode(tempAttribute);
+                            }
+                            break;
                     }
                 }
             }

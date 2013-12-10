@@ -265,7 +265,6 @@
             background-color: lightblue;
         }
         .GridDataRow td {
-            /*font-size: small;*/
             height: 10px;
         }
         .todoGridStatusCol {
@@ -317,7 +316,7 @@
                 <column>{{capital}}</column>
                 <column>{{area}}</column>
                 <column>{{population}}</column>
-                <column><img src="Images/{{flag}}" height="60px" width="100px" /></column>
+                <column><img model-src="Images/{{flag}}" height="60px" width="100px" /></column>
             </dataRow>
             <footerRow>
             </footerRow>
@@ -366,12 +365,12 @@
                     <table>
                         <tr>
                             <td class="ShoppingLeftCol">
-                                <img src="Images\{{image}}" height="400px" />
+                                <img model-src="Images\{{image}}" height="400px" />
                             </td>
                             <td class="ShoppingRightCol">
                                 <span class="ShoppingItemHeading">{{name}}</span>
                                 <br />
-                                <img src="Images\{{rating}}star.png" height="35px" />
+                                <img model-src="Images\{{rating}}star.png" height="35px" />
                                 <br />
                                 <table cellpadding="12px">
                                     <tr>

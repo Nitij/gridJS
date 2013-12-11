@@ -232,7 +232,6 @@
             if (this._hasPagination) {
                 this._grid.append(paginationDiv);
             }
-
             //lets bind the input elements to the data source
             if (this._bindInput) {
                 BindInputs.call(this, inputBindings);
@@ -385,20 +384,10 @@
                                 }
                             }
                             break;
-                        case "img":
-                            //we cannot use a model in the 'src' as browser will try to load the image from that url
-                            //and will throw a 'Failed to load resource' exception. So we have to read the src from a custom
-                            //attribute and then set that value in 'src' attribute.
-                            //if ($currentElement.attr("model-src")) {
-                            //    tempAttribute = d.createAttribute("src");
-                            //    tempAttribute.value = $currentElement.attr("model-src");
-                            //    dataColChildren[k].setAttributeNode(tempAttribute);
-                            //}
-                            break;
                     }
                 }
             }
-
+            k = 0; //reset counter
             //lets now replace the template items with their data
             currentRow = ReplaceToken(dataCol.html()
                 , dataSource
@@ -406,10 +395,7 @@
                 , this._customFunctions
                 , this._hasCustomBindings)
             dataCol.html(currentRow);
-
             dataRow.append(dataCol);
-
-            //handle 'model-src'            
         }
         //row add event handling
         if (this._hasRowAddHandler) {

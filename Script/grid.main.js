@@ -499,7 +499,7 @@
         grid._dataChanges["row" + rowIndex] = grid._dataSource[rowIndex];
 
         //lets refresh the current row data here to update all the value bindings.
-        if (this._updateRowOnDataChange) {
+        if (grid._updateRowOnDataChange) {
             grid.reDrawRow.call(grid, rowIndex);
         }
     }

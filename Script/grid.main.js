@@ -24,11 +24,47 @@
         this._pageButtonActiveCss = "";
         this._dataChanges = {};
         this._bindInput = true;
-        this._customFunctions = {};
-        this._hasCustomBindings = false;
+        this._updateRowOnDataChange = true;
+        this._customFunctions = {}; //object to store custom functions
+        this._hasCustomBindings = false; //flag to determine if there are custom input bindings or not
+        this._allowPageChange = true; //flag to allow or dis-allow grid page change
+        this._onGridLoaded = null; //function/event handler to call when grid is loaded
+        this._onGridPageChange = null; //event handler for grid page change event
+        this._beforeGridPageChange = null; //event handler for grid page change event before the page is changed
+        this._onRowRedrawComplete = null; //event handler for row re-draw complete event
         return this;
     };
     gridJS.prototype = {
+        //flag to determine if data row should be updated on binded input data change or not
+        updateDataRowOnInputChange: function (bool) {
+            this._updateRowOnDataChange = bool;
+            return this;
+        },
+        //event wireup which fires up beofre the page is changed
+        beforeGridPageChange: function (func) {
+            this._beforeGridPageChange = func;
+            return this;
+        },
+        //function which is called when row redraw is completed which happens when any bound input is changed
+        onRowRedrawComplete: function (func) {
+            this._onRowRedrawComplete = func;
+            return this;
+        },
+        //function to set grid page change event handler
+        onGridPageChange: function (func) {
+            this._onGridPageChange = func;
+            return this;
+        },
+        //function to set grid loaded event handler
+        onGridLoaded: function (func) {
+            this._onGridLoaded = func;
+            return this;
+        },
+        //function to set the flag to allow grid page change or not
+        allowPageChange: function (bool) {
+            this._allowPageChange = bool;
+            return this;
+        },
         addCustomFunction: function (funcName, f) {
             this._customFunctions[funcName] = f;
             this._hasCustomBindings = true;
@@ -49,7 +85,7 @@
             this._footerElement = this._grid.find("footerRow");
             return this;
         },
-        draw: function(){
+        draw: function (){
             this.init().reDraw();
             return this;
         },
@@ -232,11 +268,12 @@
             if (this._hasPagination) {
                 this._grid.append(paginationDiv);
             }
-
             //lets bind the input elements to the data source
             if (this._bindInput) {
                 BindInputs.call(this, inputBindings);
             }
+            //call grid loaded event handler
+            CallEventFunction(this._onGridLoaded);
 
             return this;
         },
@@ -244,8 +281,14 @@
         reDrawRow: function () {
             var rowIndex = arguments[0],
                 $dataRow = $("#" + this._gridID + "_dataRow_" + rowIndex),
-                output = GetDataRow.call(this, rowIndex, null, false, null)
+                output = null;
+            $dataRow.html("");
+            output = GetDataRow.call(this, rowIndex, null, false, null);
             $dataRow.html(output.dataRow.html());
+            //call row redraw complete event
+            if (!IsNullOrUndefined(this._onRowRedrawComplete)) {
+                this._onRowRedrawComplete(this._dataSource, rowIndex);
+            }
             BindInputs.call(this, output.inputBindings);
             return this;
         },
@@ -281,7 +324,13 @@
             return dataUpdates;
         }
     };
-
+    //function to call event handler functions
+    function CallEventFunction(func) {
+        if (!IsNullOrUndefined(func)
+                && typeof (func) === 'function') {
+            func();
+        }
+    }
     //function to bind inputs to the data source
     function BindInputs(inputBindings) {
         var i = 0, //counter
@@ -388,7 +437,7 @@
                     }
                 }
             }
-
+            k = 0; //reset counter
             //lets now replace the template items with their data
             currentRow = ReplaceToken(dataCol.html()
                 , dataSource
@@ -396,7 +445,6 @@
                 , this._customFunctions
                 , this._hasCustomBindings)
             dataCol.html(currentRow);
-
             dataRow.append(dataCol);
         }
         //row add event handling
@@ -451,7 +499,9 @@
         grid._dataChanges["row" + rowIndex] = grid._dataSource[rowIndex];
 
         //lets refresh the current row data here to update all the value bindings.
-        grid.reDrawRow.call(grid, rowIndex);
+        if (this._updateRowOnDataChange) {
+            grid.reDrawRow.call(grid, rowIndex);
+        }
     }
 
     //Set the background color of the html element passed in the even parameters
@@ -463,8 +513,16 @@
 
     //set the page number and draw the grid again
     function DrawGridByPage(e) {
-        this._currentPageNumber = e[0];
-        this.reDraw();
+        //call 'boforeGridPageChangeEvent'
+        if (!IsNullOrUndefined(this._beforeGridPageChange))
+            this._beforeGridPageChange(e[0]);
+        //only load next page if allowed
+        if (this._allowPageChange) {
+            this._currentPageNumber = e[0];
+            //call grid page chage event handler
+            CallEventFunction(this._onGridPageChange);
+            this.reDraw();            
+        }
     }
 
     //replaces token of the format {{value}} from the provided html string
@@ -506,7 +564,7 @@
                             output = output.replace(token, "");
                         }
                     }
-                    //handle model-src by changing it to src for <img> tag.
+                    //handle model-src
                     output = output.replace("model-src", "src");
                 }
             }

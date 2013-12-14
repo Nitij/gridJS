@@ -4,6 +4,7 @@
     <title>gridJS</title>
     <script type="text/javascript" src="Script\jQuery.js"></script>
     <script type="text/javascript" src="Script\grid.main.js"></script>
+    <script type="text/javascript" src="Script\validate.main.js"></script>
     <script type="text/javascript" src="Script\sampleData.js"></script>
     <script type="text/javascript" src="Script\sampleNorthWindData.js"></script>
     <script type="text/javascript" src="Script\sampleCountryData.js"></script>
@@ -514,35 +515,155 @@
             </footerRow>
         </gridjs>
     </div>
+    <br />
+    <br />
+    <div id="divBoundGridWithValidation" style="text-align: center; width: 100%;">
+        <gridjs id="gridBoundGridWithValidation" class="NorthWindGrid">
+            <headerRow class="NorthWindGridHeaderRow">
+                <column><b>Order ID</b></column>
+                <column><b>Customer ID</b></column>
+                <column><b>Emp ID</b></column>
+                <column><b>Order Date</b></column>
+                <column><b>Shipped Date</b></column>
+                <column><b>Freight</b></column>
+                <column><b>Ship Name</b></column>
+                <column><b>Ship City</b></column>
+                <column><b>Ship Postal Code</b></column>
+                <column><b>Ship Country</b></column>
+            </headerRow>
+            <dataRow class="NorthWindGridRow">
+                <column>
+                    <input class="CustomText" type="text" id="Text1" model="{{OrderID}}" />
+                </column>
+                <column>{{CustomerID}}</column>
+                <column>{{EmployeeID}}</column>
+                <column>{{GetOrderDate1()}}</column>
+                <column>{{GetShippedDate1()}}</column>
+                <column>{{Freight}}</column>
+                <column>
+                    <input class="CustomText" type="text" id="Text2" model="{{ShipName}}" validatorName ="{{GetShipNameValidator()}}"/>
+                    &nbsp;<div validator = "{{GetShipNameValidator()}}"></div>
+                </column>
+                <column>
+                    <input class="CustomText" type="text" id="Text3" model="{{ShipCity}}" validatorName ="{{GetShipCityValidator()}}"/>
+                    &nbsp;<div validator = "{{GetShipCityValidator()}}"></div>
+                </column>
+                <column>{{ShipPostalCode}}</column>
+                <column>
+                    <input class="CustomText" type="text" id="Text4" model="{{ShipCountry}}" validatorName ="{{GetShipCountryValidator()}}"/>    
+                    &nbsp;<div validator = "{{GetShipCountryValidator()}}"></div>               
+                </column>                
+            </dataRow>
+            <footerRow>
+            </footerRow>
+        </gridjs>
+    </div>
 
     <script type="text/javascript">
         var AddTodo = null,
             ClearAllTodo = null;
         $(document).ready(function () {
+            //Bound NorthWind Grid with Validation
+            //===============================================================================
+            var validationNorthWindGrid,
+                vManager,
+                shipNameValidatorList = [],
+                shipCityValidatorList = [],
+                shipCountryValidatorList = [],
+                gridLoadedFirstTime = false;
+            vManager = new ValidationManager()
+            .showPassImgNotification(false);
+
+            validationNorthWindGrid = new GridJS()
+                .getGrid("gridBoundGridWithValidation")
+                .dataSource(NorthWindDataSource)
+                .setCellPadding(6)
+                .setPagination(10)
+                .setPageButtonCss("NorthWindPaginationButton")
+                .addCustomFunction("GetOrderDate1", GetOrderDate1)
+                .addCustomFunction("GetShippedDate1", GetShippedDate1)
+                .addCustomFunction("GetShipNameValidator", GetShipNameValidator)
+                .addCustomFunction("GetShipCityValidator", GetShipCityValidator)
+                .addCustomFunction("GetShipCountryValidator", GetShipCountryValidator)
+                .setDataRowColors(["#0B6121", "#0A2A0A"])
+                .onGridLoaded(OnValidationGridLoaded)
+                .onGridPageChange(OnGridPageChange)
+                .onRowAddition(onGridRowAdd)
+                .beforeGridPageChange(BeforeGridPageChange)
+                .updateDataRowOnInputChange(false)
+                .draw();
+
+            function BeforeGridPageChange(dataSource, rowIndex) {
+                var isValid = vManager.validateAll();
+                if (!isValid) validationNorthWindGrid.allowPageChange(false);
+                else validationNorthWindGrid.allowPageChange(true);
+            }
+            function onGridRowAdd(dataRow, dataSource, rowIndex) {
+                var shipNameValidator = "valShipName_" + rowIndex,
+                 shipCityValidator = "valShipCity_" + rowIndex,
+                 shipCountryValidator = "valShipCountry_" + rowIndex;
+                shipNameValidatorList.push(shipNameValidator);
+                shipCityValidatorList.push(shipCityValidator);
+                shipCountryValidatorList.push(shipCountryValidator);
+                
+                return dataRow;
+            }
+
+            function OnValidationGridLoaded() {
+                vManager.addValidator(shipNameValidatorList, [{ type: ValidationType.Required, message: "Ship Name is required." }])
+                    .addValidator(shipCityValidatorList, [{ type: ValidationType.Required, message: "Ship City is required." }])
+                    .addValidator(shipCountryValidatorList, [{ type: ValidationType.Required, message: "Ship Country is required." }])
+                .initialize();
+                gridLoadedFirstTime = true;
+            }
+            function OnGridPageChange() {
+                //reset the validator lists before grid new page is loaded
+                shipNameValidatorList = [];
+                shipCityValidatorList = [];
+                shipCountryValidatorList = [];
+                vManager.clearValidators();
+            }
+
+            function GetShipNameValidator(data, rowIndex) {
+                return "valShipName_" + rowIndex;
+            }
+
+            function GetShipCityValidator(data, rowIndex) {
+                return "valShipCity_" + rowIndex;
+            }
+
+            function GetShipCountryValidator(data, rowIndex) {
+                return "valShipCountry_" + rowIndex;
+            }
+
             //Bound NorthWind Grid
             //===============================================================================
-            var northWindGrid = new GridJS()
+            var boundNorthWindGrid = new GridJS()
                 .getGrid("gridBoundNorthWind")
                 .dataSource(NorthWindDataSource)
                 .setCellPadding(6)
                 .setPagination(10)
                 .setPageButtonCss("NorthWindPaginationButton")
-                .addCustomFunction("GetOrderDate1", function (data, rowIndex) {
-                    var date = new Date(Date.parse(data[rowIndex].OrderDate)),
-                        month = date.getMonth(),
-                        day = date.getDate(),
-                        year = date.getYear();
-                    return month + "/" + day + "/" + year;
-                })
-                .addCustomFunction("GetShippedDate1", function (data, rowIndex) {
-                    var date = new Date(Date.parse(data[rowIndex].ShippedDate)),
-                        month = date.getMonth(),
-                        day = date.getDate(),
-                        year = date.getYear();
-                    return month + "/" + day + "/" + year;
-                })
+                .addCustomFunction("GetOrderDate1", GetOrderDate1)
+                .addCustomFunction("GetShippedDate1", GetShippedDate1)
                 .setDataRowColors(["#0B6121", "#0A2A0A"])
                 .draw();
+
+            function GetOrderDate1(data, rowIndex) {
+                var date = new Date(Date.parse(data[rowIndex].OrderDate)),
+                    month = date.getMonth(),
+                    day = date.getDate(),
+                    year = date.getYear();
+                return month + "/" + day + "/" + year;
+            }
+
+            function GetShippedDate1(data, rowIndex) {
+                var date = new Date(Date.parse(data[rowIndex].ShippedDate)),
+                    month = date.getMonth(),
+                    day = date.getDate(),
+                    year = date.getYear();
+                return month + "/" + day + "/" + year;
+            }
             //===============================================================================
 
 
@@ -623,15 +744,12 @@
             todoGrid = new GridJS().getGrid("todoGrid")
                 .dataSource(todoList)
                 .setDataRowColors(["#FFFFFF", "#FBEFFB", "#EFF8FB", "#FBFBEF", "#FBEFEF"])
-                //.setCellPadding(8)
                 .addCustomFunction("GetTodoStatus", function (data, rowIndex) {
                     if (data[rowIndex]["done"] === true) { return "Done"; }
                     else { return "Normal"; }
                 })
                 .setMouseOverColor("#FFC1C1")
                 .setPagination(10)
-                //.setPageButtonCss("myButton", "myButton-active")
-                //.disableInputBindings(false)
                 .draw();
             //================================================================================
         });

@@ -10,323 +10,7 @@
     <script type="text/javascript" src="Script\sampleCountryData.js"></script>
     <script type="text/javascript" src="Script\sampleShoppingData.js"></script>
 
-    <style type="text/css">
-        .CustomText {
-            background: white;
-            border: 1px double #DDD;
-            border-radius: 5px;
-            box-shadow: 0 0 5px #333;
-            outline: none;
-            height: 25px;
-            width: 150px;
-            font-family:Arial;
-            font-size:medium;
-            font-weight:700;
-            text-align:center;
-        }
-
-        .NorthWindPaginationButton {
-            -moz-box-shadow: inset 0px 1px 0px 0px #9acc85;
-            -webkit-box-shadow: inset 0px 1px 0px 0px #9acc85;
-            box-shadow: inset 0px 1px 0px 0px #9acc85;
-            background: -webkit-gradient(linear, left top, left bottom, color-stop(0.05, #74ad5a), color-stop(1, #68a54b));
-            background: -moz-linear-gradient(top, #74ad5a 5%, #68a54b 100%);
-            background: -webkit-linear-gradient(top, #74ad5a 5%, #68a54b 100%);
-            background: -o-linear-gradient(top, #74ad5a 5%, #68a54b 100%);
-            background: -ms-linear-gradient(top, #74ad5a 5%, #68a54b 100%);
-            background: linear-gradient(to bottom, #74ad5a 5%, #68a54b 100%);
-            filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#74ad5a', endColorstr='#68a54b',GradientType=0);
-            background-color: #74ad5a;
-            border: 1px solid #3b6e22;
-            display: inline-block;
-            cursor: pointer;
-            color: #ffffff;
-            font-family: arial;
-            font-size: 13px;
-            font-weight: bold;
-            padding: 6px 12px;
-            text-decoration: none;
-            height: 16px;
-            width: 20px;
-        }
-
-            .NorthWindPaginationButton:hover {
-                background: -webkit-gradient(linear, left top, left bottom, color-stop(0.05, #68a54b), color-stop(1, #74ad5a));
-                background: -moz-linear-gradient(top, #68a54b 5%, #74ad5a 100%);
-                background: -webkit-linear-gradient(top, #68a54b 5%, #74ad5a 100%);
-                background: -o-linear-gradient(top, #68a54b 5%, #74ad5a 100%);
-                background: -ms-linear-gradient(top, #68a54b 5%, #74ad5a 100%);
-                background: linear-gradient(to bottom, #68a54b 5%, #74ad5a 100%);
-                filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#68a54b', endColorstr='#74ad5a',GradientType=0);
-                background-color: #68a54b;
-            }
-
-            .NorthWindPaginationButton:active {
-                position: relative;
-                top: 1px;
-            }
-
-        .NorthWindGrid {
-            margin: 0 auto;
-            width: 1500px;
-            /*height:800px;*/
-        }
-
-        .NorthWindGridHeaderRow {
-            font-family: Arial;
-            font-size: large;
-            font-weight: bolder;
-            color: white;
-            background-color: #6E6E6E;
-        }
-
-        .NorthWindGridRow {
-            font-family: Arial;
-            font-size: large;
-            font-weight: 700;
-            color: white;
-        }
-
-        .ShoppingGrid {
-            margin: 0 auto;
-            width: 1000px;
-            text-align: left;
-        }
-
-        .ShoppingLeftCol {
-            width: 30%;
-            text-align: right;
-        }
-
-        .ShoppingRightCol {
-            width: 70%;
-        }
-
-        .ShoppingItemHeading {
-            font-family: Arial;
-            font-size: xx-large;
-        }
-
-        .ShoppingFeaturesCol {
-            font-family: Arial;
-            font-size: medium;
-        }
-
-        .ShoppingPriceCol {
-            font-family: Arial;
-            font-size: large;
-        }
-
-        .ShoppingBuyNowLeftCol {
-            width: 50%;
-            font-size: medium;
-            font-family: Arial;
-            font-weight: 700;
-        }
-
-        .ShoppingBuyNowRightCol {
-            width: 50%;
-            font-size: large;
-            font-family: Arial;
-            font-weight: 700;
-        }
-
-        .PriceWithoutDiscount {
-            text-decoration: line-through;
-            color: gray;
-            font-size: small;
-        }
-
-        .ShopingInStock {
-            font-size: x-large;
-            color: green;
-            font-family: Arial;
-        }
-
-        .ShoppingPrice {
-            font-size: x-large;
-            font-weight: 700;
-        }
-
-        .ShoppingPaginationButton {
-            -moz-box-shadow: inset 0px 1px 3px 0px #91b8b3;
-            -webkit-box-shadow: inset 0px 1px 3px 0px #91b8b3;
-            box-shadow: inset 0px 1px 3px 0px #91b8b3;
-            background: -webkit-gradient(linear, left top, left bottom, color-stop(0.05, #768d87), color-stop(1, #6c7c7c));
-            background: -moz-linear-gradient(top, #768d87 5%, #6c7c7c 100%);
-            background: -webkit-linear-gradient(top, #768d87 5%, #6c7c7c 100%);
-            background: -o-linear-gradient(top, #768d87 5%, #6c7c7c 100%);
-            background: -ms-linear-gradient(top, #768d87 5%, #6c7c7c 100%);
-            background: linear-gradient(to bottom, #768d87 5%, #6c7c7c 100%);
-            filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#768d87', endColorstr='#6c7c7c',GradientType=0);
-            background-color: #768d87;
-            -moz-border-radius: 5px;
-            -webkit-border-radius: 5px;
-            border-radius: 5px;
-            border: 1px solid #566963;
-            display: inline-block;
-            cursor: pointer;
-            color: #ffffff;
-            font-family: arial;
-            font-size: 15px;
-            font-weight: bold;
-            padding: 11px 23px;
-            text-decoration: none;
-            text-shadow: 0px -1px 0px #2b665e;
-            width: 25px;
-        }
-
-            .ShoppingPaginationButton:hover {
-                background: -webkit-gradient(linear, left top, left bottom, color-stop(0.05, #6c7c7c), color-stop(1, #768d87));
-                background: -moz-linear-gradient(top, #6c7c7c 5%, #768d87 100%);
-                background: -webkit-linear-gradient(top, #6c7c7c 5%, #768d87 100%);
-                background: -o-linear-gradient(top, #6c7c7c 5%, #768d87 100%);
-                background: -ms-linear-gradient(top, #6c7c7c 5%, #768d87 100%);
-                background: linear-gradient(to bottom, #6c7c7c 5%, #768d87 100%);
-                filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#6c7c7c', endColorstr='#768d87',GradientType=0);
-                background-color: #6c7c7c;
-            }
-
-            .ShoppingPaginationButton:active {
-                position: relative;
-                top: 1px;
-            }
-
-        .ShoppingPaginationActiveButton {
-            -moz-box-shadow: inset 0px 1px 3px 0px #91b8b3;
-            -webkit-box-shadow: inset 0px 1px 3px 0px #91b8b3;
-            box-shadow: inset 0px 1px 3px 0px #91b8b3;
-            background: -webkit-gradient(linear, left top, left bottom, color-stop(0.05, #d5e041), color-stop(1, #849620));
-            background: -moz-linear-gradient(top, #d5e041 5%, #849620 100%);
-            background: -webkit-linear-gradient(top, #d5e041 5%, #849620 100%);
-            background: -o-linear-gradient(top, #d5e041 5%, #849620 100%);
-            background: -ms-linear-gradient(top, #d5e041 5%, #849620 100%);
-            background: linear-gradient(to bottom, #d5e041 5%, #849620 100%);
-            filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#d5e041', endColorstr='#849620',GradientType=0);
-            background-color: #d5e041;
-            -moz-border-radius: 5px;
-            -webkit-border-radius: 5px;
-            border-radius: 5px;
-            border: 1px solid #566963;
-            display: inline-block;
-            cursor: pointer;
-            color: #ffffff;
-            font-family: arial;
-            font-size: 15px;
-            font-weight: bold;
-            padding: 11px 23px;
-            text-decoration: none;
-            text-shadow: 0px -1px 0px #2b665e;
-            width: 25px;
-        }
-
-            .ShoppingPaginationActiveButton:hover {
-                background: -webkit-gradient(linear, left top, left bottom, color-stop(0.05, #849620), color-stop(1, #d5e041));
-                background: -moz-linear-gradient(top, #849620 5%, #d5e041 100%);
-                background: -webkit-linear-gradient(top, #849620 5%, #d5e041 100%);
-                background: -o-linear-gradient(top, #849620 5%, #d5e041 100%);
-                background: -ms-linear-gradient(top, #849620 5%, #d5e041 100%);
-                background: linear-gradient(to bottom, #849620 5%, #d5e041 100%);
-                filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#849620', endColorstr='#d5e041',GradientType=0);
-                background-color: #849620;
-            }
-
-            .ShoppingPaginationActiveButton:active {
-                position: relative;
-                top: 1px;
-            }
-
-        .ShoppingBuyNowButton {
-            -moz-box-shadow: inset 0px 1px 0px 0px #f5978e;
-            -webkit-box-shadow: inset 0px 1px 0px 0px #f5978e;
-            box-shadow: inset 0px 1px 0px 0px #f5978e;
-            background: -webkit-gradient(linear, left top, left bottom, color-stop(0.05, #f24537), color-stop(1, #c62d1f));
-            background: -moz-linear-gradient(top, #f24537 5%, #c62d1f 100%);
-            background: -webkit-linear-gradient(top, #f24537 5%, #c62d1f 100%);
-            background: -o-linear-gradient(top, #f24537 5%, #c62d1f 100%);
-            background: -ms-linear-gradient(top, #f24537 5%, #c62d1f 100%);
-            background: linear-gradient(to bottom, #f24537 5%, #c62d1f 100%);
-            filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#f24537', endColorstr='#c62d1f',GradientType=0);
-            background-color: #f24537;
-            -moz-border-radius: 6px;
-            -webkit-border-radius: 6px;
-            border-radius: 6px;
-            border: 1px solid #d02718;
-            display: inline-block;
-            cursor: pointer;
-            color: #ffffff;
-            font-family: arial;
-            font-size: 15px;
-            font-weight: bold;
-            padding: 6px 24px;
-            text-decoration: none;
-            text-shadow: 0px 1px 0px #810e05;
-        }
-
-            .ShoppingBuyNowButton:hover {
-                background: -webkit-gradient(linear, left top, left bottom, color-stop(0.05, #c62d1f), color-stop(1, #f24537));
-                background: -moz-linear-gradient(top, #c62d1f 5%, #f24537 100%);
-                background: -webkit-linear-gradient(top, #c62d1f 5%, #f24537 100%);
-                background: -o-linear-gradient(top, #c62d1f 5%, #f24537 100%);
-                background: -ms-linear-gradient(top, #c62d1f 5%, #f24537 100%);
-                background: linear-gradient(to bottom, #c62d1f 5%, #f24537 100%);
-                filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#c62d1f', endColorstr='#f24537',GradientType=0);
-                background-color: #c62d1f;
-            }
-
-            .ShoppingBuyNowButton:active {
-                position: relative;
-                top: 1px;
-            }
-
-
-        .CountryGrid {
-            margin: 0 auto;
-        }
-
-        .CountryGridRow {
-            font-family: Arial;
-            font-size: large;
-            font-weight: 700;
-        }
-
-        .CountryGridHeaderRow {
-            font-family: Arial;
-            font-size: x-large;
-            font-weight: bolder;
-        }
-
-        .TodoGrid {
-            font-family: Verdana;
-            margin: 0 auto;
-            width: 400px;
-        }
-
-        .GridHeaderCol {
-            background-color: lightblue;
-        }
-
-        .GridDataRow td {
-            height: 10px;
-        }
-
-        .todoGridStatusCol {
-            width: 20%;
-            text-align: right;
-        }
-
-        .todoGridTextCol {
-            width: 80%;
-            text-align: left;
-        }
-
-        .TodoTextNormal {
-        }
-
-        .TodoTextDone {
-            text-decoration: line-through;
-        }
-    </style>
+    <link rel="stylesheet" href="Style/style.css" />
 </head>
 <body>
     <div id="divTodoGrid" style="text-align: center; width: 100%;">
@@ -518,9 +202,9 @@
     <br />
     <br />
     <div id="divBoundGridWithValidation" style="text-align: center; width: 100%;">
-        <gridjs id="gridBoundGridWithValidation" class="NorthWindGrid">
-            <headerRow class="NorthWindGridHeaderRow">
-                <column><b>Order ID</b></column>
+        <gridjs id="gridBoundGridWithValidation" class="NorthWindValidationGrid">
+            <headerRow class="NorthWindValidationGridHeaderRow">
+                <column class="NorthWindValidationGridHeaderRowCustomColumn1"><b>Order ID</b></column>
                 <column><b>Customer ID</b></column>
                 <column><b>Emp ID</b></column>
                 <column><b>Order Date</b></column>
@@ -529,9 +213,9 @@
                 <column><b>Ship Name</b></column>
                 <column><b>Ship City</b></column>
                 <column><b>Ship Postal Code</b></column>
-                <column><b>Ship Country</b></column>
+                <column class="NorthWindValidationGridHeaderRowCustomColumn2"><b>Ship Country</b></column>
             </headerRow>
-            <dataRow class="NorthWindGridRow">
+            <dataRow class="NorthWindValidationGridRow">
                 <column>
                     <input class="CustomText" type="text" id="Text1" model="{{OrderID}}" />
                 </column>
@@ -579,13 +263,13 @@
                 .dataSource(NorthWindDataSource)
                 .setCellPadding(6)
                 .setPagination(10)
-                .setPageButtonCss("NorthWindPaginationButton")
+                .setPageButtonCss("NorthWindValidationGridButton", "NorthWindValidationActiveButton")
                 .addCustomFunction("GetOrderDate1", GetOrderDate1)
                 .addCustomFunction("GetShippedDate1", GetShippedDate1)
                 .addCustomFunction("GetShipNameValidator", GetShipNameValidator)
                 .addCustomFunction("GetShipCityValidator", GetShipCityValidator)
                 .addCustomFunction("GetShipCountryValidator", GetShipCountryValidator)
-                .setDataRowColors(["#0B6121", "#0A2A0A"])
+                //.setDataRowColors(["#0B6121", "#0A2A0A"])
                 .onGridLoaded(OnValidationGridLoaded)
                 .onGridPageChange(OnGridPageChange)
                 .onRowAddition(onGridRowAdd)

@@ -1,14 +1,14 @@
-<!doctype html>
+﻿<!doctype html>
 <html>
 <head>
     <title>gridJS</title>
-    <script type="text/javascript" src="Script\jQuery.js"></script>
-    <script type="text/javascript" src="Script\grid.main.js"></script>
-    <script type="text/javascript" src="Script\validate.main.js"></script>
-    <script type="text/javascript" src="Script\sampleData.js"></script>
-    <script type="text/javascript" src="Script\sampleNorthWindData.js"></script>
-    <script type="text/javascript" src="Script\sampleCountryData.js"></script>
-    <script type="text/javascript" src="Script\sampleShoppingData.js"></script>
+    <script type="text/javascript" src="Scripts\jQuery.js"></script>
+    <script type="text/javascript" src="Scripts\grid.main.js"></script>
+    <script type="text/javascript" src="Scripts\validate.main.js"></script>
+    <script type="text/javascript" src="Scripts\sampleData.js"></script>
+    <script type="text/javascript" src="Scripts\sampleNorthWindData.js"></script>
+    <script type="text/javascript" src="Scripts\sampleCountryData.js"></script>
+    <script type="text/javascript" src="Scripts\sampleShoppingData.js"></script>
 
     <link rel="stylesheet" href="Style/style.css" />
 </head>
@@ -174,6 +174,7 @@
                 <column><b>Ship City</b></column>
                 <column><b>Ship Postal Code</b></column>
                 <column><b>Ship Country</b></column>
+                <column><b>Order Details 1(Id)</b></column>
             </headerRow>
             <dataRow class="NorthWindGridRow">
                 <column>
@@ -193,7 +194,10 @@
                 <column>{{ShipPostalCode}}</column>
                 <column>
                     <input class="CustomText" type="text" id="txtShipCountry" model="{{ShipCountry}}" />                   
-                </column>                
+                </column> 
+                <column>
+                    <input class="CustomText" type="text" id="Text5" model="{{Order_Details[0].OrderID}}" />                   
+                </column>               
             </dataRow>
             <footerRow>
             </footerRow>
@@ -253,35 +257,36 @@
                 vManager,
                 shipNameValidatorList = [],
                 shipCityValidatorList = [],
-                shipCountryValidatorList = [],
-                gridLoadedFirstTime = false;
+                shipCountryValidatorList = [];
+
             vManager = new ValidationManager()
             .showPassImgNotification(false);
 
-            validationNorthWindGrid = new GridJS()
-                .getGrid("gridBoundGridWithValidation")
-                .dataSource(NorthWindDataSource)
-                .setCellPadding(6)
-                .setPagination(10)
-                .setPageButtonCss("NorthWindValidationGridButton", "NorthWindValidationActiveButton")
-                .addCustomFunction("GetOrderDate1", GetOrderDate1)
-                .addCustomFunction("GetShippedDate1", GetShippedDate1)
-                .addCustomFunction("GetShipNameValidator", GetShipNameValidator)
-                .addCustomFunction("GetShipCityValidator", GetShipCityValidator)
-                .addCustomFunction("GetShipCountryValidator", GetShipCountryValidator)
-                //.setDataRowColors(["#0B6121", "#0A2A0A"])
-                .onGridLoaded(OnValidationGridLoaded)
-                .onGridPageChange(OnGridPageChange)
-                .onRowAddition(onGridRowAdd)
-                .beforeGridPageChange(BeforeGridPageChange)
-                .updateDataRowOnInputChange(false)
-                .draw();
+            validationNorthWindGrid = new GridJS({
+                gridId: 'gridBoundGridWithValidation',
+                dataSource: NorthWindDataSource,
+                cellPadding: 6,
+                pagination: 10,
+                pageButtonCss: { normalCss: 'NorthWindValidationGridButton', activeCss: 'NorthWindValidationActiveButton' },
+                onGridLoaded: OnValidationGridLoaded,
+                onGridPageChange: OnGridPageChange,
+                onRowAddition: onGridRowAdd,
+                beforeGridPageChange: BeforeGridPageChange,
+                updateDataRowOnInputChange: false
+            })
+            .addCustomFunction("GetOrderDate1", GetOrderDate1)
+            .addCustomFunction("GetShippedDate1", GetShippedDate1)
+            .addCustomFunction("GetShipNameValidator", GetShipNameValidator)
+            .addCustomFunction("GetShipCityValidator", GetShipCityValidator)
+            .addCustomFunction("GetShipCountryValidator", GetShipCountryValidator)
+            .draw();
 
             function BeforeGridPageChange(dataSource, rowIndex) {
                 var isValid = vManager.validateAll();
                 if (!isValid) validationNorthWindGrid.allowPageChange(false);
                 else validationNorthWindGrid.allowPageChange(true);
             }
+
             function onGridRowAdd(dataRow, dataSource, rowIndex) {
                 var shipNameValidator = "valShipName_" + rowIndex,
                  shipCityValidator = "valShipCity_" + rowIndex,
@@ -289,7 +294,7 @@
                 shipNameValidatorList.push(shipNameValidator);
                 shipCityValidatorList.push(shipCityValidator);
                 shipCountryValidatorList.push(shipCountryValidator);
-                
+
                 return dataRow;
             }
 
@@ -298,8 +303,8 @@
                     .addValidator(shipCityValidatorList, [{ type: ValidationType.Required, message: "Ship City is required." }])
                     .addValidator(shipCountryValidatorList, [{ type: ValidationType.Required, message: "Ship Country is required." }])
                 .initialize();
-                gridLoadedFirstTime = true;
             }
+
             function OnGridPageChange() {
                 //reset the validator lists before grid new page is loaded
                 shipNameValidatorList = [];
@@ -322,17 +327,19 @@
 
             //Bound NorthWind Grid
             //===============================================================================
-            var boundNorthWindGrid = new GridJS()
-                .getGrid("gridBoundNorthWind")
-                .dataSource(NorthWindDataSource)
-                .setCellPadding(6)
-                .setPagination(10)
-                .setPageButtonCss("NorthWindPaginationButton")
-                .addCustomFunction("GetOrderDate1", GetOrderDate1)
-                .addCustomFunction("GetShippedDate1", GetShippedDate1)
-                .setDataRowColors(["#0B6121", "#0A2A0A"])
-                .draw();
+            var boundNorthWindGrid = new GridJS({
+                gridId: 'gridBoundNorthWind',
+                dataSource: NorthWindDataSource,
+                cellPadding: 6,
+                pagination: 10,
+                pageButtonCss: { normalCss: 'NorthWindPaginationButton', activeCss: '' },
+                dataRowColors: ["#0B6121", "#0A2A0A"]
+            })
+            .addCustomFunction("GetOrderDate1", GetOrderDate1)
+            .addCustomFunction("GetShippedDate1", GetShippedDate1)
+            .draw();
 
+            //GetOrderDate1
             function GetOrderDate1(data, rowIndex) {
                 var date = new Date(Date.parse(data[rowIndex].OrderDate)),
                     month = date.getMonth(),
@@ -341,6 +348,7 @@
                 return month + "/" + day + "/" + year;
             }
 
+            //GetShippedDate1
             function GetShippedDate1(data, rowIndex) {
                 var date = new Date(Date.parse(data[rowIndex].ShippedDate)),
                     month = date.getMonth(),
@@ -353,55 +361,64 @@
 
             //Shopping Grid
             //===============================================================================
-            var shoppingGrid = new GridJS()
-                .getGrid("gridShopping")
-                .dataSource(ShoppingDataSource)
-                .setCellPadding(8)
-                .setPagination(1)
-                .addCustomFunction("PriceAfterDiscount", function (data, rowIndex) {
-                    var price = data[rowIndex].price;
-                    var discount = data[rowIndex].discount;
+            var shoppingGrid = new GridJS({
+                gridId: 'gridShopping',
+                dataSource: ShoppingDataSource,
+                cellPadding: 8,
+                pagination: 1,
+                pageButtonCss: { normalCss: 'ShoppingPaginationButton', activeCss: 'ShoppingPaginationActiveButton' }
+            })
+            .addCustomFunction("PriceAfterDiscount", priceAfterDiscount)
+            .draw();
 
-                    return price - ((price * discount) / 100);
-                })
-                .setPageButtonCss("ShoppingPaginationButton", "ShoppingPaginationActiveButton")
-                .draw();
+            //function to get price after discount
+            function priceAfterDiscount(data, rowIndex) {
+                var price = data[rowIndex].price;
+                var discount = data[rowIndex].discount;
+
+                return price - ((price * discount) / 100);
+            }
+
             //===============================================================================
 
             //Northwind grid
             //===============================================================================
-            var northWindGrid = new GridJS()
-                .getGrid("gridNorthWind")
-                .dataSource(NorthWindDataSource)
-                .setCellPadding(6)
-                .setPagination(10)
-                .setPageButtonCss("NorthWindPaginationButton")
-                .addCustomFunction("GetOrderDate", function (data, rowIndex) {
-                    var date = new Date(Date.parse(data[rowIndex].OrderDate)),
-                        month = date.getMonth(),
-                        day = date.getDate(),
-                        year = date.getYear();
-                    return month + "/" + day + "/" + year;
-                })
-                .addCustomFunction("GetShippedDate", function (data, rowIndex) {
-                    var date = new Date(Date.parse(data[rowIndex].ShippedDate)),
-                        month = date.getMonth(),
-                        day = date.getDate(),
-                        year = date.getYear();
-                    return month + "/" + day + "/" + year;
-                })
-                .setDataRowColors(["#0B6121", "#0A2A0A"])
-                .draw();
+            var northWindGrid = new GridJS({
+                gridId: 'gridNorthWind',
+                dataSource: NorthWindDataSource,
+                cellPadding: 6,
+                pagination: 10,
+                pageButtonCss: { normalCss: 'NorthWindPaginationButton', activeCss: '' },
+                dataRowColors: ["#0B6121", "#0A2A0A"]
+            })
+            .addCustomFunction("GetOrderDate", function (data, rowIndex) {
+                var date = new Date(Date.parse(data[rowIndex].OrderDate)),
+                    month = date.getMonth(),
+                    day = date.getDate(),
+                    year = date.getYear();
+                return month + "/" + day + "/" + year;
+            })
+            .addCustomFunction("GetShippedDate", function (data, rowIndex) {
+                var date = new Date(Date.parse(data[rowIndex].ShippedDate)),
+                    month = date.getMonth(),
+                    day = date.getDate(),
+                    year = date.getYear();
+                return month + "/" + day + "/" + year;
+            })
+            .draw();
+
             //===============================================================================
 
             //Country grid
             //===============================================================================
-            var countryGrid = new GridJS()
-                .getGrid("gridCountry")
-                .dataSource(CountryDataSource)
-                .setCellPadding(8)
-                .setDataRowColors(["#F8FBEF", "#EFF5FB"])
-                .draw();
+            var countryGrid = new GridJS({
+                gridId: 'gridCountry',
+                dataSource: CountryDataSource,
+                cellPadding: 8,
+                dataRowColors: ["#F8FBEF", "#EFF5FB"]
+            })
+            .draw();
+
             //===============================================================================
 
             //TODO app object
@@ -425,16 +442,19 @@
                 todoGrid.reDraw();
             }
 
-            todoGrid = new GridJS().getGrid("todoGrid")
-                .dataSource(todoList)
-                .setDataRowColors(["#FFFFFF", "#FBEFFB", "#EFF8FB", "#FBFBEF", "#FBEFEF"])
-                .addCustomFunction("GetTodoStatus", function (data, rowIndex) {
-                    if (data[rowIndex]["done"] === true) { return "Done"; }
-                    else { return "Normal"; }
-                })
-                .setMouseOverColor("#FFC1C1")
-                .setPagination(10)
-                .draw();
+            todoGrid = new GridJS({
+                gridId: 'todoGrid',
+                dataSource: todoList,
+                dataRowColors: ["#FFFFFF", "#FBEFFB", "#EFF8FB", "#FBFBEF", "#FBEFEF"],
+                mouseOverColor: '#FFC1C1',
+                pagination: 10
+            })
+            .addCustomFunction("GetTodoStatus", function (data, rowIndex) {
+                if (data[rowIndex]["done"] === true) { return "Done"; }
+                else { return "Normal"; }
+            })
+            .draw();
+
             //================================================================================
         });
     </script>

@@ -26,9 +26,33 @@
     var currentPageNumber = 1,
         cellPadding = 5;
 
+    //config function
+    //Config Object Properties:
+    //-----------------
+    //gridId
+    //dataSource
+    //updateDataRowOnInputChange
+    //beforeGridPageChange
+    //onRowRedrawComplete
+    //onGridPageChange
+    //onGridLoaded
+    //allowPageChange
+    //disableInputBindings
+    //pageButtonCss {normalCss: 'value', activeCss: 'value'}
+    //pagination
+    //dataRowColors []
+    //cellPadding
+    //onRowAddition
+    //mouseOverColor
+    //-----------------
+    gridJS = function (config) {
 
-    gridJS = function () {
-        this._sourceGrid = null;
+        var f = null,
+            o = null,
+            c = config;
+
+        //initializing stuff here
+        this._sourceGrid = null;                        //this will be used to gather source grid markup on grid redraw
         this._grid = null;
         this._gridID = null;
         this._dataSource = null;
@@ -57,110 +81,96 @@
         this._onGridPageChange = null;                  //event handler for grid page change event
         this._beforeGridPageChange = null;              //event handler for grid page change event before the page is changed
         this._onRowRedrawComplete = null;               //event handler for row re-draw complete event
+        
+
+        //configure the properties based on the config object
+        //set the grid
+        if (c['gridId']) {
+            this._sourceGrid = d.createElement('gridjs');
+            this._gridID = c['gridId'];
+            this._grid = d.querySelector('#' + c['gridId']);
+            this._sourceGrid.innerHTML = this._grid.innerHTML;
+        }
+
+        //set the data-source
+        if (c['dataSource']) {
+            this._dataSource = c['dataSource'];
+            this._dataItemCount = c['dataSource'].length;
+        }
+
+        //set updateDataRowOnInputChange flag
+        if (!IsNullOrUndefined(c['updateDataRowOnInputChange']))
+            this._updateRowOnDataChange = c['updateDataRowOnInputChange'];
+        else
+            this._updateRowOnDataChange = true;
+
+        //set beforeGridPageChange event
+        f = c['beforeGridPageChange'];
+        if (f && isFunction(f))
+            this._beforeGridPageChange = f;
+
+        //set onRowRedrawComplete event
+        f = c['onRowRedrawComplete'];
+        if (f && isFunction(f))
+            this._onRowRedrawComplete = f;
+
+        //set onGridPageChange event
+        f = c['onGridPageChange'];
+        if (f && isFunction(f))
+            this._onGridPageChange = f;
+
+        //set onGridLoaded event
+        f = c['onGridLoaded'];
+        if (f && isFunction(f))
+            this._onGridLoaded = f;
+
+        //set allowPageChange flag
+        this._allowPageChange = c['allowPageChange'] || true;
+
+        //set disableInputBindings flag
+        this._bindInput = c['disableInputBindings'] || true;
+
+        //set pagination button css
+        o = c['pageButtonCss'];
+        if (o) {
+            this._pageButtonNormalCss = o['normalCss'];
+            this._pageButtonActiveCss = o['activeCss'];
+        }
+
+        //set pagination
+        if (c['pagination']) {
+            this._hasPagination = true;
+            this._pageRowCount = c['pagination'];
+        }
+
+        //set dataRowColors
+        o = c['dataRowColors'];
+        if (o && o.length && typeof o !== '[Object object]')
+            this._dataRowBackColors = o;
+
+        //set cellPadding
+        o = c['cellPadding'];
+        if (o) this._cellPadding = o;
+
+        //set onRowAddition event
+        f = c['onRowAddition'];
+        if (f && isFunction(f)) {
+            this._hasRowAddHandler = true;
+            this._rowAddHandler = f;
+        }
+
+        //set mouseOverColor
+        o = c['mouseOverColor'];
+        if (o) {
+            this._hasMouseOverColor = true;
+            this._mouseOverColor = o;
+        }
+
+        //return our grid object
         return this;
     };
     gridJS.prototype = {
-        //config function
-        //Config Object Properties:
-        //-----------------
-        //gridId
-        //dataSource
-        //updateDataRowOnInputChange
-        //beforeGridPageChange
-        //onRowRedrawComplete
-        //onGridPageChange
-        //onGridLoaded
-        //allowPageChange
-        //disableInputBindings
-        //pageButtonCss {normal, active}
-        //pagination
-        //dataRowColors []
-        //cellPadding
-        //onRowAddition
-        //mouseOverColor
-        //-----------------
-        config: function (c) {
-            var f = null,
-                o = null;
-
-            //set the grid
-            if (c['gridId']) {
-                this._gridID = c['gridId'];
-                this._grid = d.querySelector('#' + gridID);
-            }
-
-            //set the data-source
-            if (c['dataSource']) {
-                this._dataSource = dataSource;
-                this._dataItemCount = dataSource.length;
-            }
-
-            //set updateDataRowOnInputChange flag
-            this._updateRowOnDataChange = c['updateDataRowOnInputChange'] || true;
-
-            //set beforeGridPageChange event
-            f = c['beforeGridPageChange'];
-            if (f && isFunction(f))
-                this._beforeGridPageChange = f;
-
-            //set onRowRedrawComplete event
-            f = c['onRowRedrawComplete'];
-            if (f && isFunction(f))
-                this._onRowRedrawComplete = f;
-
-            //set onGridPageChange event
-            f = c['onGridPageChange'];
-            if (f && isFunction(f))
-                this._onGridPageChange = f;
-
-            //set onGridLoaded event
-            f = c['onGridLoaded'];
-            if (f && isFunction(f))
-                this._onGridLoaded = f;
-
-            //set allowPageChange flag
-            this._allowPageChange = c['allowPageChange'] || true;
-
-            //set disableInputBindings flag
-            this._bindInput = c['disableInputBindings'] || true;
-
-            //set pagination button css
-            o = c['pageButtonCss'];
-            if (o.length) {
-                this._pageButtonNormalCss = o['normalCss'];
-                this._pageButtonActiveCss = o['activeCss'];
-            }
-
-            //set pagination
-            if (c['pagination']) {
-                this._hasPagination = true;
-                this._pageRowCount = c['pagination'];
-            }
-
-            //set dataRowColors
-            o = c['dataRowColors'];
-            if (o.length && typeof o !== '[Object object]')
-                this._dataRowBackColors = o;
-
-            //set cellPadding
-            o = c['cellPadding'];
-            if (o) this._cellPadding = o;
-
-            //set onRowAddition event
-            f = c['onRowAddition'];
-            if (f && isFunction(f)) {
-                this._hasRowAddHandler = true;
-                this._rowAddHandler = f;
-            }
-
-            //set mouseOverColor
-            o = c['mouseOverColor'];
-            if (o) {
-                this._hasMouseOverColor = true;
-                this._mouseOverColor = o;
-            }
-        },
-
+        
         //flag to determine if data row should be updated on binded input data change or not
         updateDataRowOnInputChange: function (bool) {
             this._updateRowOnDataChange = bool;
@@ -686,6 +696,7 @@
                 value = this.checked;
                 break;
         }
+        //this needs more work as heirarchichal binds are not supported
         grid._dataSource[rowIndex][propertyName] = value;
         grid._dataChanges["row" + rowIndex] = grid._dataSource[rowIndex];
 
@@ -781,7 +792,7 @@
 
     //Function to evalute value from a template function
     function EvalFunction(f, dataSource, rowIndex, customBindings) {
-        var func = f.replace("()", ""),
+        var func = f.replace('()', ''),
             func = customBindings[func];
         if (!IsNullOrUndefined(func)) {
             return func(dataSource, rowIndex);

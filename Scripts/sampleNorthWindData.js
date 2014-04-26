@@ -10,7 +10,8 @@
                             [
                                 { "OrderID": 10248, "ProductID": 11, "UnitPrice": "14.0000", "Quantity": 12, "Discount": 0 }
                                 , { "OrderID": 10248, "ProductID": 42, "UnitPrice": "9.8000", "Quantity": 10, "Discount": 0 }
-                                , { "OrderID": 10248, "ProductID": 72, "UnitPrice": "34.8000", "Quantity": 5, "Discount": 0 }]
+                                , { "OrderID": 10248, "ProductID": 72, "UnitPrice": "34.8000", "Quantity": 5, "Discount": 0 }
+                            ]
                         , "OrderID": 10248
                         , "CustomerID": "VINET"
                         , "EmployeeID": 5

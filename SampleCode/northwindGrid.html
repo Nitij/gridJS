@@ -1,0 +1,30 @@
+﻿<pre class="brush: html">
+    <gridjs id="northwindGrid" class="NorthWindGrid">
+        <headerRow class="NorthWindGridHeaderRow">
+            <column><b>Order ID</b></column>
+            <column><b>Customer ID</b></column>
+            <column><b>Emp ID</b></column>
+            <column><b>Order Date</b></column>
+            <column><b>Shipped Date</b></column>
+            <column><b>Freight</b></column>
+            <column><b>Ship Name</b></column>
+            <column><b>Ship City</b></column>
+            <column><b>Ship Postal Code</b></column>
+            <column><b>Ship Country</b></column>
+        </headerRow>
+        <dataRow class="NorthWindGridRow">
+            <column>{{OrderID}}</column>
+            <column>{{CustomerID}}</column>
+            <column>{{EmployeeID}}</column>
+            <column>{{GetOrderDate()}}</column>
+            <column>{{GetShippedDate()}}</column>
+            <column>{{Freight}}</column>
+            <column>{{ShipName}}</column>
+            <column>{{ShipCity}}</column>
+            <column>{{ShipPostalCode}}</column>
+            <column>{{ShipCountry}}</column>                
+        </dataRow>
+        <footerRow>
+        </footerRow>
+    </gridjs>
+</pre>

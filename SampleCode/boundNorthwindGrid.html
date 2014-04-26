@@ -1,0 +1,42 @@
+﻿<pre class="brush: html">
+    <gridjs id="boundNorthWindGrid" class="NorthWindGrid">
+        <headerRow class="NorthWindGridHeaderRow">
+            <column><b>Order ID</b></column>
+            <column><b>Customer ID</b></column>
+            <column><b>Emp ID</b></column>
+            <column><b>Order Date</b></column>
+            <column><b>Shipped Date</b></column>
+            <column><b>Freight</b></column>
+            <column><b>Ship Name</b></column>
+            <column><b>Ship City</b></column>
+            <column><b>Ship Postal Code</b></column>
+            <column><b>Ship Country</b></column>
+            <column><b>Order Details 1(Id)</b></column>
+        </headerRow>
+        <dataRow class="NorthWindGridRow">
+            <column>
+                <input class="CustomText" type="text" id="txtOrderID" model="{{OrderID}}" />
+            </column>
+            <column>{{CustomerID}}</column>
+            <column>{{EmployeeID}}</column>
+            <column>{{GetOrderDate1()}}</column>
+            <column>{{GetShippedDate1()}}</column>
+            <column>{{Freight}}</column>
+            <column>
+                <input class="CustomText" type="text" id="txtShipName" model="{{ShipName}}" />
+            </column>
+            <column>
+                <input class="CustomText" type="text" id="txtShipCity" model="{{ShipCity}}" />
+            </column>
+            <column>{{ShipPostalCode}}</column>
+            <column>
+                <input class="CustomText" type="text" id="txtShipCountry" model="{{ShipCountry}}" />                   
+            </column> 
+            <column>
+                <input class="CustomText" type="text" id="Text5" model="{{Order_Details[0].OrderID}}" />                   
+            </column>               
+        </dataRow>
+        <footerRow>
+        </footerRow>
+    </gridjs>
+</pre>

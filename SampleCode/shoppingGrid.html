@@ -1,0 +1,74 @@
+﻿<pre class="brush: html">
+    <gridjs id="shoppingGrid" class="ShoppingGrid">
+        <headerRow>
+        </headerRow>
+        <dataRow>
+            <column>
+                <table>
+                    <tr>
+                        <td class="ShoppingLeftCol">
+                            <img model-src="Images\{{image}}" height="400px" />
+                        </td>
+                        <td class="ShoppingRightCol">
+                            <span class="ShoppingItemHeading">{{name}}</span>
+                            <br />
+                            <img model-src="Images\{{rating}}star.png" height="35px" />
+                            <br />
+                            <table cellpadding="12px">
+                                <tr>
+                                    <td class="ShoppingPriceCol">
+                                        <span class="PriceWithoutDiscount">Rs. {{price}}</span>
+                                        <br />
+                                        <span class="ShoppingPrice">Rs. {{PriceAfterDiscount()}}</span>                        
+                                        <br />
+                                        Inclusive of taxes
+                                        <br /><br />
+                                        <b>Discount:</b> {{discount}}%
+                                        <br /><br />
+                                        Free home delivery
+                                    </td>
+                                    <td class="ShoppingFeaturesCol">
+                                        <b>Key Features:</b>
+                                        <ul>
+                                            <li><b>Operating System:</b> {{operatingSystem}}</li>
+                                            <li><b>Processor:</b> {{processor}}</li>
+                                            <li><b>Screen Resolution:</b> {{resolution}}</li>
+                                            <li><b>Camera:</b> {{primaryCamera}}</li>
+                                            <li><b>Size:</b> {{size}}</li>
+                                            <li><b>Weight:</b> {{weight}}</li>
+                                            <li><b>Internal Memory:</b> {{internalMemory}}</li>
+                                        </ul>
+                                    </td>
+                                </tr>
+                            </table>
+                        
+                            <table cellpadding="10px">
+                                <tr>
+                                    <td class="ShoppingBuyNowLeftCol">
+                                        <a class="ShoppingBuyNowButton" href="" onclick="return false;">BUY NOW</a>
+                                        <br /><br />
+                                        Call <b>1800 200 9000 (toll free)</b> for assistance from our product expert.
+                                        <hr />
+                                        <b>Cash</b> on Delivery
+                                        <hr />
+                                        <b>EMI</b> Option
+                                        <hr />
+                                        <b>30 Day</b> Replacement Guarantee
+                                        <hr />
+                                    </td>
+                                    <td class="ShoppingBuyNowRightCol">
+                                        <span class="ShopingInStock">In Stock</span>
+                                        <br />
+                                        Cash-on-Delivery also available
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </column>
+        </dataRow>
+        <footerRow>
+        </footerRow>
+    </gridjs>
+</pre>

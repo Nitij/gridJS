@@ -1,462 +1,688 @@
-﻿<!doctype html>
+﻿<!DOCTYPE html>
 <html>
 <head>
-    <title>gridJS</title>
-    <script type="text/javascript" src="Scripts\jQuery.js"></script>
-    <script type="text/javascript" src="Scripts\grid.main.js"></script>
-    <script type="text/javascript" src="Scripts\validate.main.js"></script>
-    <script type="text/javascript" src="Scripts\sampleData.js"></script>
-    <script type="text/javascript" src="Scripts\sampleNorthWindData.js"></script>
-    <script type="text/javascript" src="Scripts\sampleCountryData.js"></script>
-    <script type="text/javascript" src="Scripts\sampleShoppingData.js"></script>
+    <title></title>
+    <!--Syntax Highlighter-->
+    <script type="text/javascript" src="Scripts/ThirdParty/SyntaxHighlighter/shCore.js"></script>
+    <script type="text/javascript" src="Scripts/ThirdParty/SyntaxHighlighter/shBrushJScript.js"></script>
+    <script type="text/javascript" src="Scripts/ThirdParty/SyntaxHighlighter/shBrushXml.js"></script>
 
-    <link rel="stylesheet" href="Style/style.css" />
+    <!--data source-->
+    <script type="text/javascript" src="Scripts/sampleCountryData.js"></script>
+    <script type="text/javascript" src="Scripts/sampleNorthWindData.js"></script>
+    <script type="text/javascript" src="Scripts/sampleShoppingData.js"></script>
+    <script type="text/javascript" src="Scripts/sampleGeneralData.js"></script>
+
+    <!--GRidJS-->
+    <script type="text/javascript" src="Scripts/grid.main.js"></script>
+
+    <!--jQuery-->
+    <script type="text/javascript" src="Scripts/jQuery.js"></script>
+
+    <!--app-->
+    <script type="text/javascript" src="Scripts/App/app.js"></script>
+
+    <!--uiBlocker-->
+    <script type="text/javascript" src="Scripts/App/uiBlocker.js"></script>
+
+    <!--events-->
+    <script type="text/javascript" src="Scripts/App/events.js"></script>
+
+    <!--grids-->
+    <!--todo grid-->
+    <script type="text/javascript" src="Scripts/Grids/todo.js"></script>
+    <!--country grid-->
+    <script type="text/javascript" src="Scripts/Grids/country.js"></script>
+    <!--northwind grid-->
+    <script type="text/javascript" src="Scripts/Grids/northwind.js"></script>
+    <!--shopping grid-->
+    <script type="text/javascript" src="Scripts/Grids/shopping.js"></script>
+    <!--boundNorthwind grid-->
+    <script type="text/javascript" src="Scripts/Grids/boundNorthwind.js"></script>
+    <!--validation grid-->
+    <script type="text/javascript" src="Scripts/validate.main.js"></script>
+    <script type="text/javascript" src="Scripts/Grids/validation.js"></script>
+    <!--custom editable grid-->
+    <script type="text/javascript" src="Scripts/Grids/customEditable.js"></script>
+
+    
+
+    <link rel="stylesheet" href="Style/MainStyle.css" />
+    <link rel="stylesheet" href="Style/GridStyle.css" />
+    <link rel="stylesheet" href="Style/ThirdParty/SyntaxHighlighter/shCore.css" />
+    <link rel="stylesheet" href="Style/ThirdParty/SyntaxHighlighter/shThemeDefault.css" />
 </head>
 <body>
-    <div id="divTodoGrid" style="text-align: center; width: 100%;">
-        <input class="CustomText" id="txtTodo" type="text" placeholder="add new todo here" />
-        <input type="submit" value="Add Todo" onclick="AddTodo(); return false;" />
-        <input type="submit" value="Clear" onclick="ClearAllTodo(); return false;" />
-        <br />
-        <gridjs id="todoGrid" class="TodoGrid">
-            <headerRow>
-            </headerRow>
-            <dataRow class="GridDataRow">
-                <column class="todoGridStatusCol"><input id="chkStatus" type="checkbox" model="{{done}}" /></column>
-                <column class="todoGridTextCol"><span class="TodoText{{GetTodoStatus()}}">{{title}}</span></column>
-            </dataRow>
-            <footerRow>
-            </footerRow>
-        </gridjs>
-    </div>
-    <br />
-    <br />
-    <div id="divCountryGrid" style="text-align: center; width: 100%;">
-        <gridjs id="gridCountry" class="CountryGrid">
-            <headerRow class="CountryGridHeaderRow">
-                <column><b>Name</b></column>
-                <column><b>Capital</b></column>
-                <column><b>Area</b></column>
-                <column><b>Population</b></column>
-                <column><b>Official Flag</b></column>
-            </headerRow>
-            <dataRow class="CountryGridRow">
-                <column>{{name}}</column>
-                <column>{{capital}}</column>
-                <column>{{area}}</column>
-                <column>{{population}}</column>
-                <column><img model-src="Images/{{flag}}" height="60px" width="100px" /></column>
-            </dataRow>
-            <footerRow>
-            </footerRow>
-        </gridjs>
-    </div>
-    <br />
-    <br />
-    <div id="divNorthWindGrid" style="text-align: center; width: 100%;">
-        <gridjs id="gridNorthWind" class="NorthWindGrid">
-            <headerRow class="NorthWindGridHeaderRow">
-                <column><b>Order ID</b></column>
-                <column><b>Customer ID</b></column>
-                <column><b>Emp ID</b></column>
-                <column><b>Order Date</b></column>
-                <column><b>Shipped Date</b></column>
-                <column><b>Freight</b></column>
-                <column><b>Ship Name</b></column>
-                <column><b>Ship City</b></column>
-                <column><b>Ship Postal Code</b></column>
-                <column><b>Ship Country</b></column>
-            </headerRow>
-            <dataRow class="NorthWindGridRow">
-                <column>{{OrderID}}</column>
-                <column>{{CustomerID}}</column>
-                <column>{{EmployeeID}}</column>
-                <column>{{GetOrderDate()}}</column>
-                <column>{{GetShippedDate()}}</column>
-                <column>{{Freight}}</column>
-                <column>{{ShipName}}</column>
-                <column>{{ShipCity}}</column>
-                <column>{{ShipPostalCode}}</column>
-                <column>{{ShipCountry}}</column>                
-            </dataRow>
-            <footerRow>
-            </footerRow>
-        </gridjs>
-    </div>
-    <br />
-    <br />
-    <div id="divShoppingGrid" style="text-align: center; width: 100%;">
-        <gridjs id="gridShopping" class="ShoppingGrid">
-            <headerRow>
-            </headerRow>
-            <dataRow>
-                <column>
-                    <table>
-                        <tr>
-                            <td class="ShoppingLeftCol">
-                                <img model-src="Images\{{image}}" height="400px" />
-                            </td>
-                            <td class="ShoppingRightCol">
-                                <span class="ShoppingItemHeading">{{name}}</span>
-                                <br />
-                                <img model-src="Images\{{rating}}star.png" height="35px" />
-                                <br />
-                                <table cellpadding="12px">
-                                    <tr>
-                                        <td class="ShoppingPriceCol">
-                                            <span class="PriceWithoutDiscount">Rs. {{price}}</span>
-                                            <br />
-                                            <span class="ShoppingPrice">Rs. {{PriceAfterDiscount()}}</span>                        
-                                            <br />
-                                            Inclusive of taxes
-                                            <br /><br />
-                                            <b>Discount:</b> {{discount}}%
-                                            <br /><br />
-                                            Free home delivery
-                                        </td>
-                                        <td class="ShoppingFeaturesCol">
-                                            <b>Key Features:</b>
-                                            <ul>
-                                                <li><b>Operating System:</b> {{operatingSystem}}</li>
-                                                <li><b>Processor:</b> {{processor}}</li>
-                                                <li><b>Screen Resolution:</b> {{resolution}}</li>
-                                                <li><b>Camera:</b> {{primaryCamera}}</li>
-                                                <li><b>Size:</b> {{size}}</li>
-                                                <li><b>Weight:</b> {{weight}}</li>
-                                                <li><b>Internal Memory:</b> {{internalMemory}}</li>
-                                            </ul>
-                                        </td>
-                                    </tr>
-                                </table>
+    <div id="container" class="container">
+        <!--ui blocker-->
+        <div id="divUIBlocker" class="uiBlocker" onclick="App.Events.HideSourceCode();return false;"></div>
+        <div id="divSourceCode" class="divSourceCode">
+            <div style="overflow:scroll;height:100%;">
+                Source Code: Html
+                <div id="htmlCode">                             
+                </div>
+                Source Code: JavaScript
+                <div id="jsCode">
+                                
+                </div>
+            </div>
+        </div>
+
+        <!--logo-->
+        <div id="divLogo" class="logo">
+            <h1>GridJS</h1>
+        </div>
+
+        <!--api documentation-->
+        <div id="divApi" class="api">
+            GridJS is a JavaScript plugin to create UI grids. This plugin supports templates and is highly customizable. gridJS can work independently from any other third party library like jQuery. 
+            The first step in using gridJS is to create markup of the grid. This can be done by creating a custom &lt;gridJS&gt; html element. Inside there can be header row, data row and footer. Take a look at below example:
+            <br /><br />
+            First load the GridJS script into the page:
+            <pre class="brush: html">
+                &lt;head&gt;
+                    &lt;script type="text/javascript" src="grid.main.js">&lt;/script&gt;
+                &lt;/head&gt;
+            </pre>
+
+            Then create the custom &lt;gridJS&gt; html element:
+            <pre class="brush: html">
+                &lt;gridjs id="gridNorthWind" class="NorthWindGrid"&gt;
+                    &lt;headerRow class="NorthWindGridHeaderRow"&gt;
+                        &lt;column&gt;<b>Order ID</b>&lt;/column&gt;
+                        &lt;column&gt;<b>Customer ID</b>&lt;/column&gt;
+                        &lt;column&gt;<b>Emp ID</b>&lt;/column&gt;
+                        &lt;column&gt;<b>Order Date</b>&lt;/column&gt;
+                        &lt;column&gt;<b>Shipped Date</b>&lt;/column&gt;
+                        &lt;column&gt;<b>Freight</b>&lt;/column&gt;
+                        &lt;column&gt;<b>Ship Name</b>&lt;/column&gt;
+                        &lt;column&gt;<b>Ship City</b>&lt;/column&gt;
+                        &lt;column&gt;<b>Ship Postal Code</b>&lt;/column&gt;
+                        &lt;column&gt;<b>Ship Country</b>&lt;/column&gt;
+                    &lt;/headerRow&gt;
+                    &lt;dataRow class="NorthWindGridRow"&gt;
+                        &lt;column&gt;{{OrderID}}&lt;/column&gt;
+                        &lt;column&gt;{{CustomerID}}&lt;/column&gt;
+                        &lt;column&gt;{{EmployeeID}}&lt;/column&gt;
+                        &lt;column&gt;{{GetOrderDate()}}&lt;/column&gt;
+                        &lt;column&gt;{{GetShippedDate()}}&lt;/column&gt;
+                        &lt;column&gt;{{Freight}}&lt;/column&gt;
+                        &lt;column&gt;{{ShipName}}&lt;/column&gt;
+                        &lt;column&gt;{{ShipCity}}&lt;/column&gt;
+                        &lt;column&gt;{{ShipPostalCode}}&lt;/column&gt;
+                        &lt;column&gt;{{ShipCountry}}&lt;/column&gt;                
+                    &lt;/dataRow&gt;
+                    &lt;footerRow&gt;
+                    &lt;/footerRow&gt;
+                &lt;/gridjs&gt;
+            </pre>
+
+            gridJS works by converting the &lt;gridJS&gt; html element into html table by combining it with the provided data source. gridJS can be configured when creating the grid object by passing the config object. The structure of that config object can be as follows:
+            <pre class="brush: js">
+                var gridJS = new GridJS({
+                    gridId 					  : 'gridNorthWind',                 //Gets the id of the &lt;gridJS&gt; element.
+                    dataSource 				  : NorthWindDataSource,             //Gets the data-source.
+                    updateDataRowOnInputChange: (function),                      //Flag to update data row when any input inside that row is changed.
+                    beforeGridPageChange	  : (function),                      //Event which is fired before grid page change.
+                    onRowRedrawComplete		  : (function),                      //Event which is fired when data-row redraw is complete.
+                    onGridPageChange		  : (function),                      //Event which is fired when grid page is changed.
+                    onGridLoaded			  : (function),                      //Event which is fired hen the grid is loaded.
+                    allowPageChange			  : true,                            //Flag to determine if the grid page can be changed or not.
+                    disableInputBindings	  : false,                           //Flag to disable or enable input bindings.
+                    pageButtonCss             : { normalCss: 'NormalCssClass',
+                                                  activeCss: 'ActiveCssClass'},  //Sets the page button's normal and active state css classes.
+                    pagination				  : 10,                              //Enables pagination and sets number of rows per page.
+                    dataRowColors   		  : ["#0B6121", "#0A2A0A"],          //Gets the sequential data-row colors.
+                    cellPadding:			  : 5,                               //Sets the cell padding.
+                    onRowAddition			  : (function),                      //Event which is fired before row addition.
+                    mouseOverColor:			  : '#FFC1C1'                        //Sets the mouse-over color of the grid.
+                });
+            </pre>
+            <br />
+            Finally draw the grid by calling the draw() function.
+            <pre class="brush: js">
+                gridJS().draw();                    
+            </pre>
+
+            Apart from the above config object syntax there are several standalone helper functions to set the grid properties. They are:
+
+            <!--reDraw-->
+            <div class="apiFunction">
+                <h2>reDraw()</h2>
+                <span>This function redraws the grid if required.</span>
+                <pre class="brush: js">
+                    gridJS().reDraw();                    
+                </pre>
+            </div>
+
+            <!--updateDataRowOnInputChange-->
+            <div class="apiFunction">
+                <h2>updateDataRowOnInputChange(bool)</h2>
+                <span>Function to set the flag to determine if data row should be updated on binded input's data change or not.</span>
+                <pre class="brush: js">
+                    gridJS().updateDataRowOnInputChange(boolean value);                    
+                </pre>
+            </div>
+
+            <!--beforeGridPageChange-->
+            <div class="apiFunction">
+                <h2>beforeGridPageChange(func)</h2>
+                <span>Function that can be used to wireup event handler for grid page change event.</span>
+                <pre class="brush: js">
+                    gridJS().beforeGridPageChange(SomeFunction);                    
+                </pre>
+            </div>
+
+            <!--onRowRedrawComplete-->
+            <div class="apiFunction">
+                <h2>onRowRedrawComplete(func)</h2>
+                <span>Function which is called when row redraw is completed which happens when any bound input is changed.</span>
+                <pre class="brush: js">
+                    gridJS().onRowRedrawComplete(SomeFunction);                    
+                </pre>
+            </div>
+
+            <!--onGridPageChange-->
+            <div class="apiFunction">
+                <h2>onGridPageChange(func)</h2>
+                <span>Function to set grid page change event handler.</span>
+                <pre class="brush: js">
+                    gridJS().onGridPageChange(SomeFunction);                    
+                </pre>
+            </div>
+
+            <!--onGridLoaded-->
+            <div class="apiFunction">
+                <h2>onGridLoaded(func)</h2>
+                <span>Function to set grid loaded event handler.</span>
+                <pre class="brush: js">
+                    gridJS().onGridLoaded(SomeFunction);                    
+                </pre>
+            </div>
+
+            <!--allowPageChange-->
+            <div class="apiFunction">
+                <h2>allowPageChange(bool)</h2>
+                <span>Function to set the flag to allow grid page change or not.</span>
+                <pre class="brush: js">
+                    gridJS().allowPageChange(true);                    
+                </pre>
+            </div>
+
+            <!--addCustomFunction-->
+            <div class="apiFunction">
+                <h2>addCustomFunction(functionName, func)</h2>
+                <span>Adds a custom function that can be called from inside the grid's templates. The called function receives the data-source and row index as parameters.</span>
+                <pre class="brush: js">
+                    gridJS().addCustomFunction('MyFunction', myFunction);                    
+                </pre>
+            </div>
+
+            <!--disableInputBindings-->
+            <div class="apiFunction">
+                <h2>disableInputBindings(bool)</h2>
+                <span>Function to disable or enable input bindings.</span>
+                <pre class="brush: js">
+                    gridJS().disableInputBindings(boolean value);                    
+                </pre>
+            </div>
+
+            <!--setPageButtonCss-->
+            <div class="apiFunction">
+                <h2>setPageButtonCss(normalCss, activeCss)</h2>
+                <span>Sets the page button's normal and active state css classes.</span>
+                <pre class="brush: js">
+                    gridJS().setPageButtonCss('NormalStateCssClassName', 'ActiveStateCssClassName');                    
+                </pre>
+            </div>
+
+            <!--setPagination-->
+            <div class="apiFunction">
+                <h2>setPagination(numberOfRows)</h2>
+                <span>Function that an be used to activate the pagination and sets number of rows in a page.</span>
+                <pre class="brush: js">
+                    gridJS().setPagination(10);                    
+                </pre>
+            </div>
+
+            <!--getGrid-->
+            <div class="apiFunction">
+                <h2>getGrid(gridId)</h2>
+                <span>Function to get the grid element's id.</span>
+                <pre class="brush: js">
+                    gridJS().getGrid('#myGridId');                    
+                </pre>
+            </div>
+
+            <!--dataSource-->
+            <div class="apiFunction">
+                <h2>dataSource(dataSource)</h2>
+                <span>Function to set the grid's JSON array data source.</span>
+                <pre class="brush: js">
+                    gridJS().dataSource(myDataSource [{},{},{}...]);                    
+                </pre>
+            </div>
+
+            <!--setDataRowColors-->
+            <div class="apiFunction">
+                <h2>setDataRowColors(colorsArray)</h2>
+                <span>Function to set alternate colors or custom color sequence for the rows.</span>
+                <pre class="brush: js">
+                    gridJS().setDataRowColors([color1, color2...]);                    
+                </pre>
+            </div>
+
+            <!--setCellPadding-->
+            <div class="apiFunction">
+                <h2>setCellPadding(cellPadding)</h2>
+                <span>Function to set the padding of the output table's cells.</span>
+                <pre class="brush: js">
+                    gridJS().setCellPadding(5);                    
+                </pre>
+            </div>
+
+            <!--onRowAddition-->
+            <div class="apiFunction">
+                <h2>onRowAddition(func)</h2>
+                <span>Function to set row add event handler.</span>
+                <pre class="brush: js">
+                    gridJS().onRowAddition(SomeFunction);                    
+                </pre>
+            </div>
+
+            <!--setMouseOverColor-->
+            <div class="apiFunction">
+                <h2>setMouseOverColor(color)</h2>
+                <span>Function to set row mouse over color.</span>
+                <pre class="brush: js">
+                    gridJS().setMouseOverColor('lightGreen');                    
+                </pre>
+            </div>
+
+            <!--getDataUpdates-->
+            <div class="apiFunction">
+                <h2>getDataUpdates()</h2>
+                <span>Function that returns an array containing updated data rows.</span><br />
+                <span>Returns an array of data updates made by using the bound input elements.</span>
+                <pre class="brush: js">
+                    var updates = gridJS().getDataUpdates();                    
+                </pre>
+            </div>
+        </div>
+
+        <!--samples-->
+        <div id="divSamples">
+
+            <!--todo grid-->
+            <div class="sample">
+                <h2>ToDo Grid</h2>
+                <a href="#" onclick="App.Events.ShowTodoGridCode();return false;" class="showCodeButton">Show Code</a>
+                <br /><br />
+                <input class="CustomText" id="txtTodo" type="text" placeholder="add new todo here" />
+                <input type="submit" value="Add Todo" onclick="AddTodo(); return false;" />
+                <input type="submit" value="Clear" onclick="ClearAllTodo(); return false;" />
+                <br />
+                <gridjs id="todoGrid" class="TodoGrid">
+                    <headerRow>
+                    </headerRow>
+                    <dataRow class="GridDataRow">
+                        <column class="todoGridStatusCol"><input id="chkStatus" type="checkbox" model="{{done}}" /></column>
+                        <column class="todoGridTextCol"><span class="TodoText{{GetTodoStatus()}}">{{title}}</span></column>
+                    </dataRow>
+                    <footerRow>
+                    </footerRow>
+                </gridjs>
+            </div>
+
+            <!--country grid-->
+            <div class="sample">
+                <h2>Country Grid</h2>
+                <a href="#" onclick="App.Events.ShowCountryGridCode();return false;" class="showCodeButton">Show Code</a>
+                <br /><br />
+                <gridjs id="countryGrid" class="CountryGrid">
+                    <headerRow class="CountryGridHeaderRow">
+                        <column><b>Name</b></column>
+                        <column><b>Capital</b></column>
+                        <column><b>Area</b></column>
+                        <column><b>Population</b></column>
+                        <column><b>Official Flag</b></column>
+                    </headerRow>
+                    <dataRow class="CountryGridRow">
+                        <column>{{name}}</column>
+                        <column>{{capital}}</column>
+                        <column>{{area}}</column>
+                        <column>{{population}}</column>
+                        <column><img model-src="Images/{{flag}}" height="60px" width="100px" /></column>
+                    </dataRow>
+                    <footerRow>
+                    </footerRow>
+                </gridjs>
+            </div>
+
+            <!--northwind grid-->
+            <div class="sample">
+                <h2>Normal Css Grid</h2>
+                <a href="#" onclick="App.Events.ShowNorthwindGridCode();return false;" class="showCodeButton">Show Code</a>
+                <br /><br />
+                <gridjs id="northwindGrid" class="NorthWindGrid">
+                    <headerRow class="NorthWindGridHeaderRow">
+                        <column><b>Order ID</b></column>
+                        <column><b>Customer ID</b></column>
+                        <column><b>Emp ID</b></column>
+                        <column><b>Order Date</b></column>
+                        <column><b>Shipped Date</b></column>
+                        <column><b>Freight</b></column>
+                        <column><b>Ship Name</b></column>
+                        <column><b>Ship City</b></column>
+                        <column><b>Ship Postal Code</b></column>
+                        <column><b>Ship Country</b></column>
+                    </headerRow>
+                    <dataRow class="NorthWindGridRow">
+                        <column>{{OrderID}}</column>
+                        <column>{{CustomerID}}</column>
+                        <column>{{EmployeeID}}</column>
+                        <column>{{GetOrderDate()}}</column>
+                        <column>{{GetShippedDate()}}</column>
+                        <column>{{Freight}}</column>
+                        <column>{{ShipName}}</column>
+                        <column>{{ShipCity}}</column>
+                        <column>{{ShipPostalCode}}</column>
+                        <column>{{ShipCountry}}</column>                
+                    </dataRow>
+                    <footerRow>
+                    </footerRow>
+                </gridjs>
+            </div>
+
+            <!--shopping grid-->
+            <div class="sample">
+                <h2>Shopping Grid</h2>
+                <a href="#" onclick="App.Events.ShowShoppingGridCode();return false;" class="showCodeButton">Show Code</a>
+                <br /><br />
+                <gridjs id="shoppingGrid" class="ShoppingGrid">
+                    <headerRow>
+                    </headerRow>
+                    <dataRow>
+                        <column>
+                            <table>
+                                <tr>
+                                    <td class="ShoppingLeftCol">
+                                        <img model-src="Images\{{image}}" height="400px" />
+                                    </td>
+                                    <td class="ShoppingRightCol">
+                                        <span class="ShoppingItemHeading">{{name}}</span>
+                                        <br />
+                                        <img model-src="Images\{{rating}}star.png" height="35px" />
+                                        <br />
+                                        <table cellpadding="12px">
+                                            <tr>
+                                                <td class="ShoppingPriceCol">
+                                                    <span class="PriceWithoutDiscount">Rs. {{price}}</span>
+                                                    <br />
+                                                    <span class="ShoppingPrice">Rs. {{PriceAfterDiscount()}}</span>                        
+                                                    <br />
+                                                    Inclusive of taxes
+                                                    <br /><br />
+                                                    <b>Discount:</b> {{discount}}%
+                                                    <br /><br />
+                                                    Free home delivery
+                                                </td>
+                                                <td class="ShoppingFeaturesCol">
+                                                    <b>Key Features:</b>
+                                                    <ul>
+                                                        <li><b>Operating System:</b> {{operatingSystem}}</li>
+                                                        <li><b>Processor:</b> {{processor}}</li>
+                                                        <li><b>Screen Resolution:</b> {{resolution}}</li>
+                                                        <li><b>Camera:</b> {{primaryCamera}}</li>
+                                                        <li><b>Size:</b> {{size}}</li>
+                                                        <li><b>Weight:</b> {{weight}}</li>
+                                                        <li><b>Internal Memory:</b> {{internalMemory}}</li>
+                                                    </ul>
+                                                </td>
+                                            </tr>
+                                        </table>
                         
-                                <table cellpadding="10px">
-                                    <tr>
-                                        <td class="ShoppingBuyNowLeftCol">
-                                            <a class="ShoppingBuyNowButton" href="" onclick="return false;">BUY NOW</a>
-                                            <br /><br />
-                                            Call <b>1800 200 9000 (toll free)</b> for assistance from our product expert.
-                                            <hr />
-                                            <b>Cash</b> on Delivery
-                                            <hr />
-                                            <b>EMI</b> Option
-                                            <hr />
-                                            <b>30 Day</b> Replacement Guarantee
-                                            <hr />
-                                        </td>
-                                        <td class="ShoppingBuyNowRightCol">
-                                            <span class="ShopingInStock">In Stock</span>
-                                            <br />
-                                            Cash-on-Delivery also available
-                                        </td>
-                                    </tr>
-                                </table>
-                            </td>
-                        </tr>
-                    </table>
-                </column>
-            </dataRow>
-            <footerRow>
-            </footerRow>
-        </gridjs>
+                                        <table cellpadding="10px">
+                                            <tr>
+                                                <td class="ShoppingBuyNowLeftCol">
+                                                    <a class="ShoppingBuyNowButton" href="" onclick="return false;">BUY NOW</a>
+                                                    <br /><br />
+                                                    Call <b>1800 200 9000 (toll free)</b> for assistance from our product expert.
+                                                    <hr />
+                                                    <b>Cash</b> on Delivery
+                                                    <hr />
+                                                    <b>EMI</b> Option
+                                                    <hr />
+                                                    <b>30 Day</b> Replacement Guarantee
+                                                    <hr />
+                                                </td>
+                                                <td class="ShoppingBuyNowRightCol">
+                                                    <span class="ShopingInStock">In Stock</span>
+                                                    <br />
+                                                    Cash-on-Delivery also available
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+                        </column>
+                    </dataRow>
+                    <footerRow>
+                    </footerRow>
+                </gridjs>
+            </div>
+
+            <!--bound northwind grid-->
+            <div class="sample">
+                <h2>Bound Input Css Grid</h2>
+                <a href="#" onclick="App.Events.ShowBoundNorthwindGridCode();return false;" class="showCodeButton">Show Code</a>
+                <br /><br />
+                <span>Try changing the inputs and after changing the page the inputs are retained.</span>
+                <gridjs id="boundNorthWindGrid" class="NorthWindGrid">
+                    <headerRow class="NorthWindGridHeaderRow">
+                        <column><b>Order ID</b></column>
+                        <column><b>Customer ID</b></column>
+                        <column><b>Emp ID</b></column>
+                        <column><b>Order Date</b></column>
+                        <column><b>Shipped Date</b></column>
+                        <column><b>Freight</b></column>
+                        <column><b>Ship Name</b></column>
+                        <column><b>Ship City</b></column>
+                        <column><b>Ship Postal Code</b></column>
+                        <column><b>Ship Country</b></column>
+                        <column><b>Order Details 1(Id)</b></column>
+                    </headerRow>
+                    <dataRow class="NorthWindGridRow">
+                        <column>
+                            <input class="CustomText" type="text" id="txtOrderID" model="{{OrderID}}" />
+                        </column>
+                        <column>{{CustomerID}}</column>
+                        <column>{{EmployeeID}}</column>
+                        <column>{{GetOrderDate()}}</column>
+                        <column>{{GetShippedDate()}}</column>
+                        <column>{{Freight}}</column>
+                        <column>
+                            <input class="CustomText" type="text" id="txtShipName" model="{{ShipName}}" />
+                        </column>
+                        <column>
+                            <input class="CustomText" type="text" id="txtShipCity" model="{{ShipCity}}" />
+                        </column>
+                        <column>{{ShipPostalCode}}</column>
+                        <column>
+                            <input class="CustomText" type="text" id="txtShipCountry" model="{{ShipCountry}}" />                   
+                        </column> 
+                        <column>
+                            <input class="CustomText" type="text" id="Text5" model="{{Order_Details[0].OrderID}}" />                   
+                        </column>               
+                    </dataRow>
+                    <footerRow>
+                    </footerRow>
+                </gridjs>
+            </div>
+
+            <!--validation grid-->
+            <div class="sample">
+                <h2>Validation Grid</h2>
+                <a href="#" onclick="App.Events.ShowValidationGridCode();return false;" class="showCodeButton">Show Code</a>
+                <br /><br />
+                <span>This grid's fields has required field validators attached. Try changing the grid page while having an empty text box.</span>
+                <gridjs id="validationGrid" class="NorthWindValidationGrid">
+                    <headerRow class="NorthWindValidationGridHeaderRow">
+                        <column class="NorthWindValidationGridHeaderRowCustomColumn1"><b>Order ID</b></column>
+                        <column><b>Customer ID</b></column>
+                        <column><b>Emp ID</b></column>
+                        <column><b>Order Date</b></column>
+                        <column><b>Shipped Date</b></column>
+                        <column><b>Freight</b></column>
+                        <column><b>Ship Name</b></column>
+                        <column><b>Ship City</b></column>
+                        <column><b>Ship Postal Code</b></column>
+                        <column class="NorthWindValidationGridHeaderRowCustomColumn2"><b>Ship Country</b></column>
+                    </headerRow>
+                    <dataRow class="NorthWindValidationGridRow">
+                        <column>
+                            <input class="CustomText" type="text" id="Text1" model="{{OrderID}}" />
+                        </column>
+                        <column>{{CustomerID}}</column>
+                        <column>{{EmployeeID}}</column>
+                        <column>{{GetOrderDate()}}</column>
+                        <column>{{GetShippedDate()}}</column>
+                        <column>{{Freight}}</column>
+                        <column>
+                            <input class="CustomText" type="text" id="Text2" model="{{ShipName}}" validatorName ="{{GetShipNameValidator()}}"/>
+                            &nbsp;<div validator = "{{GetShipNameValidator()}}"></div>
+                        </column>
+                        <column>
+                            <input class="CustomText" type="text" id="Text3" model="{{ShipCity}}" validatorName ="{{GetShipCityValidator()}}"/>
+                            &nbsp;<div validator = "{{GetShipCityValidator()}}"></div>
+                        </column>
+                        <column>{{ShipPostalCode}}</column>
+                        <column>
+                            <input class="CustomText" type="text" id="Text4" model="{{ShipCountry}}" validatorName ="{{GetShipCountryValidator()}}"/>    
+                            &nbsp;<div validator = "{{GetShipCountryValidator()}}"></div>               
+                        </column>                
+                    </dataRow>
+                    <footerRow>
+                    </footerRow>
+                </gridjs>
+            </div>
+
+            <div class="sample">
+                <h2>Custom Editable Grid</h2>
+                <a href="#" onclick="App.Events.ShowCustomEditableGridCode();return false;" class="showCodeButton">Show Code</a>
+                <br /><br />
+                <span>This is a typical Edit/Add grid.</span>
+                <gridJS id="customEditableGrid" class="customEditableGrid">
+                    <headerRow class="customEditableGridHeaderRow">
+                        <column><b>Room Name</b></column>
+                        <column><b>Room Type</b></column>
+                        <column><b>Color</b></column>
+                        <column><b>Action</b></column>
+                    </headerRow>
+                    <dataRow>
+                        <column>
+                            <span style="display:{{getDoneDisplay()}};">{{roomName}}</span>
+                            <input class="CustomText" id="txtRoomName" type="text" model="{{roomName}}" style="width:180px;display:{{getEditDisplay()}};"/>
+                        </column>
+                        <column>
+                            <span style="display:{{getDoneDisplay()}};">{{roomType}}</span>
+                            <input class="CustomText" id="txtRoomType" type="text" model="{{roomType}}" style="width:280px;display:{{getEditDisplay()}};" />
+                        </column>
+                        <column>
+                            <div style="background-color:{{color}};width:30px;height:30px;margin:0 auto;border-radius:50%;display:{{getDivDoneDisplay()}};"></div>
+                            <input class="CustomText" id="txtRoomColor" type="text" model="{{color}}" style="display:{{getEditDisplay()}};" />
+                        </column>
+                        <column>
+                            <a id="editButton" class="customEditableGridEditRowButton" href="#" style="display:{{getDoneDisplay()}};" onclick="customEditableGridEdit(this); return false;">Edit</a>
+                            <a id="doneButton" class="customEditableGridDoneRowButton" href="#" style="display:{{getEditDisplay()}};" onclick="customEditableGridDone(this); return false;">Done</a>
+                        </column>
+                    </dataRow>
+                    <footerRow>
+                        <column><input class="CustomText" id="txtAddRoomName" type="text" placeholder="room name" style="width:180px;"/></column>
+                        <column><input class="CustomText" id="txtAddRoomType" type="text" placeholder="room type" style="width:280px;"/></column>
+                        <column><input class="CustomText" id="txtAddRoomColor" type="text" placeholder="room color" /></column>
+                        <column><a class="customEditableGridAddRecordButton" id="addRoomRecord" href="#" onclick="addNewRoomRecord(); return false;">Add New Record</a></column>
+                    </footerRow>
+                </gridJS>
+            </div>
+
+        </div>
     </div>
-    <br />
-    <br />
-    <div id="divBoundNorthWind" style="text-align: center; width: 100%;">
-        <gridjs id="gridBoundNorthWind" class="NorthWindGrid">
-            <headerRow class="NorthWindGridHeaderRow">
-                <column><b>Order ID</b></column>
-                <column><b>Customer ID</b></column>
-                <column><b>Emp ID</b></column>
-                <column><b>Order Date</b></column>
-                <column><b>Shipped Date</b></column>
-                <column><b>Freight</b></column>
-                <column><b>Ship Name</b></column>
-                <column><b>Ship City</b></column>
-                <column><b>Ship Postal Code</b></column>
-                <column><b>Ship Country</b></column>
-                <column><b>Order Details 1(Id)</b></column>
-            </headerRow>
-            <dataRow class="NorthWindGridRow">
-                <column>
-                    <input class="CustomText" type="text" id="txtOrderID" model="{{OrderID}}" />
-                </column>
-                <column>{{CustomerID}}</column>
-                <column>{{EmployeeID}}</column>
-                <column>{{GetOrderDate1()}}</column>
-                <column>{{GetShippedDate1()}}</column>
-                <column>{{Freight}}</column>
-                <column>
-                    <input class="CustomText" type="text" id="txtShipName" model="{{ShipName}}" />
-                </column>
-                <column>
-                    <input class="CustomText" type="text" id="txtShipCity" model="{{ShipCity}}" />
-                </column>
-                <column>{{ShipPostalCode}}</column>
-                <column>
-                    <input class="CustomText" type="text" id="txtShipCountry" model="{{ShipCountry}}" />                   
-                </column> 
-                <column>
-                    <input class="CustomText" type="text" id="Text5" model="{{Order_Details[0].OrderID}}" />                   
-                </column>               
-            </dataRow>
-            <footerRow>
-            </footerRow>
-        </gridjs>
-    </div>
-    <br />
-    <br />
-    <div id="divBoundGridWithValidation" style="text-align: center; width: 100%;">
-        <gridjs id="gridBoundGridWithValidation" class="NorthWindValidationGrid">
-            <headerRow class="NorthWindValidationGridHeaderRow">
-                <column class="NorthWindValidationGridHeaderRowCustomColumn1"><b>Order ID</b></column>
-                <column><b>Customer ID</b></column>
-                <column><b>Emp ID</b></column>
-                <column><b>Order Date</b></column>
-                <column><b>Shipped Date</b></column>
-                <column><b>Freight</b></column>
-                <column><b>Ship Name</b></column>
-                <column><b>Ship City</b></column>
-                <column><b>Ship Postal Code</b></column>
-                <column class="NorthWindValidationGridHeaderRowCustomColumn2"><b>Ship Country</b></column>
-            </headerRow>
-            <dataRow class="NorthWindValidationGridRow">
-                <column>
-                    <input class="CustomText" type="text" id="Text1" model="{{OrderID}}" />
-                </column>
-                <column>{{CustomerID}}</column>
-                <column>{{EmployeeID}}</column>
-                <column>{{GetOrderDate1()}}</column>
-                <column>{{GetShippedDate1()}}</column>
-                <column>{{Freight}}</column>
-                <column>
-                    <input class="CustomText" type="text" id="Text2" model="{{ShipName}}" validatorName ="{{GetShipNameValidator()}}"/>
-                    &nbsp;<div validator = "{{GetShipNameValidator()}}"></div>
-                </column>
-                <column>
-                    <input class="CustomText" type="text" id="Text3" model="{{ShipCity}}" validatorName ="{{GetShipCityValidator()}}"/>
-                    &nbsp;<div validator = "{{GetShipCityValidator()}}"></div>
-                </column>
-                <column>{{ShipPostalCode}}</column>
-                <column>
-                    <input class="CustomText" type="text" id="Text4" model="{{ShipCountry}}" validatorName ="{{GetShipCountryValidator()}}"/>    
-                    &nbsp;<div validator = "{{GetShipCountryValidator()}}"></div>               
-                </column>                
-            </dataRow>
-            <footerRow>
-            </footerRow>
-        </gridjs>
-    </div>
+
 
     <script type="text/javascript">
-        var AddTodo = null,
-            ClearAllTodo = null;
+        var customEditableGrid = null;
         $(document).ready(function () {
-            //Bound NorthWind Grid with Validation
-            //===============================================================================
-            var validationNorthWindGrid,
-                vManager,
-                shipNameValidatorList = [],
-                shipCityValidatorList = [],
-                shipCountryValidatorList = [];
+            SyntaxHighlighter.all()
 
-            vManager = new ValidationManager()
-            .showPassImgNotification(false);
+            //draw all the grids
+            //todo grid
+            App.Grids.BuildTodoGrid().draw();
 
-            validationNorthWindGrid = new GridJS({
-                gridId: 'gridBoundGridWithValidation',
-                dataSource: NorthWindDataSource,
-                cellPadding: 6,
-                pagination: 10,
-                pageButtonCss: { normalCss: 'NorthWindValidationGridButton', activeCss: 'NorthWindValidationActiveButton' },
-                onGridLoaded: OnValidationGridLoaded,
-                onGridPageChange: OnGridPageChange,
-                onRowAddition: onGridRowAdd,
-                beforeGridPageChange: BeforeGridPageChange,
-                updateDataRowOnInputChange: false
-            })
-            .addCustomFunction("GetOrderDate1", GetOrderDate1)
-            .addCustomFunction("GetShippedDate1", GetShippedDate1)
-            .addCustomFunction("GetShipNameValidator", GetShipNameValidator)
-            .addCustomFunction("GetShipCityValidator", GetShipCityValidator)
-            .addCustomFunction("GetShipCountryValidator", GetShipCountryValidator)
-            .draw();
+            //country grid
+            App.Grids.BuildCountryGrid().draw();
 
-            function BeforeGridPageChange(dataSource, rowIndex) {
-                var isValid = vManager.validateAll();
-                if (!isValid) validationNorthWindGrid.allowPageChange(false);
-                else validationNorthWindGrid.allowPageChange(true);
-            }
+            //northwind grid
+            App.Grids.BuildNorthwindGrid().draw();
 
-            function onGridRowAdd(dataRow, dataSource, rowIndex) {
-                var shipNameValidator = "valShipName_" + rowIndex,
-                 shipCityValidator = "valShipCity_" + rowIndex,
-                 shipCountryValidator = "valShipCountry_" + rowIndex;
-                shipNameValidatorList.push(shipNameValidator);
-                shipCityValidatorList.push(shipCityValidator);
-                shipCountryValidatorList.push(shipCountryValidator);
+            //shopping grid
+            App.Grids.BuildShoppingGrid().draw();
 
-                return dataRow;
-            }
+            //bound northwind grid
+            App.Grids.BuildBoundNorthwindGrid().draw();
 
-            function OnValidationGridLoaded() {
-                vManager.addValidator(shipNameValidatorList, [{ type: ValidationType.Required, message: "Ship Name is required." }])
-                    .addValidator(shipCityValidatorList, [{ type: ValidationType.Required, message: "Ship City is required." }])
-                    .addValidator(shipCountryValidatorList, [{ type: ValidationType.Required, message: "Ship Country is required." }])
-                .initialize();
-            }
+            //validation grid
+            App.Grids.BuildValidationNorthWindGrid().draw();
 
-            function OnGridPageChange() {
-                //reset the validator lists before grid new page is loaded
-                shipNameValidatorList = [];
-                shipCityValidatorList = [];
-                shipCountryValidatorList = [];
-                vManager.clearValidators();
-            }
-
-            function GetShipNameValidator(data, rowIndex) {
-                return "valShipName_" + rowIndex;
-            }
-
-            function GetShipCityValidator(data, rowIndex) {
-                return "valShipCity_" + rowIndex;
-            }
-
-            function GetShipCountryValidator(data, rowIndex) {
-                return "valShipCountry_" + rowIndex;
-            }
-
-            //Bound NorthWind Grid
-            //===============================================================================
-            var boundNorthWindGrid = new GridJS({
-                gridId: 'gridBoundNorthWind',
-                dataSource: NorthWindDataSource,
-                cellPadding: 6,
-                pagination: 10,
-                pageButtonCss: { normalCss: 'NorthWindPaginationButton', activeCss: '' },
-                dataRowColors: ["#0B6121", "#0A2A0A"]
-            })
-            .addCustomFunction("GetOrderDate1", GetOrderDate1)
-            .addCustomFunction("GetShippedDate1", GetShippedDate1)
-            .draw();
-
-            //GetOrderDate1
-            function GetOrderDate1(data, rowIndex) {
-                var date = new Date(Date.parse(data[rowIndex].OrderDate)),
-                    month = date.getMonth(),
-                    day = date.getDate(),
-                    year = date.getYear();
-                return month + "/" + day + "/" + year;
-            }
-
-            //GetShippedDate1
-            function GetShippedDate1(data, rowIndex) {
-                var date = new Date(Date.parse(data[rowIndex].ShippedDate)),
-                    month = date.getMonth(),
-                    day = date.getDate(),
-                    year = date.getYear();
-                return month + "/" + day + "/" + year;
-            }
-            //===============================================================================
-
-
-            //Shopping Grid
-            //===============================================================================
-            var shoppingGrid = new GridJS({
-                gridId: 'gridShopping',
-                dataSource: ShoppingDataSource,
-                cellPadding: 8,
-                pagination: 1,
-                pageButtonCss: { normalCss: 'ShoppingPaginationButton', activeCss: 'ShoppingPaginationActiveButton' }
-            })
-            .addCustomFunction("PriceAfterDiscount", priceAfterDiscount)
-            .draw();
-
-            //function to get price after discount
-            function priceAfterDiscount(data, rowIndex) {
-                var price = data[rowIndex].price;
-                var discount = data[rowIndex].discount;
-
-                return price - ((price * discount) / 100);
-            }
-
-            //===============================================================================
-
-            //Northwind grid
-            //===============================================================================
-            var northWindGrid = new GridJS({
-                gridId: 'gridNorthWind',
-                dataSource: NorthWindDataSource,
-                cellPadding: 6,
-                pagination: 10,
-                pageButtonCss: { normalCss: 'NorthWindPaginationButton', activeCss: '' },
-                dataRowColors: ["#0B6121", "#0A2A0A"]
-            })
-            .addCustomFunction("GetOrderDate", function (data, rowIndex) {
-                var date = new Date(Date.parse(data[rowIndex].OrderDate)),
-                    month = date.getMonth(),
-                    day = date.getDate(),
-                    year = date.getYear();
-                return month + "/" + day + "/" + year;
-            })
-            .addCustomFunction("GetShippedDate", function (data, rowIndex) {
-                var date = new Date(Date.parse(data[rowIndex].ShippedDate)),
-                    month = date.getMonth(),
-                    day = date.getDate(),
-                    year = date.getYear();
-                return month + "/" + day + "/" + year;
-            })
-            .draw();
-
-            //===============================================================================
-
-            //Country grid
-            //===============================================================================
-            var countryGrid = new GridJS({
-                gridId: 'gridCountry',
-                dataSource: CountryDataSource,
-                cellPadding: 8,
-                dataRowColors: ["#F8FBEF", "#EFF5FB"]
-            })
-            .draw();
-
-            //===============================================================================
-
-            //TODO app object
-            //===============================================================================
-            var todoGrid,
-                todo = function (t, d) {
-                    this.title = t;
-                    this.done = d;
-                },
-                todoList = [],
-                $txtTodo = $("#txtTodo");
-
-            AddTodo = function () {
-                todoList.push(new todo($txtTodo.val(), ""));
-                todoGrid.reDraw();
-                $txtTodo.val("");
-            }
-
-            ClearAllTodo = function () {
-                todoList.length = 0;
-                todoGrid.reDraw();
-            }
-
-            todoGrid = new GridJS({
-                gridId: 'todoGrid',
-                dataSource: todoList,
-                dataRowColors: ["#FFFFFF", "#FBEFFB", "#EFF8FB", "#FBFBEF", "#FBEFEF"],
-                mouseOverColor: '#FFC1C1',
-                pagination: 10
-            })
-            .addCustomFunction("GetTodoStatus", function (data, rowIndex) {
-                if (data[rowIndex]["done"] === true) { return "Done"; }
-                else { return "Normal"; }
-            })
-            .draw();
-
-            //================================================================================
+            //custom editable grid
+            customEditableGrid = App.Grids.BuildcustomEditableGrid();
+            customEditableGrid.draw();            
         });
+
+        //custom editable grid events
+        function customEditableGridEdit(self) {
+            var rowId = self.getAttribute('rowId'),
+                doneButtonId = 'doneButton' + '_' + rowId,
+                doneButton = document.getElementById(doneButtonId);
+
+            self.style.display = 'none';
+            doneButton.style.display = 'inline';
+
+            OfficeRooms[rowId].edit = true;
+            customEditableGrid.reDrawRow(rowId);
+        }
+
+        function customEditableGridDone(self) {
+            var rowId = self.getAttribute('rowId'),
+                editButtonId = 'editButton' + '_' + rowId,
+                editButton = document.getElementById(editButtonId);
+
+            self.style.display = 'none';
+            editButton.style.display = 'inline';
+
+            OfficeRooms[rowId].edit = false;
+            customEditableGrid.reDrawRow(rowId);
+        }
+
+        function addNewRoomRecord() {
+            var $txtAddRoomName = $('#txtAddRoomName');
+            var $txtAddRoomType = $('#txtAddRoomType');
+            var $txtAddRoomColor = $('#txtAddRoomColor');
+
+            OfficeRooms.push({
+                roomName: $txtAddRoomName.val(),
+                roomType: $txtAddRoomType.val(),
+                color: $txtAddRoomColor.val(),
+                edit: false
+            });
+
+            $txtAddRoomName.val('');
+            $txtAddRoomType.val('');
+            $txtAddRoomColor.val('');
+
+            customEditableGrid.reDraw();
+        }
     </script>
 </body>
 </html>

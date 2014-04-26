@@ -1,0 +1,16 @@
+﻿<pre class="brush: html">
+    <input class="CustomText" id="txtTodo" type="text" placeholder="add new todo here" />
+    <input type="submit" value="Add Todo" onclick="AddTodo(); return false;" />
+    <input type="submit" value="Clear" onclick="ClearAllTodo(); return false;" />
+    <br />
+    <gridjs id="todoGrid" class="TodoGrid">
+        <headerRow>
+        </headerRow>
+        <dataRow class="GridDataRow">
+            <column class="todoGridStatusCol"><input id="chkStatus" type="checkbox" model="{{done}}" /></column>
+            <column class="todoGridTextCol"><span class="TodoText{{GetTodoStatus()}}">{{title}}</span></column>
+        </dataRow>
+        <footerRow>
+        </footerRow>
+    </gridjs>
+</pre>

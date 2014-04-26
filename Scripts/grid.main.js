@@ -101,8 +101,6 @@
         //set updateDataRowOnInputChange flag
         if (!IsNullOrUndefined(c['updateDataRowOnInputChange']))
             this._updateRowOnDataChange = c['updateDataRowOnInputChange'];
-        else
-            this._updateRowOnDataChange = true;
 
         //set beforeGridPageChange event
         f = c['beforeGridPageChange'];
@@ -177,7 +175,7 @@
             return this;
         },
 
-        //event wireup which fires up beofre the page is changed
+        //event wireup which fires up before the page is changed
         beforeGridPageChange: function (func) {
             if (isFunction(func))
                 this._beforeGridPageChange = func;
@@ -291,7 +289,7 @@
                 inputBindings = [],                                                 //input element's binding data, format: {id, rowIndex, propertyToBind}                
                 procesedRow = null,
                 tempAttribute = null;                                               //temp attribute var which can be reused
-
+            
             //initialize final grid table
             finalGrid = d.createElement('table');
             finalGrid.setAttribute('cellspacing', 0);
@@ -471,6 +469,21 @@
                 dataUpdates.push(dataChange);
             }
             return dataUpdates;
+        },
+
+        //set the page number and draw the grid again
+        drawGridByPage: function (e) {
+            //call 'boforeGridPageChangeEvent'
+            if (!IsNullOrUndefined(this._beforeGridPageChange))
+                this._beforeGridPageChange(e[0]);
+            //only load next page if allowed
+            if (this._allowPageChange) {
+                this._currentPageNumber = e[0];
+                //call grid page chage event handler
+                CallEventFunction(this._onGridPageChange);
+                this.reDraw();
+            }
+            return false;
         }
     };
 
@@ -556,7 +569,7 @@
             dataSource = this._dataSource,
             tempAttribute = null,                                           //temp attribute var which can be reused
             returnVal = {};
-
+        
         //set to empty array if undefined or null
         if (IsNullOrUndefined(inputBindings)) { inputBindings = []; }
 
@@ -588,6 +601,7 @@
                 currentElement = dataColChildren[k];
                 if (currentElement.id !== "") {
                     currentElement.id = dataColChildren[k].id += "_" + startRow;
+                    currentElement.setAttribute('rowId', startRow);
                 }
                 if (this._bindInput) {
                     //input bindings
@@ -737,7 +751,9 @@
             pStart = 0, pEnd = 0, tokenStart = 0, tokenEnd = 0,
             token = "", tokenName = "",
             output = str,
-            data = dataSource[rowIndex];
+            data = dataSource[rowIndex],
+            evaluatedToken = null;
+
         for (; i < length; i++) {
             if (i < length) {
                 ptr = str.substr(i, 2);
@@ -752,7 +768,8 @@
                     token = str.substr(pStart, pEnd - pStart + 1);
                     tokenName = str.substr(tokenStart, tokenEnd - tokenStart + 1);
                     if (!IsFunctionTemplate(tokenName)) {
-                        output = output.replace(token, EvalToken(data, tokenName));
+                        evaluatedToken = EvalToken(data, tokenName);
+                        output = output.replace(token, (IsNullOrUndefined(evaluatedToken) ? '' : evaluatedToken));
                     }
                     else {
                         //final check, will procedd if there is any custom binding added else

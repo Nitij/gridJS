@@ -1,0 +1,20 @@
+﻿<pre class="brush: html">
+    <gridjs id="countryGrid" class="CountryGrid">
+        <headerRow class="CountryGridHeaderRow">
+            <column><b>Name</b></column>
+            <column><b>Capital</b></column>
+            <column><b>Area</b></column>
+            <column><b>Population</b></column>
+            <column><b>Official Flag</b></column>
+        </headerRow>
+        <dataRow class="CountryGridRow">
+            <column>{{name}}</column>
+            <column>{{capital}}</column>
+            <column>{{area}}</column>
+            <column>{{population}}</column>
+            <column><img model-src="Images/{{flag}}" height="60px" width="100px" /></column>
+        </dataRow>
+        <footerRow>
+        </footerRow>
+    </gridjs>
+</pre>

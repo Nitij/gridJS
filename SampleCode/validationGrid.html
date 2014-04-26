@@ -1,0 +1,41 @@
+﻿<pre class="brush: html">
+    <gridjs id="validationGrid" class="NorthWindValidationGrid">
+        <headerRow class="NorthWindValidationGridHeaderRow">
+            <column class="NorthWindValidationGridHeaderRowCustomColumn1"><b>Order ID</b></column>
+            <column><b>Customer ID</b></column>
+            <column><b>Emp ID</b></column>
+            <column><b>Order Date</b></column>
+            <column><b>Shipped Date</b></column>
+            <column><b>Freight</b></column>
+            <column><b>Ship Name</b></column>
+            <column><b>Ship City</b></column>
+            <column><b>Ship Postal Code</b></column>
+            <column class="NorthWindValidationGridHeaderRowCustomColumn2"><b>Ship Country</b></column>
+        </headerRow>
+        <dataRow class="NorthWindValidationGridRow">
+            <column>
+                <input class="CustomText" type="text" id="Text1" model="{{OrderID}}" />
+            </column>
+            <column>{{CustomerID}}</column>
+            <column>{{EmployeeID}}</column>
+            <column>{{GetOrderDate1()}}</column>
+            <column>{{GetShippedDate1()}}</column>
+            <column>{{Freight}}</column>
+            <column>
+                <input class="CustomText" type="text" id="Text2" model="{{ShipName}}" validatorName ="{{GetShipNameValidator()}}"/>
+                &nbsp;<div validator = "{{GetShipNameValidator()}}"></div>
+            </column>
+            <column>
+                <input class="CustomText" type="text" id="Text3" model="{{ShipCity}}" validatorName ="{{GetShipCityValidator()}}"/>
+                &nbsp;<div validator = "{{GetShipCityValidator()}}"></div>
+            </column>
+            <column>{{ShipPostalCode}}</column>
+            <column>
+                <input class="CustomText" type="text" id="Text4" model="{{ShipCountry}}" validatorName ="{{GetShipCountryValidator()}}"/>    
+                &nbsp;<div validator = "{{GetShipCountryValidator()}}"></div>               
+            </column>                
+        </dataRow>
+        <footerRow>
+        </footerRow>
+    </gridjs>
+</pre>

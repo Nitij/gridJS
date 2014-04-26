@@ -1,0 +1,36 @@
+﻿<pre class="brush: html">
+    <gridJS id="customEditableGrid" class="customEditableGrid">
+        <headerRow class="customEditableGridHeaderRow">
+            <column><b>Room Name</b></column>
+            <column><b>Room Type</b></column>
+            <column><b>Color</b></column>
+            <column><b>Action</b></column>
+        </headerRow>
+        <dataRow>
+            <column>
+                <span style="display:{{getDoneDisplay()}};">{{roomName}}</span>
+                <input class="CustomText" id="txtRoomName" type="text" model="{{roomName}}" style="width:180px;display:{{getEditDisplay()}};"/>
+            </column>
+            <column>
+                <span style="display:{{getDoneDisplay()}};">{{roomType}}</span>
+                <input class="CustomText" id="txtRoomType" type="text" model="{{roomType}}" style="width:280px;display:{{getEditDisplay()}};" />
+            </column>
+            <column>
+                <div style="background-color:{{color}};width:30px;height:30px;margin:0 auto;border-radius:50%;display:{{getDivDoneDisplay()}};"></div>
+                <input class="CustomText" id="txtRoomColor" type="text" model="{{color}}" style="display:{{getEditDisplay()}};" />
+            </column>
+            <column>
+                <a id="editButton" class="customEditableGridEditRowButton" href="#" style="display:{{getDoneDisplay()}};" 
+                    onclick="customEditableGridEdit(this); return false;">Edit</a>
+                <a id="doneButton" class="customEditableGridDoneRowButton" href="#" style="display:{{getEditDisplay()}};" 
+                    onclick="customEditableGridDone(this); return false;">Done</a>
+            </column>
+        </dataRow>
+        <footerRow>
+            <column><input class="CustomText" id="txtAddRoomName" type="text" placeholder="room name" style="width:180px;"/></column>
+            <column><input class="CustomText" id="txtAddRoomType" type="text" placeholder="room type" style="width:280px;"/></column>
+            <column><input class="CustomText" id="txtAddRoomColor" type="text" placeholder="room color" /></column>
+            <column><a class="customEditableGridAddRecordButton" id="addRoomRecord" href="#" onclick="addNewRoomRecord(); return false;">Add New Record</a></column>
+        </footerRow>
+    </gridJS>
+</pre>

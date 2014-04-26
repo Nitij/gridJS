@@ -1,0 +1,232 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{95EEF0E3-5747-4E0A-B272-3E7FC7DC46AF}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>gridJSPage</RootNamespace>
+    <AssemblyName>gridJSPage</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <UseIISExpress>true</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Images\0star.png" />
+    <Content Include="Images\188px-Flag_of_Bangladesh.svg.png" />
+    <Content Include="Images\188px-Flag_of_Brazil.svg.png" />
+    <Content Include="Images\188px-Flag_of_India.svg.png" />
+    <Content Include="Images\188px-Flag_of_Indonesia.svg.png" />
+    <Content Include="Images\188px-Flag_of_Japan.svg.png" />
+    <Content Include="Images\188px-Flag_of_Nigeria.svg.png" />
+    <Content Include="Images\188px-Flag_of_Pakistan.svg.png" />
+    <Content Include="Images\188px-Flag_of_Russia.svg.png" />
+    <Content Include="Images\188px-Flag_of_the_People%27s_Republic_of_China.svg.png" />
+    <Content Include="Images\188px-Flag_of_the_United_States.svg.png" />
+    <Content Include="Images\1star.png" />
+    <Content Include="Images\2star.png" />
+    <Content Include="Images\3star.png" />
+    <Content Include="Images\4star.png" />
+    <Content Include="Images\5star.png" />
+    <Content Include="Images\apple-iphone-5c-400x400-imadpnhygtzu8s3z.jpeg" />
+    <Content Include="Images\apple-iphone-5c-400x400-imadpnhyw2qnxkh5.jpeg" />
+    <Content Include="Images\apple-iphone-5c-400x400-imadpnhzgcfgyz8e.jpeg" />
+    <Content Include="Images\apple-iphone-5c-400x400-imadpnhzmg3q2dt6.jpeg" />
+    <Content Include="Images\apple-iphone-5s-400x400-imadpppc9k3gzdjz.jpeg" />
+    <Content Include="Images\blackberry-q10-400x400-imadhkzz5qtfhzy5.jpeg" />
+    <Content Include="Images\htc-one-400x400-imadnzhhzyywhzzg.jpeg" />
+    <Content Include="Images\htc-one-max-400x400-imadqrqeyceghdba.jpeg" />
+    <Content Include="Images\lg-g2-32-gb-400x400-imadzzebyf2fccjx.jpeg" />
+    <Content Include="Images\lg-optimus-g-e975-400x400-imadjfuysxeaeu5y.jpeg" />
+    <Content Include="Images\nokia-lumia-lumia-1020-400x400-imadzkgshuhjwfmk.jpeg" />
+    <Content Include="Images\nokia-lumia-lumia-1020-400x400-imadzkgsskuq6tt4.jpeg" />
+    <Content Include="Images\nokia-lumia-lumia-1020-400x400-imadzkgsyttbgt3f.jpeg" />
+    <Content Include="Images\samsung-galaxy-golden-i9230-400x400-imadqyvrzwnx4x7h.jpeg" />
+    <Content Include="Images\samsung-galaxy-note-3-galaxy-note-3-n9000-400x400-imadzrek9qwryxyn.jpeg" />
+    <Content Include="Images\samsung-galaxy-note-3-n9000-400x400-imadq4ypdrhrynxh.jpeg" />
+    <Content Include="Images\samsung-galaxy-s4-i9500-400x400-imadkbmd6quvhc9t.jpeg" />
+    <Content Include="Images\sony-xperia-z-ultra-400x400-imadzbkyx4mvceyn.jpeg" />
+    <Content Include="index.html" />
+    <Content Include="index2.html" />
+    <Content Include="SampleCode\boundNorthwindGrid.html" />
+    <Content Include="SampleCode\boundNorthwindGrid.js" />
+    <Content Include="SampleCode\customEditableGrid.html" />
+    <Content Include="SampleCode\customEditableGrid.js" />
+    <Content Include="SampleCode\validationGrid.html" />
+    <Content Include="SampleCode\validationGrid.js" />
+    <Content Include="SampleCode\shoppingGrid.html" />
+    <Content Include="SampleCode\shoppingGrid.js" />
+    <Content Include="SampleCode\northwindGrid.html" />
+    <Content Include="SampleCode\northwindGrid.js" />
+    <Content Include="SampleCode\countryGrid.html" />
+    <Content Include="SampleCode\countryGrid.js" />
+    <Content Include="SampleCode\todoGrid.html" />
+    <Content Include="SampleCode\todoGrid.js" />
+    <Content Include="Scripts\App\app.js" />
+    <Content Include="Scripts\App\uiBlocker.js" />
+    <Content Include="Scripts\grid.main.js" />
+    <Content Include="Scripts\App\events.js" />
+    <Content Include="Scripts\Grids\boundNorthwind.js" />
+    <Content Include="Scripts\Grids\customEditable.js" />
+    <Content Include="Scripts\Grids\validation.js" />
+    <Content Include="Scripts\Grids\shopping.js" />
+    <Content Include="Scripts\Grids\country.js" />
+    <Content Include="Scripts\Grids\northwind.js" />
+    <Content Include="Scripts\Grids\todo.js" />
+    <Content Include="Scripts\jQuery.js" />
+    <Content Include="Scripts\sampleCountryData.js" />
+    <Content Include="Scripts\sampleData.js" />
+    <Content Include="Scripts\sampleGeneralData.js" />
+    <Content Include="Scripts\sampleNorthWindData.js" />
+    <Content Include="Scripts\sampleShoppingData.js" />
+    <Content Include="Scripts\ThirdParty\SyntaxHighlighter\shAutoloader.js" />
+    <Content Include="Scripts\ThirdParty\SyntaxHighlighter\shBrushAppleScript.js" />
+    <Content Include="Scripts\ThirdParty\SyntaxHighlighter\shBrushAS3.js" />
+    <Content Include="Scripts\ThirdParty\SyntaxHighlighter\shBrushBash.js" />
+    <Content Include="Scripts\ThirdParty\SyntaxHighlighter\shBrushColdFusion.js" />
+    <Content Include="Scripts\ThirdParty\SyntaxHighlighter\shBrushCpp.js" />
+    <Content Include="Scripts\ThirdParty\SyntaxHighlighter\shBrushCSharp.js" />
+    <Content Include="Scripts\ThirdParty\SyntaxHighlighter\shBrushCss.js" />
+    <Content Include="Scripts\ThirdParty\SyntaxHighlighter\shBrushDelphi.js" />
+    <Content Include="Scripts\ThirdParty\SyntaxHighlighter\shBrushDiff.js" />
+    <Content Include="Scripts\ThirdParty\SyntaxHighlighter\shBrushErlang.js" />
+    <Content Include="Scripts\ThirdParty\SyntaxHighlighter\shBrushGroovy.js" />
+    <Content Include="Scripts\ThirdParty\SyntaxHighlighter\shBrushJava.js" />
+    <Content Include="Scripts\ThirdParty\SyntaxHighlighter\shBrushJavaFX.js" />
+    <Content Include="Scripts\ThirdParty\SyntaxHighlighter\shBrushJScript.js" />
+    <Content Include="Scripts\ThirdParty\SyntaxHighlighter\shBrushPerl.js" />
+    <Content Include="Scripts\ThirdParty\SyntaxHighlighter\shBrushPhp.js" />
+    <Content Include="Scripts\ThirdParty\SyntaxHighlighter\shBrushPlain.js" />
+    <Content Include="Scripts\ThirdParty\SyntaxHighlighter\shBrushPowerShell.js" />
+    <Content Include="Scripts\ThirdParty\SyntaxHighlighter\shBrushPython.js" />
+    <Content Include="Scripts\ThirdParty\SyntaxHighlighter\shBrushRuby.js" />
+    <Content Include="Scripts\ThirdParty\SyntaxHighlighter\shBrushSass.js" />
+    <Content Include="Scripts\ThirdParty\SyntaxHighlighter\shBrushScala.js" />
+    <Content Include="Scripts\ThirdParty\SyntaxHighlighter\shBrushSql.js" />
+    <Content Include="Scripts\ThirdParty\SyntaxHighlighter\shBrushVb.js" />
+    <Content Include="Scripts\ThirdParty\SyntaxHighlighter\shBrushXml.js" />
+    <Content Include="Scripts\ThirdParty\SyntaxHighlighter\shCore.js" />
+    <Content Include="Scripts\ThirdParty\SyntaxHighlighter\shLegacy.js" />
+    <Content Include="Scripts\validate.main.js" />
+    <Content Include="Style\MainStyle.css" />
+    <Content Include="Style\GridStyle.css" />
+    <Content Include="Style\ThirdParty\SyntaxHighlighter\shCore.css" />
+    <Content Include="Style\ThirdParty\SyntaxHighlighter\shCoreDefault.css" />
+    <Content Include="Style\ThirdParty\SyntaxHighlighter\shCoreDjango.css" />
+    <Content Include="Style\ThirdParty\SyntaxHighlighter\shCoreEclipse.css" />
+    <Content Include="Style\ThirdParty\SyntaxHighlighter\shCoreEmacs.css" />
+    <Content Include="Style\ThirdParty\SyntaxHighlighter\shCoreFadeToGrey.css" />
+    <Content Include="Style\ThirdParty\SyntaxHighlighter\shCoreMDUltra.css" />
+    <Content Include="Style\ThirdParty\SyntaxHighlighter\shCoreMidnight.css" />
+    <Content Include="Style\ThirdParty\SyntaxHighlighter\shCoreRDark.css" />
+    <Content Include="Style\ThirdParty\SyntaxHighlighter\shThemeDefault.css" />
+    <Content Include="Style\ThirdParty\SyntaxHighlighter\shThemeDjango.css" />
+    <Content Include="Style\ThirdParty\SyntaxHighlighter\shThemeEclipse.css" />
+    <Content Include="Style\ThirdParty\SyntaxHighlighter\shThemeEmacs.css" />
+    <Content Include="Style\ThirdParty\SyntaxHighlighter\shThemeFadeToGrey.css" />
+    <Content Include="Style\ThirdParty\SyntaxHighlighter\shThemeMDUltra.css" />
+    <Content Include="Style\ThirdParty\SyntaxHighlighter\shThemeMidnight.css" />
+    <Content Include="Style\ThirdParty\SyntaxHighlighter\shThemeRDark.css" />
+    <Content Include="validateJSImages\Failed\delete-icon24pixel.png" />
+    <Content Include="validateJSImages\Failed\delete-icon32pixel.png" />
+    <Content Include="validateJSImages\Failed\delete-icon48pixel.png" />
+    <Content Include="validateJSImages\Failed\delete-icon64x64pixel.png" />
+    <Content Include="validateJSImages\Failed\delete-icon72x72pixel.png" />
+    <Content Include="validateJSImages\Passed\check-icon24pixel.png" />
+    <Content Include="validateJSImages\Passed\check-icon32pixel.png" />
+    <Content Include="validateJSImages\Passed\check-icon48pixel.png" />
+    <Content Include="validateJSImages\Passed\check-icon64x64pixel.png" />
+    <Content Include="validateJSImages\Passed\check-icon72x72pixel.png" />
+    <Content Include="Web.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Fonts\fontawesome-webfont.woff" />
+    <Content Include="Fonts\maven_pro_regular-webfont.woff" />
+    <None Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>0</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:53510/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

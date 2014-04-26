@@ -13,7 +13,7 @@
     <script type="text/javascript" src="Scripts/sampleShoppingData.js"></script>
     <script type="text/javascript" src="Scripts/sampleGeneralData.js"></script>
 
-    <!--GRidJS-->
+    <!--GridJS-->
     <script type="text/javascript" src="Scripts/grid.main.js"></script>
 
     <!--jQuery-->
@@ -95,6 +95,7 @@
             <a href="https://twitter.com/_nitij" class="twitter-follow-button" data-show-count="false" data-size="large">Follow @_nitij</a>
         </div>
 
+        <!--getting started-->
         <div id="gettingStarted" class="gettingStarted">
             GridJS is a JavaScript plugin to create UI grids. This plugin supports templates and is highly customizable. gridJS can work independently from any other third party library like jQuery. 
             The first step in using gridJS is to create markup of the grid. This can be done by creating a custom &lt;gridJS&gt; html element. Inside there can be header row, data row and footer. Take a look at below example:
@@ -165,174 +166,6 @@
             <pre class="brush: js">
                 gridJS().draw();                    
             </pre>
-        </div>
-
-        <!--api documentation-->
-        <div id="divApi" class="api">
-            Apart from the above config object syntax there are several standalone helper functions to set the grid properties. They are:
-
-            <!--reDraw-->
-            <div class="apiFunction">
-                <h2>reDraw()</h2>
-                <span>This function redraws the grid if required.</span>
-                <pre class="brush: js">
-                    gridJS().reDraw();                    
-                </pre>
-            </div>
-
-            <!--updateDataRowOnInputChange-->
-            <div class="apiFunction">
-                <h2>updateDataRowOnInputChange(bool)</h2>
-                <span>Function to set the flag to determine if data row should be updated on binded input's data change or not.</span>
-                <pre class="brush: js">
-                    gridJS().updateDataRowOnInputChange(boolean value);                    
-                </pre>
-            </div>
-
-            <!--beforeGridPageChange-->
-            <div class="apiFunction">
-                <h2>beforeGridPageChange(func)</h2>
-                <span>Function that can be used to wireup event handler for grid page change event.</span>
-                <pre class="brush: js">
-                    gridJS().beforeGridPageChange(SomeFunction);                    
-                </pre>
-            </div>
-
-            <!--onRowRedrawComplete-->
-            <div class="apiFunction">
-                <h2>onRowRedrawComplete(func)</h2>
-                <span>Function which is called when row redraw is completed which happens when any bound input is changed.</span>
-                <pre class="brush: js">
-                    gridJS().onRowRedrawComplete(SomeFunction);                    
-                </pre>
-            </div>
-
-            <!--onGridPageChange-->
-            <div class="apiFunction">
-                <h2>onGridPageChange(func)</h2>
-                <span>Function to set grid page change event handler.</span>
-                <pre class="brush: js">
-                    gridJS().onGridPageChange(SomeFunction);                    
-                </pre>
-            </div>
-
-            <!--onGridLoaded-->
-            <div class="apiFunction">
-                <h2>onGridLoaded(func)</h2>
-                <span>Function to set grid loaded event handler.</span>
-                <pre class="brush: js">
-                    gridJS().onGridLoaded(SomeFunction);                    
-                </pre>
-            </div>
-
-            <!--allowPageChange-->
-            <div class="apiFunction">
-                <h2>allowPageChange(bool)</h2>
-                <span>Function to set the flag to allow grid page change or not.</span>
-                <pre class="brush: js">
-                    gridJS().allowPageChange(true);                    
-                </pre>
-            </div>
-
-            <!--addCustomFunction-->
-            <div class="apiFunction">
-                <h2>addCustomFunction(functionName, func)</h2>
-                <span>Adds a custom function that can be called from inside the grid's templates. The called function receives the data-source and row index as parameters.</span>
-                <pre class="brush: js">
-                    gridJS().addCustomFunction('MyFunction', myFunction);                    
-                </pre>
-            </div>
-
-            <!--disableInputBindings-->
-            <div class="apiFunction">
-                <h2>disableInputBindings(bool)</h2>
-                <span>Function to disable or enable input bindings.</span>
-                <pre class="brush: js">
-                    gridJS().disableInputBindings(boolean value);                    
-                </pre>
-            </div>
-
-            <!--setPageButtonCss-->
-            <div class="apiFunction">
-                <h2>setPageButtonCss(normalCss, activeCss)</h2>
-                <span>Sets the page button's normal and active state css classes.</span>
-                <pre class="brush: js">
-                    gridJS().setPageButtonCss('NormalStateCssClassName', 'ActiveStateCssClassName');                    
-                </pre>
-            </div>
-
-            <!--setPagination-->
-            <div class="apiFunction">
-                <h2>setPagination(numberOfRows)</h2>
-                <span>Function that an be used to activate the pagination and sets number of rows in a page.</span>
-                <pre class="brush: js">
-                    gridJS().setPagination(10);                    
-                </pre>
-            </div>
-
-            <!--getGrid-->
-            <div class="apiFunction">
-                <h2>getGrid(gridId)</h2>
-                <span>Function to get the grid element's id.</span>
-                <pre class="brush: js">
-                    gridJS().getGrid('#myGridId');                    
-                </pre>
-            </div>
-
-            <!--dataSource-->
-            <div class="apiFunction">
-                <h2>dataSource(dataSource)</h2>
-                <span>Function to set the grid's JSON array data source.</span>
-                <pre class="brush: js">
-                    gridJS().dataSource(myDataSource [{},{},{}...]);                    
-                </pre>
-            </div>
-
-            <!--setDataRowColors-->
-            <div class="apiFunction">
-                <h2>setDataRowColors(colorsArray)</h2>
-                <span>Function to set alternate colors or custom color sequence for the rows.</span>
-                <pre class="brush: js">
-                    gridJS().setDataRowColors([color1, color2...]);                    
-                </pre>
-            </div>
-
-            <!--setCellPadding-->
-            <div class="apiFunction">
-                <h2>setCellPadding(cellPadding)</h2>
-                <span>Function to set the padding of the output table's cells.</span>
-                <pre class="brush: js">
-                    gridJS().setCellPadding(5);                    
-                </pre>
-            </div>
-
-            <!--onRowAddition-->
-            <div class="apiFunction">
-                <h2>onRowAddition(func)</h2>
-                <span>Function to set row add event handler.</span>
-                <pre class="brush: js">
-                    gridJS().onRowAddition(SomeFunction);                    
-                </pre>
-            </div>
-
-            <!--setMouseOverColor-->
-            <div class="apiFunction">
-                <h2>setMouseOverColor(color)</h2>
-                <span>Function to set row mouse over color.</span>
-                <pre class="brush: js">
-                    gridJS().setMouseOverColor('lightGreen');                    
-                </pre>
-            </div>
-
-            <!--getDataUpdates-->
-            <div class="apiFunction">
-                <h2>getDataUpdates()</h2>
-                <span>Function that returns an array containing updated data rows.</span><br />
-                <span>Returns an array of data updates made by using the bound input elements.</span>
-                <pre class="brush: js">
-                    var updates = gridJS().getDataUpdates();                    
-                </pre>
-            </div>
         </div>
 
         <!--samples-->
@@ -636,6 +469,174 @@
             </div>
 
         </div>
+
+        <!--api documentation-->
+        <div id="divApi" class="api">
+            Apart from the above config object syntax there are several standalone helper functions to set the grid properties. They are:
+
+            <!--reDraw-->
+            <div class="apiFunction">
+                <h2>reDraw()</h2>
+                <span>This function redraws the grid if required.</span>
+                <pre class="brush: js">
+                    gridJS().reDraw();                    
+                </pre>
+            </div>
+
+            <!--updateDataRowOnInputChange-->
+            <div class="apiFunction">
+                <h2>updateDataRowOnInputChange(bool)</h2>
+                <span>Function to set the flag to determine if data row should be updated on binded input's data change or not.</span>
+                <pre class="brush: js">
+                    gridJS().updateDataRowOnInputChange(boolean value);                    
+                </pre>
+            </div>
+
+            <!--beforeGridPageChange-->
+            <div class="apiFunction">
+                <h2>beforeGridPageChange(func)</h2>
+                <span>Function that can be used to wireup event handler for grid page change event.</span>
+                <pre class="brush: js">
+                    gridJS().beforeGridPageChange(SomeFunction);                    
+                </pre>
+            </div>
+
+            <!--onRowRedrawComplete-->
+            <div class="apiFunction">
+                <h2>onRowRedrawComplete(func)</h2>
+                <span>Function which is called when row redraw is completed which happens when any bound input is changed.</span>
+                <pre class="brush: js">
+                    gridJS().onRowRedrawComplete(SomeFunction);                    
+                </pre>
+            </div>
+
+            <!--onGridPageChange-->
+            <div class="apiFunction">
+                <h2>onGridPageChange(func)</h2>
+                <span>Function to set grid page change event handler.</span>
+                <pre class="brush: js">
+                    gridJS().onGridPageChange(SomeFunction);                    
+                </pre>
+            </div>
+
+            <!--onGridLoaded-->
+            <div class="apiFunction">
+                <h2>onGridLoaded(func)</h2>
+                <span>Function to set grid loaded event handler.</span>
+                <pre class="brush: js">
+                    gridJS().onGridLoaded(SomeFunction);                    
+                </pre>
+            </div>
+
+            <!--allowPageChange-->
+            <div class="apiFunction">
+                <h2>allowPageChange(bool)</h2>
+                <span>Function to set the flag to allow grid page change or not.</span>
+                <pre class="brush: js">
+                    gridJS().allowPageChange(true);                    
+                </pre>
+            </div>
+
+            <!--addCustomFunction-->
+            <div class="apiFunction">
+                <h2>addCustomFunction(functionName, func)</h2>
+                <span>Adds a custom function that can be called from inside the grid's templates. The called function receives the data-source and row index as parameters.</span>
+                <pre class="brush: js">
+                    gridJS().addCustomFunction('MyFunction', myFunction);                    
+                </pre>
+            </div>
+
+            <!--disableInputBindings-->
+            <div class="apiFunction">
+                <h2>disableInputBindings(bool)</h2>
+                <span>Function to disable or enable input bindings.</span>
+                <pre class="brush: js">
+                    gridJS().disableInputBindings(boolean value);                    
+                </pre>
+            </div>
+
+            <!--setPageButtonCss-->
+            <div class="apiFunction">
+                <h2>setPageButtonCss(normalCss, activeCss)</h2>
+                <span>Sets the page button's normal and active state css classes.</span>
+                <pre class="brush: js">
+                    gridJS().setPageButtonCss('NormalStateCssClassName', 'ActiveStateCssClassName');                    
+                </pre>
+            </div>
+
+            <!--setPagination-->
+            <div class="apiFunction">
+                <h2>setPagination(numberOfRows)</h2>
+                <span>Function that an be used to activate the pagination and sets number of rows in a page.</span>
+                <pre class="brush: js">
+                    gridJS().setPagination(10);                    
+                </pre>
+            </div>
+
+            <!--getGrid-->
+            <div class="apiFunction">
+                <h2>getGrid(gridId)</h2>
+                <span>Function to get the grid element's id.</span>
+                <pre class="brush: js">
+                    gridJS().getGrid('#myGridId');                    
+                </pre>
+            </div>
+
+            <!--dataSource-->
+            <div class="apiFunction">
+                <h2>dataSource(dataSource)</h2>
+                <span>Function to set the grid's JSON array data source.</span>
+                <pre class="brush: js">
+                    gridJS().dataSource(myDataSource [{},{},{}...]);                    
+                </pre>
+            </div>
+
+            <!--setDataRowColors-->
+            <div class="apiFunction">
+                <h2>setDataRowColors(colorsArray)</h2>
+                <span>Function to set alternate colors or custom color sequence for the rows.</span>
+                <pre class="brush: js">
+                    gridJS().setDataRowColors([color1, color2...]);                    
+                </pre>
+            </div>
+
+            <!--setCellPadding-->
+            <div class="apiFunction">
+                <h2>setCellPadding(cellPadding)</h2>
+                <span>Function to set the padding of the output table's cells.</span>
+                <pre class="brush: js">
+                    gridJS().setCellPadding(5);                    
+                </pre>
+            </div>
+
+            <!--onRowAddition-->
+            <div class="apiFunction">
+                <h2>onRowAddition(func)</h2>
+                <span>Function to set row add event handler.</span>
+                <pre class="brush: js">
+                    gridJS().onRowAddition(SomeFunction);                    
+                </pre>
+            </div>
+
+            <!--setMouseOverColor-->
+            <div class="apiFunction">
+                <h2>setMouseOverColor(color)</h2>
+                <span>Function to set row mouse over color.</span>
+                <pre class="brush: js">
+                    gridJS().setMouseOverColor('lightGreen');                    
+                </pre>
+            </div>
+
+            <!--getDataUpdates-->
+            <div class="apiFunction">
+                <h2>getDataUpdates()</h2>
+                <span>Function that returns an array containing updated data rows.</span><br />
+                <span>Returns an array of data updates made by using the bound input elements.</span>
+                <pre class="brush: js">
+                    var updates = gridJS().getDataUpdates();                    
+                </pre>
+            </div>
+        </div>        
 
         <!--footer-->
         <div id="footer" class="footer"></div>

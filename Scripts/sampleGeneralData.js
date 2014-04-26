@@ -22,7 +22,7 @@
             },
             {
                 roomName: 'Entertainment Room',
-                roomType: "Room with a lots of xBoxes.",
+                roomType: "Room with lots of xBoxes.",
                 color: 'blue',
                 edit: false
             },

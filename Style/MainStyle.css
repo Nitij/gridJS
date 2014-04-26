@@ -3,24 +3,91 @@
     height: 100%;
 }
 
+.menu {
+    width:100%;
+    padding: 10px;
+    top:0;
+    left: 0;
+    position: fixed;
+    text-align:center;
+    background-color:black;
+    z-index:500;
+}
+
+.menuButton {
+	-moz-box-shadow: 0px 1px 0px 0px #1c1b18;
+	-webkit-box-shadow: 0px 1px 0px 0px #1c1b18;
+	box-shadow: 0px 1px 0px 0px #1c1b18;
+	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #eae0c2), color-stop(1, #ccc2a6));
+	background:-moz-linear-gradient(top, #eae0c2 5%, #ccc2a6 100%);
+	background:-webkit-linear-gradient(top, #eae0c2 5%, #ccc2a6 100%);
+	background:-o-linear-gradient(top, #eae0c2 5%, #ccc2a6 100%);
+	background:-ms-linear-gradient(top, #eae0c2 5%, #ccc2a6 100%);
+	background:linear-gradient(to bottom, #eae0c2 5%, #ccc2a6 100%);
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#eae0c2', endColorstr='#ccc2a6',GradientType=0);
+	background-color:#eae0c2;
+	-moz-border-radius:15px;
+	-webkit-border-radius:15px;
+	border-radius:15px;
+	border:2px solid #333029;
+	display:inline-block;
+	cursor:pointer;
+	color:#505739;
+	font-family:arial;
+	font-size:14px;
+	font-weight:bold;
+	padding:12px 16px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #ffffff;
+    width:100px;
+}
+.menuButton:hover {
+	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #ccc2a6), color-stop(1, #eae0c2));
+	background:-moz-linear-gradient(top, #ccc2a6 5%, #eae0c2 100%);
+	background:-webkit-linear-gradient(top, #ccc2a6 5%, #eae0c2 100%);
+	background:-o-linear-gradient(top, #ccc2a6 5%, #eae0c2 100%);
+	background:-ms-linear-gradient(top, #ccc2a6 5%, #eae0c2 100%);
+	background:linear-gradient(to bottom, #ccc2a6 5%, #eae0c2 100%);
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ccc2a6', endColorstr='#eae0c2',GradientType=0);
+	background-color:#ccc2a6;
+}
+.menuButton:active {
+	position:relative;
+	top:1px;
+}
+
+
 .logo {
     margin: 0 auto;
+    margin-top:100px;
     width: 800px;
     border-radius: 15px;
     background-color: black;
     font-family: maven-pro-regular;
     text-align: center;
     color: white;
-    /*padding: 1px;*/
 }
 
     .logo h1 {
         font-size: 68px;
     }
 
+.socialMedia {
+    margin:0 auto;
+    width:100%;
+    text-align:center;
+}
+.gettingStarted {
+    margin: 0 auto;
+    margin-top: 100px;
+    width: 90%;
+    font-family: maven-pro-regular;
+    font-size: 22px;
+}
+
 .api {
     margin: 0 auto;
-    margin-top: 50px;
+    margin-top: 100px;
     width: 90%;
     font-family: maven-pro-regular;
     font-size: 22px;
@@ -44,7 +111,14 @@
         font-size: 25px;
     }
 
+.samples {
+    margin-top: 50px;
+    font-size:30px;
+    text-align:center;
+    font-family: maven-pro-regular;
+}
 .sample {
+    font-size:20px;
     padding: 10px;
     width: 90%;
     margin: 0 auto;
@@ -62,6 +136,11 @@
     .sample span {
         font-size: 25px;
     }
+
+.sampleCode {
+    width:100%;
+    text-align:right;
+}
 
 
 .uiBlocker {
@@ -135,4 +214,5 @@
 @font-face {
     font-family: maven-pro-regular;
     src: url('/gridJS/Fonts/maven_pro_regular-webfont.woff');
+    /*src: url('/Fonts/maven_pro_regular-webfont.woff');*/
 }

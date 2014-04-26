@@ -45,7 +45,8 @@
     <!--custom editable grid-->
     <script type="text/javascript" src="Scripts/Grids/customEditable.js"></script>
 
-    
+    <!--twitter buttons-->
+    <script src="Scripts/ThirdParty/twitterSharing.js"></script>
 
     <link rel="stylesheet" href="Style/MainStyle.css" />
     <link rel="stylesheet" href="Style/GridStyle.css" />
@@ -57,15 +58,21 @@
         <!--ui blocker-->
         <div id="divUIBlocker" class="uiBlocker" onclick="App.Events.HideSourceCode();return false;"></div>
         <div id="divSourceCode" class="divSourceCode">
-            <div style="overflow:scroll;height:100%;">
+            <div id="divCodePopup" style="overflow: scroll; height: 100%;">
                 Source Code: Html
-                <div id="htmlCode">                             
+                <div id="htmlCode">
                 </div>
                 Source Code: JavaScript
                 <div id="jsCode">
-                                
                 </div>
             </div>
+        </div>
+
+        <!--top menu ar-->
+        <div id="menu" class="menu">
+            <a class="menuButton" href="#">Home</a>&nbsp;
+            <a class="menuButton" href="#" onclick="App.Events.MenuApiClick(); return false;">Api</a>&nbsp;
+            <a class="menuButton" href="#divSamples" onclick="App.Events.MenuSamplesClick(); return false;">Samples</a>
         </div>
 
         <!--logo-->
@@ -73,11 +80,26 @@
             <h1>GridJS</h1>
         </div>
 
-        <!--api documentation-->
-        <div id="divApi" class="api">
+        <!--social media-->
+        <div id="socialMedia" class="socialMedia">
+            <iframe src="http://ghbtns.com/github-btn.html?user=Nitij&repo=gridJS&type=watch&count=true&size=large"
+                height="30" width="170" frameborder="0" scrolling="0" style="width: 170px; height: 30px;" allowtransparency="true"></iframe>
+
+            <iframe src="http://ghbtns.com/github-btn.html?user=Nitij&repo=gridJS&type=fork&count=true&size=large"
+                height="30" width="170" frameborder="0" scrolling="0" style="width: 170px; height: 30px;" allowtransparency="true"></iframe>
+
+            <iframe src="http://ghbtns.com/github-btn.html?user=Nitij&type=follow&count=true&size=large" height="30" width="240"
+                frameborder="0" scrolling="0" style="width: 240px; height: 30px;" allowtransparency="true"></iframe>
+
+            <a href="https://twitter.com/share" class="twitter-share-button" data-url="https://github.com/Nitij/validateJS" data-size="large">Tweet</a>
+            <a href="https://twitter.com/_nitij" class="twitter-follow-button" data-show-count="false" data-size="large">Follow @_nitij</a>
+        </div>
+
+        <div id="gettingStarted" class="gettingStarted">
             GridJS is a JavaScript plugin to create UI grids. This plugin supports templates and is highly customizable. gridJS can work independently from any other third party library like jQuery. 
             The first step in using gridJS is to create markup of the grid. This can be done by creating a custom &lt;gridJS&gt; html element. Inside there can be header row, data row and footer. Take a look at below example:
-            <br /><br />
+            <br />
+            <br />
             First load the GridJS script into the page:
             <pre class="brush: html">
                 &lt;head&gt;
@@ -143,7 +165,10 @@
             <pre class="brush: js">
                 gridJS().draw();                    
             </pre>
+        </div>
 
+        <!--api documentation-->
+        <div id="divApi" class="api">
             Apart from the above config object syntax there are several standalone helper functions to set the grid properties. They are:
 
             <!--reDraw-->
@@ -311,13 +336,15 @@
         </div>
 
         <!--samples-->
-        <div id="divSamples">
+        <div id="divSamples" class="samples">
+            Check out the following sample grids made by using GridJS and see how we can create highly customizable and interactive grids.
 
             <!--todo grid-->
             <div class="sample">
                 <h2>ToDo Grid</h2>
-                <a href="#" onclick="App.Events.ShowTodoGridCode();return false;" class="showCodeButton">Show Code</a>
-                <br /><br />
+                <div class="sampleCode"><a href="#" onclick="App.Events.ShowTodoGridCode();return false;" class="showCodeButton">Show Code</a></div>
+                <br />
+                <span>Just a normal Todo grid.</span><br />
                 <input class="CustomText" id="txtTodo" type="text" placeholder="add new todo here" />
                 <input type="submit" value="Add Todo" onclick="AddTodo(); return false;" />
                 <input type="submit" value="Clear" onclick="ClearAllTodo(); return false;" />
@@ -337,8 +364,8 @@
             <!--country grid-->
             <div class="sample">
                 <h2>Country Grid</h2>
-                <a href="#" onclick="App.Events.ShowCountryGridCode();return false;" class="showCodeButton">Show Code</a>
-                <br /><br />
+                <div class="sampleCode"><a href="#" onclick="App.Events.ShowCountryGridCode();return false;" class="showCodeButton">Show Code</a></div>
+                <br />
                 <gridjs id="countryGrid" class="CountryGrid">
                     <headerRow class="CountryGridHeaderRow">
                         <column><b>Name</b></column>
@@ -362,8 +389,8 @@
             <!--northwind grid-->
             <div class="sample">
                 <h2>Normal Css Grid</h2>
-                <a href="#" onclick="App.Events.ShowNorthwindGridCode();return false;" class="showCodeButton">Show Code</a>
-                <br /><br />
+                <div class="sampleCode"><a href="#" onclick="App.Events.ShowNorthwindGridCode();return false;" class="showCodeButton">Show Code</a></div>
+                <br />
                 <gridjs id="northwindGrid" class="NorthWindGrid">
                     <headerRow class="NorthWindGridHeaderRow">
                         <column><b>Order ID</b></column>
@@ -397,8 +424,8 @@
             <!--shopping grid-->
             <div class="sample">
                 <h2>Shopping Grid</h2>
-                <a href="#" onclick="App.Events.ShowShoppingGridCode();return false;" class="showCodeButton">Show Code</a>
-                <br /><br />
+                <div class="sampleCode"><a href="#" onclick="App.Events.ShowShoppingGridCode();return false;" class="showCodeButton">Show Code</a></div>
+                <br />
                 <gridjs id="shoppingGrid" class="ShoppingGrid">
                     <headerRow>
                     </headerRow>
@@ -476,8 +503,8 @@
             <!--bound northwind grid-->
             <div class="sample">
                 <h2>Bound Input Css Grid</h2>
-                <a href="#" onclick="App.Events.ShowBoundNorthwindGridCode();return false;" class="showCodeButton">Show Code</a>
-                <br /><br />
+                <div class="sampleCode"><a href="#" onclick="App.Events.ShowBoundNorthwindGridCode();return false;" class="showCodeButton">Show Code</a></div>
+                <br />
                 <span>Try changing the inputs and after changing the page the inputs are retained.</span>
                 <gridjs id="boundNorthWindGrid" class="NorthWindGrid">
                     <headerRow class="NorthWindGridHeaderRow">
@@ -524,8 +551,8 @@
             <!--validation grid-->
             <div class="sample">
                 <h2>Validation Grid</h2>
-                <a href="#" onclick="App.Events.ShowValidationGridCode();return false;" class="showCodeButton">Show Code</a>
-                <br /><br />
+                <div class="sampleCode"><a href="#" onclick="App.Events.ShowValidationGridCode();return false;" class="showCodeButton">Show Code</a></div>
+                <br />
                 <span>This grid's fields has required field validators attached. Try changing the grid page while having an empty text box.</span>
                 <gridjs id="validationGrid" class="NorthWindValidationGrid">
                     <headerRow class="NorthWindValidationGridHeaderRow">
@@ -568,12 +595,13 @@
                 </gridjs>
             </div>
 
+            <!--custom editable grid-->
             <div class="sample">
                 <h2>Custom Editable Grid</h2>
-                <a href="#" onclick="App.Events.ShowCustomEditableGridCode();return false;" class="showCodeButton">Show Code</a>
-                <br /><br />
-                <span>This is a typical Edit/Add grid.</span>
-                <gridJS id="customEditableGrid" class="customEditableGrid">
+                <div class="sampleCode"><a href="#" onclick="App.Events.ShowCustomEditableGridCode();return false;" class="showCodeButton">Show Code</a></div>
+                <br />
+                <span>This is a typical Edit/Add Functionality grid.</span>
+                <gridjs id="customEditableGrid" class="customEditableGrid">
                     <headerRow class="customEditableGridHeaderRow">
                         <column><b>Room Name</b></column>
                         <column><b>Room Type</b></column>
@@ -604,7 +632,7 @@
                         <column><input class="CustomText" id="txtAddRoomColor" type="text" placeholder="room color" /></column>
                         <column><a class="customEditableGridAddRecordButton" id="addRoomRecord" href="#" onclick="addNewRoomRecord(); return false;">Add New Record</a></column>
                     </footerRow>
-                </gridJS>
+                </gridjs>
             </div>
 
         </div>
@@ -637,7 +665,7 @@
 
             //custom editable grid
             customEditableGrid = App.Grids.BuildcustomEditableGrid();
-            customEditableGrid.draw();            
+            customEditableGrid.draw();
         });
 
         //custom editable grid events
@@ -683,6 +711,7 @@
 
             customEditableGrid.reDraw();
         }
+
     </script>
 </body>
 </html>

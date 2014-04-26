@@ -40,10 +40,23 @@
     function showCustomEditableGridCode() {
         App.Helper.ShowCode(App.GridSampleCode.CustomEditableGridSampleCode);
     }
+
+    //'Api' menu item click event
+    function menuApiClick() {
+        var $divApi = $('#divApi');
+        $(w).scrollTop($divApi.offset().top -100);
+    }
+
+    //'Samples' menu item click event
+    function menuSamplesClick() {
+        var $divSamples = $('#divSamples');
+        $(w).scrollTop($divSamples.offset().top - 100);
+    }
     
 
     //attach to the namespace
     App.Events['HideSourceCode'] = hideCode;
+
     App.Events['ShowTodoGridCode'] = showTodoGridCode;
     App.Events['ShowCountryGridCode'] = showCountryGridCode;
     App.Events['ShowNorthwindGridCode'] = showNorthwindGridCode;
@@ -51,4 +64,7 @@
     App.Events['ShowBoundNorthwindGridCode'] = showBoundNorthwindGridCode;
     App.Events['ShowValidationGridCode'] = showValidationGridCode;
     App.Events['ShowCustomEditableGridCode'] = showCustomEditableGridCode;
+
+    App.Events['MenuApiClick'] = menuApiClick;
+    App.Events['MenuSamplesClick'] = menuSamplesClick;
 })(window);

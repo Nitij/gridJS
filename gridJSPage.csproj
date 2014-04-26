@@ -92,7 +92,6 @@
     <Content Include="Images\samsung-galaxy-s4-i9500-400x400-imadkbmd6quvhc9t.jpeg" />
     <Content Include="Images\sony-xperia-z-ultra-400x400-imadzbkyx4mvceyn.jpeg" />
     <Content Include="index.html" />
-    <Content Include="index2.html" />
     <Content Include="SampleCode\boundNorthwindGrid.html" />
     <Content Include="SampleCode\boundNorthwindGrid.js" />
     <Content Include="SampleCode\customEditableGrid.html" />
@@ -124,54 +123,16 @@
     <Content Include="Scripts\sampleGeneralData.js" />
     <Content Include="Scripts\sampleNorthWindData.js" />
     <Content Include="Scripts\sampleShoppingData.js" />
-    <Content Include="Scripts\ThirdParty\SyntaxHighlighter\shAutoloader.js" />
-    <Content Include="Scripts\ThirdParty\SyntaxHighlighter\shBrushAppleScript.js" />
-    <Content Include="Scripts\ThirdParty\SyntaxHighlighter\shBrushAS3.js" />
-    <Content Include="Scripts\ThirdParty\SyntaxHighlighter\shBrushBash.js" />
-    <Content Include="Scripts\ThirdParty\SyntaxHighlighter\shBrushColdFusion.js" />
-    <Content Include="Scripts\ThirdParty\SyntaxHighlighter\shBrushCpp.js" />
-    <Content Include="Scripts\ThirdParty\SyntaxHighlighter\shBrushCSharp.js" />
-    <Content Include="Scripts\ThirdParty\SyntaxHighlighter\shBrushCss.js" />
-    <Content Include="Scripts\ThirdParty\SyntaxHighlighter\shBrushDelphi.js" />
-    <Content Include="Scripts\ThirdParty\SyntaxHighlighter\shBrushDiff.js" />
-    <Content Include="Scripts\ThirdParty\SyntaxHighlighter\shBrushErlang.js" />
-    <Content Include="Scripts\ThirdParty\SyntaxHighlighter\shBrushGroovy.js" />
-    <Content Include="Scripts\ThirdParty\SyntaxHighlighter\shBrushJava.js" />
-    <Content Include="Scripts\ThirdParty\SyntaxHighlighter\shBrushJavaFX.js" />
     <Content Include="Scripts\ThirdParty\SyntaxHighlighter\shBrushJScript.js" />
-    <Content Include="Scripts\ThirdParty\SyntaxHighlighter\shBrushPerl.js" />
-    <Content Include="Scripts\ThirdParty\SyntaxHighlighter\shBrushPhp.js" />
-    <Content Include="Scripts\ThirdParty\SyntaxHighlighter\shBrushPlain.js" />
-    <Content Include="Scripts\ThirdParty\SyntaxHighlighter\shBrushPowerShell.js" />
-    <Content Include="Scripts\ThirdParty\SyntaxHighlighter\shBrushPython.js" />
-    <Content Include="Scripts\ThirdParty\SyntaxHighlighter\shBrushRuby.js" />
-    <Content Include="Scripts\ThirdParty\SyntaxHighlighter\shBrushSass.js" />
-    <Content Include="Scripts\ThirdParty\SyntaxHighlighter\shBrushScala.js" />
-    <Content Include="Scripts\ThirdParty\SyntaxHighlighter\shBrushSql.js" />
-    <Content Include="Scripts\ThirdParty\SyntaxHighlighter\shBrushVb.js" />
     <Content Include="Scripts\ThirdParty\SyntaxHighlighter\shBrushXml.js" />
     <Content Include="Scripts\ThirdParty\SyntaxHighlighter\shCore.js" />
-    <Content Include="Scripts\ThirdParty\SyntaxHighlighter\shLegacy.js" />
+    <Content Include="Scripts\ThirdParty\twitterSharing.js" />
     <Content Include="Scripts\validate.main.js" />
     <Content Include="Style\MainStyle.css" />
     <Content Include="Style\GridStyle.css" />
     <Content Include="Style\ThirdParty\SyntaxHighlighter\shCore.css" />
     <Content Include="Style\ThirdParty\SyntaxHighlighter\shCoreDefault.css" />
-    <Content Include="Style\ThirdParty\SyntaxHighlighter\shCoreDjango.css" />
-    <Content Include="Style\ThirdParty\SyntaxHighlighter\shCoreEclipse.css" />
-    <Content Include="Style\ThirdParty\SyntaxHighlighter\shCoreEmacs.css" />
-    <Content Include="Style\ThirdParty\SyntaxHighlighter\shCoreFadeToGrey.css" />
-    <Content Include="Style\ThirdParty\SyntaxHighlighter\shCoreMDUltra.css" />
-    <Content Include="Style\ThirdParty\SyntaxHighlighter\shCoreMidnight.css" />
-    <Content Include="Style\ThirdParty\SyntaxHighlighter\shCoreRDark.css" />
     <Content Include="Style\ThirdParty\SyntaxHighlighter\shThemeDefault.css" />
-    <Content Include="Style\ThirdParty\SyntaxHighlighter\shThemeDjango.css" />
-    <Content Include="Style\ThirdParty\SyntaxHighlighter\shThemeEclipse.css" />
-    <Content Include="Style\ThirdParty\SyntaxHighlighter\shThemeEmacs.css" />
-    <Content Include="Style\ThirdParty\SyntaxHighlighter\shThemeFadeToGrey.css" />
-    <Content Include="Style\ThirdParty\SyntaxHighlighter\shThemeMDUltra.css" />
-    <Content Include="Style\ThirdParty\SyntaxHighlighter\shThemeMidnight.css" />
-    <Content Include="Style\ThirdParty\SyntaxHighlighter\shThemeRDark.css" />
     <Content Include="validateJSImages\Failed\delete-icon24pixel.png" />
     <Content Include="validateJSImages\Failed\delete-icon32pixel.png" />
     <Content Include="validateJSImages\Failed\delete-icon48pixel.png" />
@@ -182,7 +143,6 @@
     <Content Include="validateJSImages\Passed\check-icon48pixel.png" />
     <Content Include="validateJSImages\Passed\check-icon64x64pixel.png" />
     <Content Include="validateJSImages\Passed\check-icon72x72pixel.png" />
-    <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -190,12 +150,6 @@
   <ItemGroup>
     <Content Include="Fonts\fontawesome-webfont.woff" />
     <Content Include="Fonts\maven_pro_regular-webfont.woff" />
-    <None Include="Web.Debug.config">
-      <DependentUpon>Web.config</DependentUpon>
-    </None>
-    <None Include="Web.Release.config">
-      <DependentUpon>Web.config</DependentUpon>
-    </None>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

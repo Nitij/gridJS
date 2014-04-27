@@ -108,6 +108,7 @@
     <Content Include="SampleCode\todoGrid.js" />
     <Content Include="Scripts\App\app.js" />
     <Content Include="Scripts\App\uiBlocker.js" />
+    <Content Include="Scripts\grid.main.min.js" />
     <Content Include="Scripts\grid.main.js" />
     <Content Include="Scripts\App\events.js" />
     <Content Include="Scripts\Grids\boundNorthwind.js" />

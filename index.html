@@ -110,7 +110,7 @@
 
             Then create the custom &lt;gridJS&gt; html element:
             <pre class="brush: html">
-                &lt;gridjs id="gridNorthWind" class="NorthWindGrid"&gt;
+                &lt;gridjs-grid id="gridNorthWind" class="NorthWindGrid"&gt;
                     &lt;headerRow class="NorthWindGridHeaderRow"&gt;
                         &lt;column&gt;<b>Order ID</b>&lt;/column&gt;
                         &lt;column&gt;<b>Customer ID</b>&lt;/column&gt;
@@ -137,10 +137,10 @@
                     &lt;/dataRow&gt;
                     &lt;footerRow&gt;
                     &lt;/footerRow&gt;
-                &lt;/gridjs&gt;
+                &lt;/gridjs-grid&gt;
             </pre>
 
-            gridJS works by converting the &lt;gridJS&gt; html element into html table by combining it with the provided data source. gridJS can be configured when creating the grid object by passing the config object. The structure of that config object can be as follows:
+            gridJS works by converting the &lt;gridjs-grid&gt; custom html element into html table by combining it with the provided data source. gridJS can be configured when creating the grid object by passing the config object. The structure of that config object can be as follows:
             <pre class="brush: js">
                 var gridJS = new GridJS({
                     gridId 					  : 'gridNorthWind',                 //Gets the id of the &lt;gridJS&gt; element.
@@ -178,7 +178,7 @@
                 <div class="sampleCode"><a href="#" onclick="App.Events.ShowCustomEditableGridCode();return false;" class="showCodeButton">Show Code</a></div>
                 <br />
                 <span>This is a typical Edit/Add Functionality grid.</span>
-                <gridjs id="customEditableGrid" class="customEditableGrid">
+                <gridjs-grid id="customEditableGrid" class="customEditableGrid">
                     <headerRow class="customEditableGridHeaderRow">
                         <column><b>Room Name</b></column>
                         <column><b>Room Type</b></column>
@@ -209,7 +209,7 @@
                         <column><input class="CustomText" id="txtAddRoomColor" type="text" placeholder="room color" /></column>
                         <column><a class="customEditableGridAddRecordButton" id="addRoomRecord" href="#" onclick="addNewRoomRecord(); return false;">Add New Record</a></column>
                     </footerRow>
-                </gridjs>
+                </gridjs-grid>
             </div>
 
             <!--todo grid-->
@@ -222,7 +222,7 @@
                 <input type="submit" value="Add Todo" onclick="AddTodo(); return false;" />
                 <input type="submit" value="Clear" onclick="ClearAllTodo(); return false;" />
                 <br />
-                <gridjs id="todoGrid" class="TodoGrid">
+                <gridjs-grid id="todoGrid" class="TodoGrid">
                     <headerRow>
                     </headerRow>
                     <dataRow class="GridDataRow">
@@ -231,7 +231,7 @@
                     </dataRow>
                     <footerRow>
                     </footerRow>
-                </gridjs>
+                </gridjs-grid>
             </div>
 
             <!--country grid-->
@@ -239,7 +239,7 @@
                 <h2>Country Grid</h2>
                 <div class="sampleCode"><a href="#" onclick="App.Events.ShowCountryGridCode();return false;" class="showCodeButton">Show Code</a></div>
                 <br />
-                <gridjs id="countryGrid" class="CountryGrid">
+                <gridjs-grid id="countryGrid" class="CountryGrid">
                     <headerRow class="CountryGridHeaderRow">
                         <column><b>Name</b></column>
                         <column><b>Capital</b></column>
@@ -256,7 +256,7 @@
                     </dataRow>
                     <footerRow>
                     </footerRow>
-                </gridjs>
+                </gridjs-grid>
             </div>
 
             <!--northwind grid-->
@@ -264,7 +264,7 @@
                 <h2>Normal Css Grid</h2>
                 <div class="sampleCode"><a href="#" onclick="App.Events.ShowNorthwindGridCode();return false;" class="showCodeButton">Show Code</a></div>
                 <br />
-                <gridjs id="northwindGrid" class="NorthWindGrid">
+                <gridjs-grid id="northwindGrid" class="NorthWindGrid">
                     <headerRow class="NorthWindGridHeaderRow">
                         <column><b>Order ID</b></column>
                         <column><b>Customer ID</b></column>
@@ -291,7 +291,7 @@
                     </dataRow>
                     <footerRow>
                     </footerRow>
-                </gridjs>
+                </gridjs-grid>
             </div>
 
             <!--shopping grid-->
@@ -299,7 +299,7 @@
                 <h2>Shopping Grid</h2>
                 <div class="sampleCode"><a href="#" onclick="App.Events.ShowShoppingGridCode();return false;" class="showCodeButton">Show Code</a></div>
                 <br />
-                <gridjs id="shoppingGrid" class="ShoppingGrid">
+                <gridjs-grid id="shoppingGrid" class="ShoppingGrid">
                     <headerRow>
                     </headerRow>
                     <dataRow>
@@ -370,7 +370,7 @@
                     </dataRow>
                     <footerRow>
                     </footerRow>
-                </gridjs>
+                </gridjs-grid>
             </div>
 
             <!--bound northwind grid-->
@@ -379,7 +379,7 @@
                 <div class="sampleCode"><a href="#" onclick="App.Events.ShowBoundNorthwindGridCode();return false;" class="showCodeButton">Show Code</a></div>
                 <br />
                 <span>Try changing the inputs and after changing the page the inputs are retained.</span>
-                <gridjs id="boundNorthWindGrid" class="NorthWindGrid">
+                <gridjs-grid id="boundNorthWindGrid" class="NorthWindGrid">
                     <headerRow class="NorthWindGridHeaderRow">
                         <column><b>Order ID</b></column>
                         <column><b>Customer ID</b></column>
@@ -418,7 +418,7 @@
                     </dataRow>
                     <footerRow>
                     </footerRow>
-                </gridjs>
+                </gridjs-grid>
             </div>
 
             <!--validation grid-->
@@ -427,7 +427,7 @@
                 <div class="sampleCode"><a href="#" onclick="App.Events.ShowValidationGridCode();return false;" class="showCodeButton">Show Code</a></div>
                 <br />
                 <span>This grid's fields has required field validators attached. Try changing the grid page while having an empty text box.</span>
-                <gridjs id="validationGrid" class="NorthWindValidationGrid">
+                <gridjs-grid id="validationGrid" class="NorthWindValidationGrid">
                     <headerRow class="NorthWindValidationGridHeaderRow">
                         <column class="NorthWindValidationGridHeaderRowCustomColumn1"><b>Order ID</b></column>
                         <column><b>Customer ID</b></column>
@@ -465,7 +465,7 @@
                     </dataRow>
                     <footerRow>
                     </footerRow>
-                </gridjs>
+                </gridjs-grid>
             </div>            
 
         </div>

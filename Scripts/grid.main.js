@@ -26,6 +26,11 @@
     var currentPageNumber = 1,
         cellPadding = 5;
 
+    //register gridjs-grid element
+    if (d.registerElement) {
+        d.registerElement('gridjs-grid');
+    }
+
     //config function
     //Config Object Properties:
     //-----------------

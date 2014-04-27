@@ -98,7 +98,7 @@
         <!--getting started-->
         <div id="gettingStarted" class="gettingStarted">
             GridJS is a JavaScript plugin to create UI grids. This plugin supports templates and is highly customizable. gridJS can work independently from any other third party library like jQuery. 
-            The first step in using gridJS is to create markup of the grid. This can be done by creating a custom &lt;gridJS&gt; html element. Inside there can be header row, data row and footer. Take a look at below example:
+            The first step in using gridJS is to create markup of the grid. This can be done by creating a custom &lt;gridJS-grid&gt; html element. Inside there can be header row, data row and footer. Take a look at below example:
             <br />
             <br />
             First load the GridJS script into the page:
@@ -140,7 +140,7 @@
                 &lt;/gridjs-grid&gt;
             </pre>
 
-            gridJS works by converting the &lt;gridjs-grid&gt; custom html element into html table by combining it with the provided data source. gridJS can be configured when creating the grid object by passing the config object. The structure of that config object can be as follows:
+            gridJS works by converting the inner html of &lt;gridjs-grid&gt; custom html element into html table by combining it with the provided data source. gridJS can be configured when creating the grid object by passing the config object. The structure of that config object can be as follows:
             <pre class="brush: js">
                 var gridJS = new GridJS({
                     gridId 					  : 'gridNorthWind',                 //Gets the id of the &lt;gridJS&gt; element.

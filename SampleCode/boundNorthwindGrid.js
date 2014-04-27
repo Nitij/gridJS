@@ -4,7 +4,7 @@ var boundNorthwindGrid = new GridJS({
     dataSource: NorthWindDataSource,
     cellPadding: 6,
     pagination: 10,
-    pageButtonCss: { normalCss: 'NorthWindPaginationButton', activeCss: '' },
+    pageButtonCss: { normalCss: 'NorthWindPaginationButton', activeCss: 'NorthWindPaginationActiveButton' },
     dataRowColors: ["#0B6121", "#0A2A0A"]
 })
 .addCustomFunction("GetOrderDate1", GetOrderDate1)

@@ -20,14 +20,7 @@
         INPUT_DATETIME = 'datetime',        //input type datetime
         INPUT_DATE = 'date',                //input type date
         INPUT_MONTH = 'month',              //input type month
-        INPUT_WEEK = 'week',                //input type week
-
-        //constants for custom attributes
-        CUSTOM_MODEL = 'model',             //to set data bindings for inputs
-        IMAGE_MODEL_SRC = 'model-src',      //to set <img> source image
-        IMAGE_SRC = 'src',                  //<img> src attribute
-        EL_MODEL_STYLE = 'model-style',     //to set the style of elements
-        EL_STYLE = 'style';                 //element style attribute
+        INPUT_WEEK = 'week';                //input type week
 
     //initializers
     var currentPageNumber = 1,
@@ -619,7 +612,7 @@
                     //input bindings
                     switch (currentElement.tagName.toLowerCase()) {
                         case "input":
-                            if (currentElement.getAttribute(CUSTOM_MODEL)) {
+                            if (currentElement.getAttribute('model')) {
                                 inputBindings.push(GetInputBinding(currentElement, startRow));
                                 switch (currentElement.type) {
                                     case INPUT_TEXT:
@@ -635,11 +628,11 @@
                                     case INPUT_MONTH:
                                     case INPUT_WEEK:
                                         tempAttribute = d.createAttribute("value");
-                                        tempAttribute.value = currentElement.getAttribute(CUSTOM_MODEL);
+                                        tempAttribute.value = currentElement.getAttribute('model');
                                         dataColChildren[k].setAttributeNode(tempAttribute);
                                         break;
                                     case INPUT_CHECBOX:
-                                        if (ReplaceToken(currentElement.getAttribute(CUSTOM_MODEL)
+                                        if (ReplaceToken(currentElement.getAttribute('model')
                                             , dataSource
                                             , startRow
                                             , this._customFunctions
@@ -770,11 +763,11 @@
             if (i < length) {
                 ptr = str.substr(i, 2);
 
-                if (ptr === '{{') {
+                if (ptr === "{{") {
                     pStart = i;
                     tokenStart = i + 2;
                 }
-                else if (ptr === '}}') {
+                else if (ptr === "}}") {
                     pEnd = i + 1;
                     tokenEnd = i - 1;
                     token = str.substr(pStart, pEnd - pStart + 1);
@@ -793,13 +786,11 @@
                         else {
                             //replace the token template with empty string if 
                             //there are no function bindings added
-                            output = output.replace(token, '');
+                            output = output.replace(token, "");
                         }
                     }
-                    //handle <img> src
-                    output = output.replace(IMAGE_MODEL_SRC, IMAGE_SRC);
-                    //handle element style
-                    output = output.replace(EL_MODEL_STYLE, EL_STYLE);
+                    //handle model-src
+                    output = output.replace("model-src", "src");
                 }
             }
         }

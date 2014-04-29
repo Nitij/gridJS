@@ -17,9 +17,9 @@
     <script type="text/javascript" src="Scripts/sampleGeneralData.js"></script>
 
     <!--GridJS-->
-    <!--<script type="text/javascript" src="Scripts/grid.main.js"></script>-->
+    <script type="text/javascript" src="Scripts/grid.main.js"></script>
     <!--Minified GridJS-->
-    <script type="text/javascript" src="Scripts/grid.main.min.js"></script>
+    <!--<script type="text/javascript" src="Scripts/grid.main.min.js"></script>-->
 
     <!--jQuery-->
     <script type="text/javascript" src="Scripts/jQuery.js"></script>
@@ -192,20 +192,20 @@
                     </headerRow>
                     <dataRow>
                         <column>
-                            <span style="display:{{getDoneDisplay()}};">{{roomName}}</span>
-                            <input class="CustomText" id="txtRoomName" type="text" model="{{roomName}}" style="width:180px;display:{{getEditDisplay()}};"/>
+                            <span model-style="display:{{getDoneDisplay()}};">{{roomName}}</span>
+                            <input class="CustomText" id="txtRoomName" type="text" model="{{roomName}}" model-style="width:180px;display:{{getEditDisplay()}};"/>
                         </column>
                         <column>
-                            <span style="display:{{getDoneDisplay()}};">{{roomType}}</span>
-                            <input class="CustomText" id="txtRoomType" type="text" model="{{roomType}}" style="width:280px;display:{{getEditDisplay()}};" />
+                            <span model-style="display:{{getDoneDisplay()}};">{{roomType}}</span>
+                            <input class="CustomText" id="txtRoomType" type="text" model="{{roomType}}" model-style="width:280px;display:{{getEditDisplay()}};" />
                         </column>
                         <column>
-                            <div style="background-color:{{color}};width:30px;height:30px;margin:0 auto;border-radius:50%;display:{{getDivDoneDisplay()}};"></div>
-                            <input class="CustomText" id="txtRoomColor" type="text" model="{{color}}" style="display:{{getEditDisplay()}};" />
+                            <div model-style="background-color:{{color}};width:30px;height:30px;margin:0 auto;border-radius:50%;display:{{getDivDoneDisplay()}};"></div>
+                            <input class="CustomText" id="txtRoomColor" type="text" model="{{color}}" model-style="display:{{getEditDisplay()}};" />
                         </column>
                         <column>
-                            <a id="editButton" class="customEditableGridEditRowButton" href="#" style="display:{{getDoneDisplay()}};" onclick="customEditableGridEdit(this); return false;">Edit</a>
-                            <a id="doneButton" class="customEditableGridDoneRowButton" href="#" style="display:{{getEditDisplay()}};" onclick="customEditableGridDone(this); return false;">Done</a>
+                            <a id="editButton" class="customEditableGridEditRowButton" href="#" model-style="display:{{getDoneDisplay()}};" onclick="customEditableGridEdit(this); return false;">Edit</a>
+                            <a id="doneButton" class="customEditableGridDoneRowButton" href="#" model-style="display:{{getEditDisplay()}};" onclick="customEditableGridDone(this); return false;">Done</a>
                         </column>
                     </dataRow>
                     <footerRow>

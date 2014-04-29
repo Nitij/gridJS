@@ -57,6 +57,8 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Downloads\grid.main.js" />
+    <Content Include="Downloads\grid.main.min.js" />
     <Content Include="Images\0star.png" />
     <Content Include="Images\188px-Flag_of_Bangladesh.svg.png" />
     <Content Include="Images\188px-Flag_of_Brazil.svg.png" />

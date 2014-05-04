@@ -57,6 +57,14 @@ function onGridRowAdd(dataRow, dataSource, rowIndex) {
     return dataRow;
 }
 
+//returns meaningful date format
+function getDate(rawDate) {
+    var month = rawDate.getMonth(),
+        day = rawDate.getDate(),
+        year = rawDate.getYear();
+    return month + "/" + day + "/" + year;
+}
+
 function OnValidationGridLoaded() {
     vManager.addValidator(shipNameValidatorList, [{ type: ValidationType.Required, message: "Ship Name is required." }])
         .addValidator(shipCityValidatorList, [{ type: ValidationType.Required, message: "Ship City is required." }])

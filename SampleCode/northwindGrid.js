@@ -18,9 +18,9 @@ var northWindGrid = new GridJS({
 
 //returns meaningful date format
 function getDate(rawDate) {
-    month = rawDate.getMonth(),
-    day = rawDate.getDate(),
-    year = rawDate.getYear();
+    var month = rawDate.getMonth(),
+        day = rawDate.getDate(),
+        year = rawDate.getYear();
     return month + "/" + day + "/" + year;
 }
 </pre>
